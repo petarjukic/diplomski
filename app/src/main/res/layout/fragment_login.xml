@@ -3,7 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="20dp"
     tools:context=".ui.login.LoginFragment">
 
+    <TextView
+        android:id="@+id/tv_title_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/login_to_app_title"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        style="@style/Title" />
 
 </FrameLayout>
