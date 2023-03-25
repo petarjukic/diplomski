@@ -1,4 +1,13 @@
 package com.example.diplomskirad.model
 
-class Product {
-}
+import com.google.firebase.database.IgnoreExtraProperties
+
+@IgnoreExtraProperties
+data class Product(
+    val id: String,
+    val productName: String,
+    val price: Float,
+    val categoryId: String,
+    val image: String,
+    val description: String? = null
+)
