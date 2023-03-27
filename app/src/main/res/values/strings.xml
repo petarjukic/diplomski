@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">DiplomskiRad</string>
     <string name="login_to_app_title">Login to app</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

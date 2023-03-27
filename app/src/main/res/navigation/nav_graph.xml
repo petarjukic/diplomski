@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/main_fragment">
+
+
+    <action
+        android:id="@+id/goToLoginFragment"
+        app:destination="@id/login_fragment"
+        app:enterAnim="@animator/nav_default_enter_anim"
+        app:exitAnim="@animator/nav_default_exit_anim"
+        app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+        app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+
+    <action
+        android:id="@+id/goToRegisterFragment"
+        app:destination="@+id/register_fragment"
+        app:enterAnim="@animator/nav_default_enter_anim"
+        app:exitAnim="@animator/nav_default_exit_anim"
+        app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+        app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.example.diplomskirad.ui.MainFragment"
+        app:enterAnim="@animator/nav_default_enter_anim"
+        app:exitAnim="@animator/nav_default_exit_anim"
+        app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+        app:popExitAnim="@animator/nav_default_pop_exit_anim">
+        <action
+            android:id="@+id/action_main_fragment_to_login_fragment"
+            app:destination="@id/login_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/login_fragment"
+        android:name="com.example.diplomskirad.ui.login.LoginFragment"
+        app:enterAnim="@animator/nav_default_enter_anim"
+        app:exitAnim="@animator/nav_default_exit_anim"
+        app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+        app:popExitAnim="@animator/nav_default_pop_exit_anim">
+        <action
+            android:id="@+id/action_login_fragment_to_registerFragment"
+            app:destination="@id/register_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/register_fragment"
+        android:name="com.example.diplomskirad.ui.registration.RegisterFragment"
+        android:label="fragment_register"
+        tools:layout="@layout/fragment_register" />
+
+</navigation>
