@@ -1,6 +1,16 @@
 <resources>
     <string name="app_name">DiplomskiRad</string>
-    <string name="login_to_app_title">Login to app</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="login_to_app_title">Login</string>
+
+    <string name="password">Password</string>
+    <string name="e_mail">E-mail</string>
+    <string name="btn_login">Login</string>
+    <string name="sign_up">Don\'t have an account? | Sign up</string>
+    <string name="register">Register</string>
+    <string name="register_already_have_an_account">Already have an account? Sign in here</string>
+    <string name="sign_up_title">Sign up</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+
 </resources>

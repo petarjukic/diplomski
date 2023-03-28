@@ -34,7 +34,7 @@ class MainFragment : Fragment() {
     }
 
     companion object {
-        val TAG = MainFragment::class.java
+        val TAG = MainFragment::class.java.simpleName
 
         fun newInstance(): MainFragment {
             val args = Bundle()

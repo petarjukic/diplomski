@@ -13,6 +13,11 @@
                       <LayoutPositions />
                     </value>
                   </entry>
+                  <entry key="goToRegisterFragment">
+                    <value>
+                      <LayoutPositions />
+                    </value>
+                  </entry>
                   <entry key="login_fragment">
                     <value>
                       <LayoutPositions>
@@ -21,6 +26,15 @@
                             <option name="x" value="256" />
                             <option name="y" value="-134" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_login_fragment_to_registerFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -46,13 +60,13 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="registerFragment">
+                  <entry key="register_fragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="680" />
-                            <option name="y" value="-149" />
+                            <option name="x" value="12" />
+                            <option name="y" value="12" />
                           </Point>
                         </option>
                       </LayoutPositions>
