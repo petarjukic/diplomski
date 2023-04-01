@@ -13,4 +13,19 @@
     <string name="first_name">First name</string>
     <string name="last_name">Last name</string>
 
+    <string name="invalid_email">Invalid e-mail input</string>
+    <string name="invalid_password">Please re-enter your password</string>
+    <string name="invalid_first_name">Invalid first name</string>
+    <string name="invalid_last_name">Invalid last name</string>
+    <string name="user_details_email">User email</string>
+    <string name="address">Address</string>
+    <string name="save_changes">Save changes</string>
+
+    <string-array name="dropdown_roles">
+        <item>Admin</item>
+        <item>Customer</item>
+    </string-array>
+
+    <string name="remove_user">Remove user</string>
+
 </resources>
