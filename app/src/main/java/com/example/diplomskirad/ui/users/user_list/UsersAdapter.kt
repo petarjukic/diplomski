@@ -8,8 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.diplomskirad.R
 import com.example.diplomskirad.model.User
 
-class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
-    private val userList: MutableList<User>
+class UsersAdapter(private val userList: ArrayList<User>) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.user_item, parent, false)
@@ -33,9 +32,5 @@ class UsersAdapter : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
             tvEmail = view.findViewById(R.id.user_email)
             tvRole = view.findViewById(R.id.user_role)
         }
-    }
-
-    init {
-        userList = ArrayList()
     }
 }

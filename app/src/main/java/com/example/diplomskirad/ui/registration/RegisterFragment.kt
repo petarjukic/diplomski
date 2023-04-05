@@ -46,8 +46,7 @@ class RegisterFragment : Fragment() {
         binding.btnRegister.setOnClickListener {
             if (checkInputFields()) {
                 // TODO register user into firebase and create user
-                findNavController().navigate(R.id.login_fragment)
-//                registerUser()
+                registerUser()
             }
         }
 
@@ -92,12 +91,12 @@ class RegisterFragment : Fragment() {
     }
 
     private fun checkInputFields(): Boolean {
-        if (binding.firstNameEditText.text.toString() != "") {
+        if (binding.firstNameEditText.text.toString() == "") {
             Toast.makeText(requireContext(), getString(R.string.invalid_first_name), Toast.LENGTH_SHORT).show()
             return false
         }
 
-        if (binding.lastNameEditText.text.toString() != "") {
+        if (binding.lastNameEditText.text.toString() == "") {
             Toast.makeText(requireContext(), getString(R.string.invalid_last_name), Toast.LENGTH_SHORT).show()
             return false
         }
@@ -127,6 +126,7 @@ class RegisterFragment : Fragment() {
     companion object {
         val TAG = RegisterFragment::class.java.simpleName
 
+        @JvmStatic
         fun newInstance(): RegisterFragment {
             val args = Bundle()
             val fragment = RegisterFragment()

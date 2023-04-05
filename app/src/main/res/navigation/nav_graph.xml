@@ -22,6 +22,22 @@
         app:popEnterAnim="@animator/nav_default_pop_enter_anim"
         app:popExitAnim="@animator/nav_default_pop_exit_anim" />
 
+    <action
+        android:id="@+id/goToUsersFragment"
+        app:destination="@+id/users_fragment"
+        app:enterAnim="@animator/nav_default_enter_anim"
+        app:exitAnim="@animator/nav_default_exit_anim"
+        app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+        app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+
+    <action
+        android:id="@+id/goToUserDetailsFragment"
+        app:destination="@+id/user_details_fragment"
+        app:enterAnim="@animator/nav_default_enter_anim"
+        app:exitAnim="@animator/nav_default_exit_anim"
+        app:popEnterAnim="@animator/nav_default_pop_enter_anim"
+        app:popExitAnim="@animator/nav_default_pop_exit_anim" />
+
 
     <fragment
         android:id="@+id/main_fragment"
@@ -33,6 +49,12 @@
         <action
             android:id="@+id/action_main_fragment_to_login_fragment"
             app:destination="@id/login_fragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_register_fragment"
+            app:destination="@id/register_fragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_usersFragment"
+            app:destination="@id/users_fragment" />
     </fragment>
 
     <fragment
@@ -53,4 +75,19 @@
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
 
+    <fragment
+        android:id="@+id/users_fragment"
+        android:name="com.example.diplomskirad.ui.users.user_list.UsersFragment"
+        android:label="fragment_users"
+        tools:layout="@layout/fragment_users" >
+        <action
+            android:id="@+id/action_users_fragment_to_userDetailsFragment"
+            app:destination="@id/user_details_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/user_details_fragment"
+        android:name="com.example.diplomskirad.ui.users.user_details.UserDetailsFragment"
+        android:label="fragment_user_details"
+        tools:layout="@layout/fragment_user_details" />
 </navigation>

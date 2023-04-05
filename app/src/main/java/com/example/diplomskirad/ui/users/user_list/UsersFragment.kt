@@ -29,6 +29,7 @@ class UsersFragment : Fragment() {
     companion object {
         val TAG = UsersFragment::class.java.simpleName
 
+        @JvmStatic
         fun newInstance(): UsersFragment {
             val args = Bundle()
             val fragment = UsersFragment()

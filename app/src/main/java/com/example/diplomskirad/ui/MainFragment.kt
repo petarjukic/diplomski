@@ -1,13 +1,16 @@
 package com.example.diplomskirad.ui
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.example.diplomskirad.MainActivity
 import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentMainBinding
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -33,15 +36,30 @@ class MainFragment : Fragment() {
     private fun setUI() {
         if (isSignedIn) {
             binding.login.visibility = View.GONE
+            binding.userList.visibility = View.VISIBLE
+            binding.logout.visibility = View.VISIBLE
         } else {
             binding.login.visibility = View.VISIBLE
-
+            binding.userList.visibility = View.VISIBLE //TODO set visibility to GONE
+            binding.logout.visibility = View.VISIBLE //TODO set visibility to GONE
         }
     }
 
     private fun setupListener() {
         binding.login.setOnClickListener {
-            findNavController().navigate(R.id.goToLoginFragment)
+            findNavController().navigate(R.id.login_fragment)
+        }
+
+        binding.userList.setOnClickListener{
+            findNavController().navigate(R.id.users_fragment)
+        }
+
+        binding.logout.setOnClickListener {
+            FirebaseAuth.getInstance().signOut()
+
+            requireActivity().finish()
+            requireActivity().startActivity(Intent(context, MainActivity::class.java))
+            requireActivity().finishAffinity()
         }
     }
 
@@ -64,6 +82,7 @@ class MainFragment : Fragment() {
     companion object {
         val TAG = MainFragment::class.java.simpleName
 
+        @JvmStatic
         fun newInstance(): MainFragment {
             val args = Bundle()
             val fragment = MainFragment()

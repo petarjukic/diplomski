@@ -11,6 +11,8 @@ import androidx.navigation.fragment.findNavController
 import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentLoginBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
     private var _binding: FragmentLoginBinding? = null
@@ -26,6 +28,11 @@ class LoginFragment : Fragment() {
 
         setupClickListeners()
         return binding.root
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = Firebase.auth
     }
 
     private fun setupClickListeners() {
@@ -62,8 +69,7 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("provjera", "signInWithEmail:success ${auth.currentUser}")
-                    val user = auth.currentUser
-//                    updateUI(user)
+                    findNavController().navigate(R.id.main_fragment)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w("provjera", "signInWithEmail:failure", task.exception)
@@ -83,6 +89,7 @@ class LoginFragment : Fragment() {
     companion object {
         val TAG = LoginFragment::class.java.simpleName
 
+        @JvmStatic
         fun newInstance(): LoginFragment {
             val args = Bundle()
             val fragment = LoginFragment()

@@ -84,7 +84,7 @@
                 android:layout_marginTop="50dp"
                 android:fontFamily="sans-serif"
                 android:hint="@string/password"
-                android:inputType="textEmailAddress"
+                android:inputType="textPassword"
                 android:lineSpacingExtra="3sp"
                 android:paddingStart="16dp"
                 android:paddingBottom="18dp"
