@@ -1,7 +1,6 @@
 package com.example.diplomskirad.ui.users.user_details
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,22 +8,25 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentUserDetailsBinding
-import com.example.diplomskirad.model.User
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 
 
 class UserDetailsFragment : Fragment() {
     private var _binding: FragmentUserDetailsBinding? = null
     private val binding get() = _binding!!
 
+    private lateinit var database: DatabaseReference
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentUserDetailsBinding.inflate(inflater, container, false)
+
+        database.addValueEventListener(postListener)
 
         setUI()
         setupListener()
@@ -41,26 +43,21 @@ class UserDetailsFragment : Fragment() {
 
     }
 
-    val postListener = object : ValueEventListener {
+    private val postListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-            // Get Post object and use the values to update the UI
-            val post = dataSnapshot.getValue<User>()
-            // ...
+
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
-            // Getting Post failed, log a message
-            Log.d("provjera", "loadPost:onCancelled", databaseError.toException())
+
         }
     }
-//    postReference.addValueEventListener(postListener)
 
     private fun setupListener() {
         binding.btnUpdateUser.setOnClickListener {
             if (checkFields()) {
                 updateUser()
                 findNavController().navigate(R.id.main_fragment)
-
             }
         }
     }
@@ -83,6 +80,7 @@ class UserDetailsFragment : Fragment() {
     companion object {
         val TAG = UserDetailsFragment::class.java.simpleName
 
+        @JvmStatic
         fun newInstance(): UserDetailsFragment {
             val args = Bundle()
             val fragment = UserDetailsFragment()

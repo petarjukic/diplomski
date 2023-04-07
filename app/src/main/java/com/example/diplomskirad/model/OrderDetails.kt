@@ -3,4 +3,4 @@ package com.example.diplomskirad.model
 import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
-data class OrderDetails(val orderId: String, val userId: String, val total: Float? = null)
+data class OrderDetails(val orderId: String? = null, val userId: String? = null, val total: Float? = null)

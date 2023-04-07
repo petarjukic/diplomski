@@ -4,11 +4,11 @@ import com.google.firebase.database.IgnoreExtraProperties
 
 @IgnoreExtraProperties
 data class User(
-    val id: String,
-    val firstName: String,
-    val lastName: String,
-    val email: String,
-    val password: String,
+    val id: String? = null,
+    val firstName: String? = null,
+    val lastName: String? = null,
+    val email: String? = null,
+    val password: String? = null,
     val address: String? = null,
-    val role: String
+    val role: String? = null
 )
