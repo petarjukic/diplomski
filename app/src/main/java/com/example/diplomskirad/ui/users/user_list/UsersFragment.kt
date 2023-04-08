@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentUsersBinding
 import com.example.diplomskirad.model.User
 import com.google.firebase.database.*
@@ -28,7 +30,7 @@ class UsersFragment : Fragment() {
 
         userList = ArrayList()
 
-        adapter = UsersAdapter(userList, context)
+        adapter = UsersAdapter(userList, this)
         val llm = LinearLayoutManager(requireContext())
         llm.orientation = LinearLayoutManager.VERTICAL
         binding.rcAllUsers.layoutManager = llm
@@ -38,18 +40,26 @@ class UsersFragment : Fragment() {
         return binding.root
     }
 
+    fun navigateToDetails(bundle: Bundle) {
+        findNavController().navigate(R.id.user_details_fragment, bundle)
+    }
+
+    fun removeUser(userId: String?) {
+        database.child("${userId}/isRemoved").setValue(true)
+    }
+
     private val postListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             for (child in dataSnapshot.children) {
                 val value: User? = child.getValue(User::class.java)
 
-                if (value != null) {
+                if (value != null && !value.isRemoved) {
                     userList?.add(value)
                 }
             }
 
             adapter?.notifyDataSetChanged()
-            binding.loading.visibility = View.GONE
+//            binding.loading.visibility = View.GONE
         }
 
         override fun onCancelled(databaseError: DatabaseError) {

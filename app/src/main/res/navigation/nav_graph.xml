@@ -79,7 +79,7 @@
         android:id="@+id/users_fragment"
         android:name="com.example.diplomskirad.ui.users.user_list.UsersFragment"
         android:label="fragment_users"
-        tools:layout="@layout/fragment_users" >
+        tools:layout="@layout/fragment_users">
         <action
             android:id="@+id/action_users_fragment_to_userDetailsFragment"
             app:destination="@id/user_details_fragment" />
@@ -89,5 +89,12 @@
         android:id="@+id/user_details_fragment"
         android:name="com.example.diplomskirad.ui.users.user_details.UserDetailsFragment"
         android:label="fragment_user_details"
-        tools:layout="@layout/fragment_user_details" />
+        tools:layout="@layout/fragment_user_details">
+
+        <argument
+            android:name="selectedUserId"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+    </fragment>
 </navigation>

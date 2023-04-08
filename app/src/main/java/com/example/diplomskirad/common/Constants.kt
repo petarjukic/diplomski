@@ -4,4 +4,5 @@ class Constants {
 
     val DEFAULT_ROLE = "customer"
     val ADMIN_ROLE = "admin"
+    val SELECTED_USER_ID_TAG = "selectedUserId"
 }

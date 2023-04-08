@@ -10,5 +10,6 @@ data class User(
     val email: String? = null,
     val password: String? = null,
     val address: String? = null,
-    val role: String? = null
+    val role: String? = null,
+    val isRemoved: Boolean = false
 )

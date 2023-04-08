@@ -1,11 +1,10 @@
-package com.example.diplomskirad.ui.product_details
+package com.example.diplomskirad.ui.products.product_details
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.diplomskirad.R
+import androidx.fragment.app.Fragment
 import com.example.diplomskirad.databinding.FragmentProductDetailsBinding
 
 class ProductDetailsFragment : Fragment() {
@@ -22,7 +21,7 @@ class ProductDetailsFragment : Fragment() {
     }
 
     companion object {
-       val TAG = ProductDetailsFragment::class.java.simpleName
+        val TAG = ProductDetailsFragment::class.java.simpleName
 
         fun newInstance(): ProductDetailsFragment {
             val args = Bundle()

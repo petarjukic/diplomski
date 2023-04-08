@@ -18,6 +18,11 @@
                       <LayoutPositions />
                     </value>
                   </entry>
+                  <entry key="goToUserDetailsFragment">
+                    <value>
+                      <LayoutPositions />
+                    </value>
+                  </entry>
                   <entry key="goToUsersFragment">
                     <value>
                       <LayoutPositions />
@@ -80,20 +85,20 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="456" />
-                            <option name="y" value="34" />
+                            <option name="x" value="507" />
+                            <option name="y" value="-73" />
                           </Point>
                         </option>
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="userDetailsFragment">
+                  <entry key="user_details_fragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="369" />
-                            <option name="y" value="352" />
+                            <option name="x" value="400" />
+                            <option name="y" value="236" />
                           </Point>
                         </option>
                       </LayoutPositions>

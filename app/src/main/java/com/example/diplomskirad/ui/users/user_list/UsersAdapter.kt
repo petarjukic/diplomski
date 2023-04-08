@@ -1,16 +1,21 @@
 package com.example.diplomskirad.ui.users.user_list
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diplomskirad.R
+import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.model.User
 
-class UsersAdapter(private val userList: List<User>?, private val context: Context?) :
+
+class UsersAdapter(
+    private val userList: List<User>?,
+    private val fragment: UsersFragment
+) :
     RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -30,20 +35,17 @@ class UsersAdapter(private val userList: List<User>?, private val context: Conte
 
     private fun setListener(holder: ViewHolder, position: Int) {
         holder.btnRemoveUser.setOnClickListener {
-            removeUser(userList?.get(position))
+            fragment.removeUser(userList?.get(position)?.id)
         }
 
         holder.tvEmail.setOnClickListener {
-            goToUserDetails()
+            goToUserDetails(userList?.get(position))
         }
     }
 
-    private fun goToUserDetails() {
-
-    }
-
-    private fun removeUser(user: User?) {
-        //TODO implement hiding user
+    private fun goToUserDetails(user: User?) {
+        val bundle = bundleOf(Constants().SELECTED_USER_ID_TAG to user?.id)
+        fragment.navigateToDetails(bundle)
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
