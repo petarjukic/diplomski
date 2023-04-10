@@ -53,8 +53,8 @@
             android:id="@+id/action_main_fragment_to_register_fragment"
             app:destination="@id/register_fragment" />
         <action
-            android:id="@+id/action_main_fragment_to_usersFragment"
-            app:destination="@id/users_fragment" />
+            android:id="@+id/action_main_fragment_to_adminActionsFragment"
+            app:destination="@id/admin_actions_fragment" />
     </fragment>
 
     <fragment
@@ -97,4 +97,23 @@
             android:defaultValue="@null"
             app:nullable="true" />
     </fragment>
+
+    <fragment
+        android:id="@+id/admin_actions_fragment"
+        android:name="com.example.diplomskirad.ui.AdminActionsFragment"
+        android:label="fragment_admin_actions"
+        tools:layout="@layout/fragment_admin_actions">
+        <action
+            android:id="@+id/action_adminActionsFragment_to_users_fragment"
+            app:destination="@id/users_fragment" />
+        <action
+            android:id="@+id/action_adminActionsFragment_to_categoryListFragment"
+            app:destination="@id/category_list_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/category_list_fragment"
+        android:name="com.example.diplomskirad.ui.category.CategoryListFragment"
+        android:label="fragment_category_list"
+        tools:layout="@layout/fragment_category_list" />
 </navigation>

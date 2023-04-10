@@ -20,6 +20,13 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     private var isSignedIn: Boolean = false
+    private lateinit var auth: FirebaseAuth
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = Firebase.auth
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,8 +57,8 @@ class MainFragment : Fragment() {
             findNavController().navigate(R.id.login_fragment)
         }
 
-        binding.userList.setOnClickListener{
-            findNavController().navigate(R.id.users_fragment)
+        binding.userList.setOnClickListener {
+            findNavController().navigate(R.id.admin_actions_fragment)
         }
 
         binding.logout.setOnClickListener {
