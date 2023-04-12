@@ -51,12 +51,12 @@ class UserDetailsFragment : Fragment() {
         binding.registerEmailEditText.setText(selectedUser?.email)
         binding.addressEditText.setText(selectedUser?.address)
 
-        if (selectedUser?.role?.lowercase(Locale.ROOT) == Constants().DEFAULT_ROLE) {
+        roleToUpdate = if (selectedUser?.role?.lowercase(Locale.ROOT) == Constants().DEFAULT_ROLE) {
             binding.userRoleDropdown.setSelection(1)
-            roleToUpdate = Constants().ADMIN_ROLE
+            Constants().ADMIN_ROLE
         } else {
             binding.userRoleDropdown.setSelection(0)
-            roleToUpdate = Constants().DEFAULT_ROLE
+            Constants().DEFAULT_ROLE
         }
     }
 

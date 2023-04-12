@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentCategoryListBinding
 import com.example.diplomskirad.model.Category
 import com.google.firebase.database.*
@@ -23,7 +25,6 @@ class CategoryListFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         database = FirebaseDatabase.getInstance().getReference("category")
-        categoryList = ArrayList()
     }
 
     override fun onCreateView(
@@ -32,11 +33,18 @@ class CategoryListFragment : Fragment() {
     ): View {
         _binding = FragmentCategoryListBinding.inflate(inflater, container, false)
 
+        categoryList = ArrayList()
+
         val llm = LinearLayoutManager(requireContext())
+        adapter = CategoryAdapter(categoryList, this)
         llm.orientation = LinearLayoutManager.VERTICAL
         binding.rcCategoryList.layoutManager = llm
         binding.rcCategoryList.adapter = adapter
         database.addValueEventListener(postListener)
+
+        binding.btnAddCategory.setOnClickListener {
+            findNavController().navigate(R.id.add_category_fragment)
+        }
 
         return binding.root
     }
@@ -64,8 +72,13 @@ class CategoryListFragment : Fragment() {
         database.child("${categoryId}/isRemoved").setValue(true)
     }
 
+    fun navigateToDetails(bundle: Bundle) {
+        findNavController().navigate(R.id.updateCategoryFragment, bundle)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
+        adapter = null
         _binding = null
     }
 

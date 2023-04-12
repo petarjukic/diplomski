@@ -109,11 +109,54 @@
         <action
             android:id="@+id/action_adminActionsFragment_to_categoryListFragment"
             app:destination="@id/category_list_fragment" />
+        <action
+            android:id="@+id/action_admin_actions_fragment_to_addProductFragment"
+            app:destination="@id/addProductFragment" />
     </fragment>
 
     <fragment
         android:id="@+id/category_list_fragment"
         android:name="com.example.diplomskirad.ui.category.CategoryListFragment"
         android:label="fragment_category_list"
-        tools:layout="@layout/fragment_category_list" />
+        tools:layout="@layout/fragment_category_list" >
+        <action
+            android:id="@+id/action_category_list_fragment_to_addCategoryFragment"
+            app:destination="@id/add_category_fragment" />
+        <action
+            android:id="@+id/action_category_list_fragment_to_updateCategoryFragment"
+            app:destination="@id/updateCategoryFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/add_category_fragment"
+        android:name="com.example.diplomskirad.ui.category.add_category.AddCategoryFragment"
+        android:label="fragment_add_category"
+        tools:layout="@layout/fragment_add_category" >
+        <action
+            android:id="@+id/action_add_category_fragment_to_category_list_fragment"
+            app:destination="@id/category_list_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addProductFragment"
+        android:name="com.example.diplomskirad.ui.products.add_product.AddProductFragment"
+        android:label="fragment_add_product"
+        tools:layout="@layout/fragment_add_product" >
+        <action
+            android:id="@+id/action_addProductFragment_to_admin_actions_fragment"
+            app:destination="@id/admin_actions_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateCategoryFragment"
+        android:name="com.example.diplomskirad.ui.category.update_category.UpdateCategoryFragment"
+        android:label="fragment_update_category"
+        tools:layout="@layout/fragment_update_category" >
+        <action
+            android:id="@+id/action_updateCategoryFragment_to_category_list_fragment"
+            app:destination="@id/category_list_fragment" />
+        <argument
+            android:name="selectedCategoryId"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+    </fragment>
 </navigation>

@@ -8,18 +8,18 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
-                  <entry key="adminActionsFragment">
+                  <entry key="addProductFragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-33" />
-                            <option name="y" value="232" />
+                            <option name="x" value="-316" />
+                            <option name="y" value="-57" />
                           </Point>
                         </option>
                         <option name="myPositions">
                           <map>
-                            <entry key="action_adminActionsFragment_to_users_fragment">
+                            <entry key="action_addProductFragment_to_admin_actions_fragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -29,14 +29,80 @@
                       </LayoutPositions>
                     </value>
                   </entry>
-                  <entry key="categoryListFragment">
+                  <entry key="add_category_fragment">
                     <value>
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="155" />
-                            <option name="y" value="538" />
+                            <option name="x" value="302" />
+                            <option name="y" value="-37" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_add_category_fragment_to_category_list_fragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="admin_actions_fragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-117" />
+                            <option name="y" value="230" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_adminActionsFragment_to_categoryListFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_adminActionsFragment_to_users_fragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_admin_actions_fragment_to_addProductFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="category_list_fragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="17" />
+                            <option name="y" value="-127" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_category_list_fragment_to_addCategoryFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_category_list_fragment_to_updateCategoryFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -66,8 +132,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="256" />
-                            <option name="y" value="-134" />
+                            <option name="x" value="181" />
+                            <option name="y" value="-426" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -87,8 +153,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="-29" />
-                            <option name="y" value="-94" />
+                            <option name="x" value="-309" />
+                            <option name="y" value="-453" />
                           </Point>
                         </option>
                         <option name="myPositions">
@@ -108,11 +174,6 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
-                            <entry key="action_main_fragment_to_usersFragment">
-                              <value>
-                                <LayoutPositions />
-                              </value>
-                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -126,6 +187,27 @@
                             <option name="x" value="507" />
                             <option name="y" value="-73" />
                           </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="updateCategoryFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-334" />
+                            <option name="y" value="303" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_updateCategoryFragment_to_category_list_fragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -148,7 +230,7 @@
                         <option name="myPosition">
                           <Point>
                             <option name="x" value="180" />
-                            <option name="y" value="217" />
+                            <option name="y" value="269" />
                           </Point>
                         </option>
                         <option name="myPositions">

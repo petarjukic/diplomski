@@ -5,8 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import androidx.core.os.bundleOf
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diplomskirad.R
+import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.model.Category
 
 class CategoryAdapter(
@@ -27,6 +29,10 @@ class CategoryAdapter(
         holder.tvCategoryName.text = categoryList?.get(position)?.categoryName
         holder.btnRemoveItem.setOnClickListener {
             categoryList?.get(position)?.id?.let { it1 -> fragment.removeCategoryItem(it1) }
+        }
+        holder.tvCategoryName.setOnClickListener {
+            val bundle = bundleOf(Constants().SELECTED_CATEGORY_ID to categoryList?.get(position)?.id)
+            fragment.navigateToDetails(bundle)
         }
     }
 
