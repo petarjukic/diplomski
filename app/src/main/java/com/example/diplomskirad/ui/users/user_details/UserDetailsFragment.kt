@@ -13,8 +13,12 @@ import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.databinding.FragmentUserDetailsBinding
 import com.example.diplomskirad.model.User
-import com.google.firebase.database.*
-import java.util.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import java.util.Locale
 
 
 class UserDetailsFragment : Fragment() {
@@ -112,7 +116,7 @@ class UserDetailsFragment : Fragment() {
             database.child("${userId}/address").setValue(binding.addressEditText.text.toString())
         }
         database.child("${userId}/role").setValue(roleToUpdate)
-        findNavController().navigate(R.id.main_fragment)
+        findNavController().popBackStack()
     }
 
     override fun onDestroyView() {

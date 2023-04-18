@@ -6,13 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentAddCategoryBinding
 import com.example.diplomskirad.model.Category
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.util.*
+import java.util.UUID
 
 class AddCategoryFragment : Fragment() {
     private var _binding: FragmentAddCategoryBinding? = null
@@ -43,7 +42,7 @@ class AddCategoryFragment : Fragment() {
         val category = Category(uuid, binding.tvCategoryName.text.toString(), false)
         database.child("category").child(uuid).setValue(category)
 
-        findNavController().navigate(R.id.category_list_fragment)
+        findNavController().popBackStack()
     }
 
     companion object {

@@ -34,7 +34,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:gravity="center"
-                android:text="string/login_to_app_title"
+                android:textSize="18sp"
+                android:text="@string/admin_actions"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

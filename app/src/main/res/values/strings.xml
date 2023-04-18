@@ -33,5 +33,11 @@
     <string name="add_category">Add category</string>
     <string name="category_name">Category name</string>
     <string name="category">Category</string>
+    <string name="add_product">Add product</string>
+    <string name="product_name">Product name</string>
+    <string name="price">Price</string>
+    <string name="product_description">Product description</string>
+    <string name="image_url">Image URL</string>
+    <string name="admin_actions">Admin actions</string>
 
 </resources>

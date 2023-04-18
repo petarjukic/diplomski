@@ -83,7 +83,6 @@
                 android:layout_marginTop="50dp"
                 android:fontFamily="sans-serif"
                 android:hint="@string/address"
-                android:inputType="textEmailAddress"
                 android:lineSpacingExtra="3sp"
                 android:paddingStart="16dp"
                 android:paddingBottom="18dp"
