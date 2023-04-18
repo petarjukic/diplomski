@@ -6,5 +6,5 @@ import com.google.firebase.database.IgnoreExtraProperties
 data class Category(
     val id: String? = null,
     val categoryName: String? = null,
-    val isRemoved: Boolean = false
+    val removed: Boolean? = null
 )

@@ -11,7 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentCategoryListBinding
 import com.example.diplomskirad.model.Category
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+
 
 class CategoryListFragment : Fragment() {
     private var _binding: FragmentCategoryListBinding? = null
@@ -53,8 +58,7 @@ class CategoryListFragment : Fragment() {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             for (child in dataSnapshot.children) {
                 val value: Category? = child.getValue(Category::class.java)
-
-                if (value != null && !value.isRemoved) {
+                if (value != null && !value.removed!!) {
                     categoryList?.add(value)
                 }
             }
@@ -69,7 +73,9 @@ class CategoryListFragment : Fragment() {
     }
 
     fun removeCategoryItem(categoryId: String) {
-        database.child("${categoryId}/isRemoved").setValue(true)
+        database.child("${categoryId}/removed").setValue(true)
+
+        findNavController().navigate(R.id.category_list_fragment)
     }
 
     fun navigateToDetails(bundle: Bundle) {

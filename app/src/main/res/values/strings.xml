@@ -32,5 +32,6 @@
     <string name="user_list">User list</string>
     <string name="add_category">Add category</string>
     <string name="category_name">Category name</string>
+    <string name="category">Category</string>
 
 </resources>

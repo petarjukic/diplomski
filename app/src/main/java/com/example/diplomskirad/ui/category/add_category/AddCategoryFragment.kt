@@ -40,7 +40,7 @@ class AddCategoryFragment : Fragment() {
 
     private fun saveCategory() {
         val uuid = UUID.randomUUID().toString()
-        val category = Category(uuid, binding.tvCategoryName.text.toString())
+        val category = Category(uuid, binding.tvCategoryName.text.toString(), false)
         database.child("category").child(uuid).setValue(category)
 
         findNavController().navigate(R.id.category_list_fragment)
