@@ -27,6 +27,7 @@ class UsersAdapter(
     override fun getItemCount() = userList!!.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.setIsRecyclable(false)
         holder.tvEmail.text = userList?.get(position)?.email
         holder.tvRole.text = userList?.get(position)?.role
 

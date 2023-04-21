@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.databinding.FragmentUpdateCategoryBinding
 import com.example.diplomskirad.model.Category
@@ -33,6 +32,8 @@ class UpdateCategoryFragment : Fragment() {
     ): View {
         database = FirebaseDatabase.getInstance().getReference("category")
         _binding = FragmentUpdateCategoryBinding.inflate(inflater, container, false)
+        val args = this.arguments
+        categoryId = args?.getString(Constants().SELECTED_CATEGORY_ID)
         database.addValueEventListener(postListener)
 
         binding.btnUpdateCategory.setOnClickListener {
@@ -47,13 +48,10 @@ class UpdateCategoryFragment : Fragment() {
     private fun updateCategory() {
         database.child("${categoryId}/categoryName").setValue(binding.categoryNameEditText.text.toString())
 
-        findNavController().navigate(R.id.main_fragment)
+        findNavController().popBackStack()
     }
 
     private fun setUI() {
-        val args = this.arguments
-        categoryId = args?.getString(Constants().SELECTED_CATEGORY_ID)
-
         binding.categoryNameEditText.setText(selectedCategory?.categoryName)
     }
 

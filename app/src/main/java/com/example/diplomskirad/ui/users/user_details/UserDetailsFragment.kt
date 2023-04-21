@@ -38,6 +38,8 @@ class UserDetailsFragment : Fragment() {
     ): View {
         database = FirebaseDatabase.getInstance().getReference("users")
         _binding = FragmentUserDetailsBinding.inflate(inflater, container, false)
+        val args = this.arguments
+        userId = args?.getString(Constants().SELECTED_USER_ID_TAG)
         database.addValueEventListener(postListener)
 
         setupListener()
@@ -46,9 +48,6 @@ class UserDetailsFragment : Fragment() {
     }
 
     private fun setUI() {
-        val args = this.arguments
-        userId = args?.getString(Constants().SELECTED_USER_ID_TAG)
-
         binding.tvTitle.text = selectedUser?.email
         binding.firstNameEditText.setText(selectedUser?.firstName)
         binding.lastNameEditText.setText(selectedUser?.lastName)
@@ -109,6 +108,7 @@ class UserDetailsFragment : Fragment() {
     }
 
     private fun updateUser() {
+        roleToUpdate = binding.userRoleDropdown.selectedItem.toString()
         database.child("${userId}/email").setValue(binding.registerEmailEditText.text.toString())
         database.child("${userId}/firstName").setValue(binding.firstNameEditText.text.toString())
         database.child("${userId}/lastName").setValue(binding.lastNameEditText.text.toString())
@@ -121,7 +121,7 @@ class UserDetailsFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
+        database.removeEventListener(postListener)
         _binding = null
     }
 

@@ -64,7 +64,7 @@ class CategoryListFragment : Fragment() {
             }
 
             adapter?.notifyDataSetChanged()
-//            binding.loading.visibility = View.GONE
+            binding.loading.visibility = View.GONE
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
@@ -84,6 +84,8 @@ class CategoryListFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        categoryList?.clear()
+        database.removeEventListener(postListener)
         adapter = null
         _binding = null
     }

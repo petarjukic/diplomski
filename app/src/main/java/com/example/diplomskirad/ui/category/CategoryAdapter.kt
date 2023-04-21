@@ -26,6 +26,7 @@ class CategoryAdapter(
     override fun getItemCount() = categoryList!!.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.setIsRecyclable(false)
         holder.tvCategoryName.text = categoryList?.get(position)?.categoryName
         holder.btnRemoveItem.setOnClickListener {
             categoryList?.get(position)?.id?.let { it1 -> fragment.removeCategoryItem(it1) }

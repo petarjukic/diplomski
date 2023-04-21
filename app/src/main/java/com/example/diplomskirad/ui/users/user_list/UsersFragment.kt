@@ -11,7 +11,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentUsersBinding
 import com.example.diplomskirad.model.User
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class UsersFragment : Fragment() {
     private var _binding: FragmentUsersBinding? = null
@@ -59,7 +63,7 @@ class UsersFragment : Fragment() {
             }
 
             adapter?.notifyDataSetChanged()
-//            binding.loading.visibility = View.GONE
+            binding.loading.visibility = View.GONE
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
@@ -69,7 +73,9 @@ class UsersFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
+        userList = ArrayList()
+        database.removeEventListener(postListener)
+        adapter = null
         _binding = null
     }
 
