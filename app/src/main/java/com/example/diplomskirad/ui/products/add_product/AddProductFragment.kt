@@ -1,6 +1,7 @@
 package com.example.diplomskirad.ui.products.add_product
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,20 +13,18 @@ import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentAddProductBinding
 import com.example.diplomskirad.model.Category
 import com.example.diplomskirad.model.Product
+import com.example.diplomskirad.ui.base_bottom_sheet.BottomSheetFragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import java.util.UUID
 
 class AddProductFragment : Fragment() {
     private var _binding: FragmentAddProductBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var database: DatabaseReference
     private lateinit var categoryData: DatabaseReference
     private var categoryId: String? = null
     private var categoryList: MutableList<Category>? = null
@@ -34,11 +33,10 @@ class AddProductFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        database = Firebase.database.reference
         categoryData = FirebaseDatabase.getInstance().getReference("category")
         _binding = FragmentAddProductBinding.inflate(inflater, container, false)
         categoryList = ArrayList()
-        database.addValueEventListener(postListener)
+        categoryData.addValueEventListener(postListener)
 
         setListener()
 
@@ -62,9 +60,19 @@ class AddProductFragment : Fragment() {
 
     private fun setListener() {
         binding.btnAddProduct.setOnClickListener {
-            if (checkFields()) {
-                saveProduct()
+//            if (checkFields()) {
+//                saveProduct()
+//            }
+
+            val lista: MutableList<String> = mutableListOf()
+            if (categoryList != null) {
+                for (category in categoryList!!) {
+                    category.categoryName?.let { lista.add(it) }
+                }
             }
+            Log.d("provjera", "AAAa lisya ${categoryList?.size}")
+            val bottomFragment = BottomSheetFragment.newInstance(lista)
+            bottomFragment.show(childFragmentManager, BottomSheetFragment.TAG)
         }
 
         ArrayAdapter.createFromResource(
@@ -102,8 +110,15 @@ class AddProductFragment : Fragment() {
             binding.descriptionEditText.text.toString()
         )
 
-        database.child("product").child(uuid).setValue(product)
+        categoryData.child("product").child(uuid).setValue(product)
         findNavController().popBackStack()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        categoryList?.clear()
+        categoryData.removeEventListener(postListener)
+        _binding = null
     }
 
     companion object {
