@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentBottomSheetBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -14,11 +16,12 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     private val binding get() = _binding!!
 
     private var adapter: BottomSheetAdapter? = null
+    private var listener: BottomSheetListener? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentBottomSheetBinding.inflate(inflater, container, false)
 
-        adapter = BottomSheetAdapter(dataList)
+        adapter = BottomSheetAdapter(dataList, this)
         val llm = LinearLayoutManager(requireContext())
         val dividerItemDecoration = DividerItemDecoration(context, llm.orientation)
         llm.orientation = LinearLayoutManager.VERTICAL
@@ -27,6 +30,24 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
         binding.rvBottomSheet.adapter = adapter
 
         return binding.root
+    }
+
+    fun itemClicked(selectedItem: String, title: TextView) {
+        if (selectedData?.lowercase() == selectedItem.lowercase()) {
+            title.setTextColor(resources.getColor(R.color.black))
+        } else {
+            for (data in dataList) {
+                if (data.lowercase() == selectedItem.lowercase()) {
+                    title.setTextColor(resources.getColor(R.color.checked_item))
+                    listener?.onCategoryItemClicked(data)
+                    break
+                }
+            }
+        }
+    }
+
+    fun setListener(listener: BottomSheetListener) {
+        this.listener = listener
     }
 
     override fun onDestroyView() {
@@ -38,15 +59,21 @@ class BottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         val TAG = BottomSheetFragment::class.java.simpleName
         private var dataList: MutableList<String> = mutableListOf()
+        private var selectedData: String? = null
 
         @JvmStatic
-        fun newInstance(dataList: MutableList<String>): BottomSheetFragment {
+        fun newInstance(dataList: MutableList<String>, selectedData: String?): BottomSheetFragment {
             this.dataList = dataList
+            this.selectedData = selectedData
             val args = Bundle()
             val fragment = BottomSheetFragment()
             fragment.arguments = args
 
             return fragment
         }
+    }
+
+    interface BottomSheetListener {
+        fun onCategoryItemClicked(title: String)
     }
 }

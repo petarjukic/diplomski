@@ -9,7 +9,9 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.diplomskirad.R
+import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.databinding.FragmentLoginBinding
+import com.example.diplomskirad.service_manager.user_manager.UserManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -69,6 +71,8 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("provjera", "signInWithEmail:success ${auth.currentUser}")
+                    UserManager().setUser(binding.loginEmail.toString(), Constants().DEFAULT_ROLE)
+
                     findNavController().navigate(R.id.main_fragment)
                 } else {
                     // If sign in fails, display a message to the user.

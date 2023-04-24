@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diplomskirad.databinding.BottomSheetItemBinding
 
-class BottomSheetAdapter(private val dataList: MutableList<String>) :
+class BottomSheetAdapter(private val dataList: MutableList<String>, private val fragment: BottomSheetFragment) :
     RecyclerView.Adapter<BottomSheetAdapter.ItemViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -18,6 +18,10 @@ class BottomSheetAdapter(private val dataList: MutableList<String>) :
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         holder.binding.title.text = dataList[position]
+
+        holder.binding.root.setOnClickListener {
+            fragment.itemClicked(dataList[position], holder.binding.title)
+        }
     }
 
     class ItemViewHolder(val binding: BottomSheetItemBinding) : RecyclerView.ViewHolder(binding.root)

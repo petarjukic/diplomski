@@ -10,4 +10,5 @@
     <color name="grey">#888888</color>
     <color name="grey_light">#F0F0F0</color>
     <color name="remove_red">#E60606</color>
+    <color name="checked_item">#10BC17</color>
 </resources>

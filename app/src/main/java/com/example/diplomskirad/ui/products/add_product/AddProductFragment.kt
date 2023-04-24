@@ -1,15 +1,12 @@
 package com.example.diplomskirad.ui.products.add_product
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentAddProductBinding
 import com.example.diplomskirad.model.Category
 import com.example.diplomskirad.model.Product
@@ -21,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.UUID
 
-class AddProductFragment : Fragment() {
+class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener {
     private var _binding: FragmentAddProductBinding? = null
     private val binding get() = _binding!!
 
@@ -60,28 +57,28 @@ class AddProductFragment : Fragment() {
 
     private fun setListener() {
         binding.btnAddProduct.setOnClickListener {
-//            if (checkFields()) {
-//                saveProduct()
-//            }
-
-            val lista: MutableList<String> = mutableListOf()
-            if (categoryList != null) {
-                for (category in categoryList!!) {
-                    category.categoryName?.let { lista.add(it) }
-                }
+            if (checkFields()) {
+                saveProduct()
             }
-            Log.d("provjera", "AAAa lisya ${categoryList?.size}")
-            val bottomFragment = BottomSheetFragment.newInstance(lista)
-            bottomFragment.show(childFragmentManager, BottomSheetFragment.TAG)
         }
 
-        ArrayAdapter.createFromResource(
-            requireContext(),
-            R.array.dropdown_roles,
-            android.R.layout.simple_spinner_item,
-        ).also { adapter ->
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-            binding.categoryDropdown.adapter = adapter
+        binding.categoryDropdown.setOnClickListener {
+            val data: MutableList<String> = mutableListOf()
+            if (categoryList != null) {
+                for (category in categoryList!!) {
+                    category.categoryName?.let { data.add(it) }
+                }
+            }
+
+            val bottomFragment: BottomSheetFragment = if (binding.categoryDropdown.text.toString() != "") {
+                BottomSheetFragment.newInstance(data, binding.categoryDropdown.text.toString())
+
+            } else {
+                BottomSheetFragment.newInstance(data, null)
+            }
+
+            bottomFragment.show(childFragmentManager, BottomSheetFragment.TAG)
+            bottomFragment.setListener(this)
         }
     }
 
@@ -89,7 +86,8 @@ class AddProductFragment : Fragment() {
         if (binding.imageUrlEditText.text.toString() == "" ||
             binding.descriptionEditText.text.toString() == "" ||
             binding.priceEditText.text.toString() == "" ||
-            binding.productNameEditText.text.toString() == ""
+            binding.productNameEditText.text.toString() == "" ||
+            binding.categoryDropdown.text.toString() == ""
         ) {
             Toast.makeText(requireContext(), "Invalid input!", Toast.LENGTH_SHORT).show()
             return false
@@ -100,7 +98,8 @@ class AddProductFragment : Fragment() {
 
     private fun saveProduct() {
         val uuid = UUID.randomUUID().toString()
-        categoryId = binding.categoryDropdown.selectedItem.toString()
+        categoryId = binding.categoryDropdown.text.toString()
+
         val product = Product(
             uuid,
             binding.productNameEditText.text.toString(),
@@ -112,6 +111,10 @@ class AddProductFragment : Fragment() {
 
         categoryData.child("product").child(uuid).setValue(product)
         findNavController().popBackStack()
+    }
+
+    override fun onCategoryItemClicked(title: String) {
+        binding.categoryDropdown.text = title
     }
 
     override fun onDestroyView() {

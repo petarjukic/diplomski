@@ -13,6 +13,7 @@ import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.databinding.FragmentUserDetailsBinding
 import com.example.diplomskirad.model.User
+import com.example.diplomskirad.service_manager.user_manager.UserManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -51,7 +52,7 @@ class UserDetailsFragment : Fragment() {
         binding.tvTitle.text = selectedUser?.email
         binding.firstNameEditText.setText(selectedUser?.firstName)
         binding.lastNameEditText.setText(selectedUser?.lastName)
-        binding.registerEmailEditText.setText(selectedUser?.email)
+        binding.emailEditText.setText(selectedUser?.email)
         binding.addressEditText.setText(selectedUser?.address)
 
         roleToUpdate = if (selectedUser?.role?.lowercase(Locale.ROOT) == Constants().DEFAULT_ROLE) {
@@ -99,7 +100,7 @@ class UserDetailsFragment : Fragment() {
     private fun checkFields(): Boolean {
         if (binding.firstNameEditText.text.toString() == "" ||
             binding.lastNameEditText.text.toString() == "" ||
-            binding.registerEmailEditText.text.toString() == ""
+            binding.emailEditText.text.toString() == ""
         ) {
             Toast.makeText(requireContext(), "Invalid input!", Toast.LENGTH_SHORT).show()
             return false
@@ -109,13 +110,19 @@ class UserDetailsFragment : Fragment() {
 
     private fun updateUser() {
         roleToUpdate = binding.userRoleDropdown.selectedItem.toString()
-        database.child("${userId}/email").setValue(binding.registerEmailEditText.text.toString())
+        database.child("${userId}/email").setValue(binding.emailEditText.text.toString())
         database.child("${userId}/firstName").setValue(binding.firstNameEditText.text.toString())
         database.child("${userId}/lastName").setValue(binding.lastNameEditText.text.toString())
         if (binding.addressEditText.text.toString() != "") {
             database.child("${userId}/address").setValue(binding.addressEditText.text.toString())
         }
         database.child("${userId}/role").setValue(roleToUpdate)
+        if (roleToUpdate != null) {
+            UserManager().setUser(binding.emailEditText.text.toString(), roleToUpdate!!)
+        } else {
+            UserManager().setUser(binding.emailEditText.text.toString(), Constants().DEFAULT_ROLE)
+        }
+
         findNavController().popBackStack()
     }
 
