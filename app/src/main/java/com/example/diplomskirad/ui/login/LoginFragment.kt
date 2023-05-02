@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
+import com.example.diplomskirad.common.preferences.LoginSharedPreferences
 import com.example.diplomskirad.databinding.FragmentLoginBinding
 import com.example.diplomskirad.service_manager.user_manager.UserManager
 import com.google.firebase.auth.FirebaseAuth
@@ -21,6 +22,7 @@ class LoginFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
+    private var sharedPreferences: LoginSharedPreferences? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -28,6 +30,7 @@ class LoginFragment : Fragment() {
     ): View {
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
+        sharedPreferences = LoginSharedPreferences(requireContext())
         setupClickListeners()
         return binding.root
     }
@@ -65,18 +68,27 @@ class LoginFragment : Fragment() {
         return true
     }
 
+    private fun getUser(): String {
+
+        return ""
+    }
+
     private fun loginUser() {
+        val role = getUser()
+
         auth.signInWithEmailAndPassword(binding.loginEmail.text.toString(), binding.loginPassword.text.toString())
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d("provjera", "signInWithEmail:success ${auth.currentUser}")
                     UserManager().setUser(binding.loginEmail.toString(), Constants().DEFAULT_ROLE)
+                    sharedPreferences?.saveEmail(binding.loginEmail.text.toString())
+                    sharedPreferences?.saveRole(role)
 
                     findNavController().navigate(R.id.main_fragment)
                 } else {
                     // If sign in fails, display a message to the user.
-                    Log.w("provjera", "signInWithEmail:failure", task.exception)
+                    Log.d("provjera", "signInWithEmail:failure", task.exception)
                     Toast.makeText(
                         requireContext(), "Authentication failed.",
                         Toast.LENGTH_SHORT

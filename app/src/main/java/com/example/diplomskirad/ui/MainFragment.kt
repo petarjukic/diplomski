@@ -2,6 +2,7 @@ package com.example.diplomskirad.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.diplomskirad.MainActivity
 import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentMainBinding
+import com.example.diplomskirad.service_manager.user_manager.UserManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -36,6 +38,8 @@ class MainFragment : Fragment() {
         checkIsUserSignedIn()
         setUI()
         setupListener()
+
+        Log.d("provjera", "user manager user logiran ${UserManager().username}")
 
         return binding.root
     }
