@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplomskirad.R
@@ -58,7 +59,7 @@ class CartFragment : Fragment(), IProductLoadListener {
         }
 
         binding.btnHomeScreen.setOnClickListener {
-            // TODO navigate to the home screen
+            findNavController().popBackStack()
         }
     }
 
@@ -106,6 +107,8 @@ class CartFragment : Fragment(), IProductLoadListener {
     }
 
     override fun onError(message: String?) {
+        binding.emptyCartScreen.visibility = View.VISIBLE
+        binding.cartScreen.visibility = View.GONE
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 

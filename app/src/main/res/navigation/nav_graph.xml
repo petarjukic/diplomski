@@ -41,7 +41,7 @@
 
     <fragment
         android:id="@+id/main_fragment"
-        android:name="com.example.diplomskirad.ui.MainFragment"
+        android:name="com.example.diplomskirad.ui.home_screen.MainFragment"
         app:enterAnim="@animator/nav_default_enter_anim"
         app:exitAnim="@animator/nav_default_exit_anim"
         app:popEnterAnim="@animator/nav_default_pop_enter_anim"
@@ -58,6 +58,9 @@
         <action
             android:id="@+id/action_main_fragment_to_cartFragment"
             app:destination="@id/cartFragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_register_fragment2"
+            app:destination="@id/register_fragment" />
     </fragment>
 
     <fragment
@@ -166,5 +169,9 @@
         android:id="@+id/cartFragment"
         android:name="com.example.diplomskirad.ui.cart_screen.CartFragment"
         android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" />
+        tools:layout="@layout/fragment_cart" >
+        <action
+            android:id="@+id/action_cartFragment_to_main_fragment"
+            app:destination="@id/main_fragment" />
+    </fragment>
 </navigation>
