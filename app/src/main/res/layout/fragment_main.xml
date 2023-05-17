@@ -1,35 +1,153 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
     tools:context=".ui.MainFragment">
 
-    <!-- TODO DELETE LATER   -->
-    <Button
-        android:id="@+id/login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Login Fragment"
-        android:layout_margin="10dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="347dp"
+        android:layout_height="42dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="40dp"
+        android:iconifiedByDefault="false"
+        android:padding="4dp"
+        android:queryHint="Search"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/user_list"
-        android:layout_width="120dp"
-        android:layout_height="70dp"
-        android:text="Admin actions"
-        android:layout_margin="120dp" />
+    <FrameLayout
+        android:id="@+id/shopping_frame"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/search_view"
+        app:layout_constraintTop_toTopOf="parent">
 
-    <Button
-        android:id="@+id/logout"
-        android:layout_width="110dp"
-        android:layout_height="70dp"
-        android:text="Log out"
-        android:layout_margin="220dp" />
+        <ImageView
+            android:id="@+id/shopping_cart"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_shopping_cart" />
 
-</FrameLayout>
+        <com.nex3z.notificationbadge.NotificationBadge
+            android:id="@+id/badge"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginLeft="10dp"
+            app:nbMaxTextLength="2" />
+    </FrameLayout>
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent">-->
+
+    <!--        <FrameLayout-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:layout_weight="3">-->
+
+    <!--            <ImageView-->
+    <!--                android:id="@+id/shopping_cart"-->
+    <!--                android:layout_width="wrap_content"-->
+    <!--                android:layout_height="wrap_content"-->
+    <!--                android:layout_gravity="center_vertical"-->
+    <!--                android:src="@drawable/ic_shopping_cart" />-->
+
+    <!--            <com.nex3z.notificationbadge.NotificationBadge-->
+    <!--                android:id="@+id/badge"-->
+    <!--                android:layout_width="30dp"-->
+    <!--                android:layout_height="30dp"-->
+    <!--                android:layout_marginLeft="10dp"-->
+    <!--                app:nbMaxTextLength="2" />-->
+    <!--        </FrameLayout>-->
+    <!--    </LinearLayout>-->
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginLeft="15dp"-->
+    <!--        android:layout_marginRight="15dp"-->
+    <!--        android:orientation="horizontal"-->
+    <!--        android:padding="10dp">-->
+
+    <!--        <ImageView-->
+    <!--            android:layout_width="20dp"-->
+    <!--            android:layout_height="20dp"-->
+    <!--            android:layout_marginTop="6dp"-->
+    <!--            android:src="@drawable/ic_search_icon" />-->
+
+    <!--    </LinearLayout>-->
+    <!--    -->
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="?android:attr/actionBarSize"-->
+    <!--        android:weightSum="16"-->
+    <!--        android:orientation="horizontal">-->
+
+    <!--        <ImageView-->
+    <!--            android:layout_width="0dp"-->
+    <!--            android:layout_height="wrap_content"-->
+    <!--            android:layout_weight="2"-->
+    <!--            android:src="@drawable/ic_shopping_cart"-->
+    <!--            android:layout_gravity="start|center_vertical" />-->
+    <!--    </LinearLayout>-->
+
+    <!--    <LinearLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:orientation="vertical">-->
+
+    <!--        <LinearLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="125dp"-->
+    <!--            android:background="#f9f9f9"-->
+    <!--            android:orientation="vertical">-->
+
+    <!--            -->
+    <!--        </LinearLayout>-->
+    <!--        <ScrollView-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="match_parent"-->
+    <!--            android:scrollbars="vertical">-->
+
+    <!--        </ScrollView>-->
+
+    <!--    </LinearLayout>-->
+
+    <!--    &lt;!&ndash; TODO DELETE LATER   &ndash;&gt;-->
+    <!--    <Button-->
+    <!--        android:id="@+id/login"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_margin="10dp"-->
+    <!--        android:text="Login Fragment"-->
+    <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/user_list"-->
+    <!--        android:layout_width="120dp"-->
+    <!--        android:layout_height="70dp"-->
+    <!--        android:layout_margin="120dp"-->
+    <!--        android:text="Admin actions" />-->
+
+    <!--    <Button-->
+    <!--        android:id="@+id/logout"-->
+    <!--        android:layout_width="110dp"-->
+    <!--        android:layout_height="70dp"-->
+    <!--        android:layout_margin="220dp"-->
+    <!--        android:text="Log out" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>

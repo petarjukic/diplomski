@@ -1,6 +1,7 @@
 package com.example.diplomskirad.ui.users.user_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,8 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplomskirad.R
+import com.example.diplomskirad.common.preferences.LoginSharedPreferences
 import com.example.diplomskirad.databinding.FragmentUsersBinding
 import com.example.diplomskirad.model.User
+import com.example.diplomskirad.service_manager.user_manager.UserManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -24,6 +27,7 @@ class UsersFragment : Fragment() {
     private var adapter: UsersAdapter? = null
     private lateinit var database: DatabaseReference
     private var userList: MutableList<User>? = null
+    private var sharedPreferences: LoginSharedPreferences? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,6 +37,9 @@ class UsersFragment : Fragment() {
         _binding = FragmentUsersBinding.inflate(inflater, container, false)
 
         userList = ArrayList()
+        sharedPreferences = LoginSharedPreferences(requireContext())
+
+        Log.d("provjera", "AAA ov je user ${sharedPreferences?.getEmail()}")
 
         adapter = UsersAdapter(userList, this)
         val llm = LinearLayoutManager(requireContext())
