@@ -45,5 +45,7 @@
     <string name="total_items">Total items</string>
     <string name="total_price">Total price</string>
     <string name="checkout">Checkout</string>
+    <string name="logout">Logout</string>
+    <string name="change_password">Change password</string>
 
 </resources>

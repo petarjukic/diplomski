@@ -83,7 +83,7 @@
 
     <fragment
         android:id="@+id/users_fragment"
-        android:name="com.example.diplomskirad.ui.users.user_list.UsersFragment"
+        android:name="com.example.diplomskirad.ui.user.user_list.UsersFragment"
         android:label="fragment_users"
         tools:layout="@layout/fragment_users">
         <action
@@ -93,7 +93,7 @@
 
     <fragment
         android:id="@+id/user_details_fragment"
-        android:name="com.example.diplomskirad.ui.users.user_details.UserDetailsFragment"
+        android:name="com.example.diplomskirad.ui.user.user_details.UserDetailsFragment"
         android:label="fragment_user_details"
         tools:layout="@layout/fragment_user_details">
 
@@ -124,7 +124,7 @@
         android:id="@+id/category_list_fragment"
         android:name="com.example.diplomskirad.ui.category.CategoryListFragment"
         android:label="fragment_category_list"
-        tools:layout="@layout/fragment_category_list" >
+        tools:layout="@layout/fragment_category_list">
         <action
             android:id="@+id/action_category_list_fragment_to_addCategoryFragment"
             app:destination="@id/add_category_fragment" />
@@ -137,7 +137,7 @@
         android:id="@+id/add_category_fragment"
         android:name="com.example.diplomskirad.ui.category.add_category.AddCategoryFragment"
         android:label="fragment_add_category"
-        tools:layout="@layout/fragment_add_category" >
+        tools:layout="@layout/fragment_add_category">
         <action
             android:id="@+id/action_add_category_fragment_to_category_list_fragment"
             app:destination="@id/category_list_fragment" />
@@ -146,7 +146,7 @@
         android:id="@+id/addProductFragment"
         android:name="com.example.diplomskirad.ui.products.add_product.AddProductFragment"
         android:label="fragment_add_product"
-        tools:layout="@layout/fragment_add_product" >
+        tools:layout="@layout/fragment_add_product">
         <action
             android:id="@+id/action_addProductFragment_to_admin_actions_fragment"
             app:destination="@id/admin_actions_fragment" />
@@ -155,7 +155,7 @@
         android:id="@+id/updateCategoryFragment"
         android:name="com.example.diplomskirad.ui.category.update_category.UpdateCategoryFragment"
         android:label="fragment_update_category"
-        tools:layout="@layout/fragment_update_category" >
+        tools:layout="@layout/fragment_update_category">
         <action
             android:id="@+id/action_updateCategoryFragment_to_category_list_fragment"
             app:destination="@id/category_list_fragment" />
@@ -169,7 +169,7 @@
         android:id="@+id/cartFragment"
         android:name="com.example.diplomskirad.ui.cart_screen.CartFragment"
         android:label="fragment_cart"
-        tools:layout="@layout/fragment_cart" >
+        tools:layout="@layout/fragment_cart">
         <action
             android:id="@+id/action_cartFragment_to_main_fragment"
             app:destination="@id/main_fragment" />

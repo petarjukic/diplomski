@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.users.user_list.UsersFragment">
+    tools:context=".ui.user.user_list.UsersFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_all_users"

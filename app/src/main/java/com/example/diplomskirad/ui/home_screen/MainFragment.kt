@@ -12,6 +12,7 @@ import com.example.diplomskirad.MainActivity
 import com.example.diplomskirad.R
 import com.example.diplomskirad.common.preferences.LoginSharedPreferences
 import com.example.diplomskirad.databinding.FragmentMainBinding
+import com.example.diplomskirad.model.Product
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -23,6 +24,7 @@ class MainFragment : Fragment() {
     private var isSignedIn: Boolean = false
     private lateinit var auth: FirebaseAuth
     private var sharedPreferences: LoginSharedPreferences? = null
+    private var productList: MutableList<Product>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +47,12 @@ class MainFragment : Fragment() {
 
     private fun setUI() {
         val userList: MutableList<String> = ArrayList()
+        val productAdapter = productList?.let { ProductAdapter(it) }
+
+        val layout = LinearLayoutManager(requireContext())
+        layout.orientation = LinearLayoutManager.VERTICAL
+        binding.rvProduct.layoutManager = layout
+        binding.rvProduct.adapter = productAdapter
 
         if (!isSignedIn) {
             userList.add("Login")
@@ -54,28 +62,17 @@ class MainFragment : Fragment() {
             userList.add("Admin actions")
         }
 
+        userList.add("Profile")
+
         val adapter = UserActionsAdapter(userList, this)
         val llm = LinearLayoutManager(requireContext())
         llm.orientation = LinearLayoutManager.HORIZONTAL
         binding.rvUserActions.layoutManager = llm
         binding.rvUserActions.adapter = adapter
-
-//        if (isSignedIn) {
-//            if (sharedPreferences?.getRole() == Constants().ADMIN_ROLE) {
-//                binding.userList.visibility = View.VISIBLE
-//            }
-//            binding.login.visibility = View.GONE
-//            binding.userList.visibility = View.VISIBLE //TODO delete in future
-//            binding.logout.visibility = View.VISIBLE
-//        } else {
-//            binding.login.visibility = View.VISIBLE
-//            binding.userList.visibility = View.VISIBLE //TODO set visibility to GONE
-//            binding.logout.visibility = View.VISIBLE //TODO set visibility to GONE
-//        }
     }
 
     fun logoutUser() {
-        if(isSignedIn) {
+        if (isSignedIn) {
             FirebaseAuth.getInstance().signOut()
             requireActivity().finish()
             requireActivity().startActivity(Intent(context, MainActivity::class.java))
@@ -86,11 +83,10 @@ class MainFragment : Fragment() {
     }
 
     fun navigateToUserActions() {
-        if(isSignedIn) {
+        if (isSignedIn) {
             findNavController().navigate(R.id.admin_actions_fragment)
         } else {
             findNavController().navigate(R.id.register_fragment)
-
         }
     }
 
@@ -122,7 +118,6 @@ class MainFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         _binding = null
     }
 

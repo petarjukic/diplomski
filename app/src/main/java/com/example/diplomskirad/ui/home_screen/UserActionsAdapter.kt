@@ -28,10 +28,18 @@ class UserActionsAdapter(
 
 
         holder.btnAction.setOnClickListener {
-            if (position == 0) {
-                fragment.logoutUser()
-            } else if (position == 1) {
-                fragment.navigateToUserActions()
+            when (position) {
+                0 -> {
+                    fragment.logoutUser()
+                }
+
+                1 -> {
+                    fragment.navigateToUserActions()
+                }
+
+                2 -> {
+                    //                todo go to profile screen
+                }
             }
         }
     }
