@@ -26,7 +26,6 @@ class UserActionsAdapter(
         holder.setIsRecyclable(false)
         holder.btnAction.text = actionsList[position]
 
-
         holder.btnAction.setOnClickListener {
             when (position) {
                 0 -> {
@@ -38,7 +37,7 @@ class UserActionsAdapter(
                 }
 
                 2 -> {
-                    //                todo go to profile screen
+                    fragment.goToProfileScreen()
                 }
             }
         }

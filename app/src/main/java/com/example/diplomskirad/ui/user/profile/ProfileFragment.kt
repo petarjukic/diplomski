@@ -35,6 +35,7 @@ class ProfileFragment : Fragment() {
         if (FirebaseAuth.getInstance().currentUser != null) {
             signedIn = true
         }
+
         setUI()
         setListener()
         return binding.root
@@ -43,17 +44,21 @@ class ProfileFragment : Fragment() {
     private fun setUI() {
         if (signedIn) {
             binding.userEmail.visibility = View.VISIBLE
+            binding.userEmailKey.visibility = View.VISIBLE
             binding.userEmail.text = auth.currentUser?.email
             binding.logoutUser.visibility = View.VISIBLE
-            binding.loginUser.visibility = View.GONE
-            binding.registerUser.visibility = View.GONE
+            binding.ivLogout.visibility = View.VISIBLE
+            binding.btnSignup.visibility = View.GONE
             binding.changePassword.visibility = View.VISIBLE
+            binding.ivChangePassword.visibility = View.VISIBLE
         } else {
             binding.userEmail.visibility = View.GONE
+            binding.userEmailKey.visibility = View.GONE
             binding.logoutUser.visibility = View.GONE
-            binding.loginUser.visibility = View.VISIBLE
-            binding.registerUser.visibility = View.VISIBLE
+            binding.ivLogout.visibility = View.GONE
+            binding.btnSignup.visibility = View.VISIBLE
             binding.changePassword.visibility = View.GONE
+            binding.ivChangePassword.visibility = View.GONE
         }
     }
 
@@ -61,14 +66,17 @@ class ProfileFragment : Fragment() {
         binding.logoutUser.setOnClickListener {
             logoutUser()
         }
-        binding.loginUser.setOnClickListener {
+        binding.ivLogout.setOnClickListener {
+            logoutUser()
+        }
+        binding.btnSignup.setOnClickListener {
             findNavController().navigate(R.id.login_fragment)
         }
-        binding.registerUser.setOnClickListener {
-            findNavController().navigate(R.id.register_fragment)
-        }
         binding.changePassword.setOnClickListener {
-//            findNavController().navigate()
+            findNavController().navigate(R.id.changePasswordFragment)
+        }
+        binding.ivChangePassword.setOnClickListener {
+            findNavController().navigate(R.id.changePasswordFragment)
         }
     }
 

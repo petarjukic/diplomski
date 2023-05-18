@@ -82,6 +82,10 @@ class MainFragment : Fragment() {
         }
     }
 
+    fun goToProfileScreen() {
+        findNavController().navigate(R.id.profileFragment)
+    }
+
     fun navigateToUserActions() {
         if (isSignedIn) {
             findNavController().navigate(R.id.admin_actions_fragment)

@@ -47,5 +47,19 @@
     <string name="checkout">Checkout</string>
     <string name="logout">Logout</string>
     <string name="change_password">Change password</string>
+    <string name="my_profile">My profile</string>
+
+    <string name="send">Send</string>
+    <string name="change_password_confirm_password">Confirm new password</string>
+    <string name="change_password_new_password">New password</string>
+    <string name="change_password_old_password">Old password</string>
+    <string name="enter_valid_passwords">Please enter valid passwords</string>
+    <string name="error_new_password_same_as_old_password">Your old and new password are the same. Please enter a different password.</string>
+    <string name="your_email">Your email:</string>
+    <string name="invalid_old_password">Please enter your current password</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
+    <string name="change_password_fail">Change password fail</string>
+    <string name="your_password_changed_successfully">Your password changed successfully!</string>
 
 </resources>
