@@ -8,16 +8,25 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplomskirad.MainActivity
 import com.example.diplomskirad.R
+import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.common.preferences.LoginSharedPreferences
 import com.example.diplomskirad.databinding.FragmentMainBinding
 import com.example.diplomskirad.model.Product
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 class MainFragment : Fragment() {
@@ -27,14 +36,15 @@ class MainFragment : Fragment() {
     private var isSignedIn: Boolean = false
     private lateinit var auth: FirebaseAuth
     private var sharedPreferences: LoginSharedPreferences? = null
+    private lateinit var database: DatabaseReference
     private var productList: MutableList<Product>? = null
     private var displayList: MutableList<Product>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        database = FirebaseDatabase.getInstance().getReference("product")
         auth = Firebase.auth
     }
-
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.main, menu)
@@ -93,20 +103,33 @@ class MainFragment : Fragment() {
         displayList = java.util.ArrayList()
 
         checkIsUserSignedIn()
-        setUI()
+        getData()
         setupListener()
 
         return binding.root
     }
 
+    private val postListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (child in dataSnapshot.children) {
+                val product = child.getValue<Product>()
+                if (product != null) {
+                    productList?.add(product)
+                }
+            }
+            setUI()
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+        }
+    }
+
     private fun setUI() {
         val userList: MutableList<String> = ArrayList()
         productList?.add(Product("dsa2", "productName"))
-        val productAdapter = productList?.let { ProductAdapter(it) }
+        val productAdapter = productList?.let { ProductAdapter(it, this) }
 
-        val layout = LinearLayoutManager(requireContext())
-        layout.orientation = LinearLayoutManager.VERTICAL
-        binding.rvProduct.layoutManager = layout
+        binding.rvProduct.layoutManager = GridLayoutManager(context, 2)
         binding.rvProduct.adapter = productAdapter
 
         if (!isSignedIn) {
@@ -124,6 +147,15 @@ class MainFragment : Fragment() {
         llm.orientation = LinearLayoutManager.HORIZONTAL
         binding.rvUserActions.layoutManager = llm
         binding.rvUserActions.adapter = adapter
+    }
+
+    private fun getData() {
+        database.addValueEventListener(postListener)
+    }
+
+    fun navigateToDetails(productId: String) {
+        val bundle = bundleOf(Constants().SELECTED_PRODUCT_ID_TAG to productId)
+        findNavController().navigate(R.id.productDetailsFragment, bundle)
     }
 
     fun logoutUser() {
@@ -181,6 +213,7 @@ class MainFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        database.removeEventListener(postListener)
         _binding = null
     }
 

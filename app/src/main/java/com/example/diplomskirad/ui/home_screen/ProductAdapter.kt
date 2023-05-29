@@ -1,5 +1,6 @@
 package com.example.diplomskirad.ui.home_screen
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +11,7 @@ import com.example.diplomskirad.R
 import com.example.diplomskirad.model.Product
 import com.squareup.picasso.Picasso
 
-class ProductAdapter(private val productList: List<Product>) :
+class ProductAdapter(private val productList: List<Product>, private val fragment: MainFragment) :
     RecyclerView.Adapter<ProductAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,17 +26,24 @@ class ProductAdapter(private val productList: List<Product>) :
         holder.productPrice.text = productList[position].price.toString()
         holder.productTitle.text = productList[position].productName
         Picasso.get().load(productList[position].image).into(holder.productImage)
+
+        holder.product.setOnClickListener {
+            Log.d("provjera", "AAAAAAA pozicija $position oiiii ${productList[position].id}")
+            productList[position].id?.let { it1 -> fragment.navigateToDetails(it1) }
+        }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val productImage: ImageView
         val productTitle: TextView
         val productPrice: TextView
+        val product: View
 
         init {
             productImage = view.findViewById(R.id.iv_product)
             productTitle = view.findViewById(R.id.tv_product_title)
             productPrice = view.findViewById(R.id.tv_product_price)
+            product = view.findViewById(R.id.product)
         }
     }
 }

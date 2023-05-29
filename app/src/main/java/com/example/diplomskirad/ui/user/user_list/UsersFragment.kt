@@ -1,7 +1,6 @@
 package com.example.diplomskirad.ui.user.user_list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,8 +36,6 @@ class UsersFragment : Fragment() {
 
         userList = ArrayList()
         sharedPreferences = LoginSharedPreferences(requireContext())
-
-        Log.d("provjera", "AAA ov je user ${sharedPreferences?.getEmail()}")
 
         adapter = UsersAdapter(userList, this)
         val llm = LinearLayoutManager(requireContext())

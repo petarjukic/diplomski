@@ -222,7 +222,24 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_main_fragment_to_searchFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="productDetailsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-446" />
+                            <option name="y" value="-797" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>

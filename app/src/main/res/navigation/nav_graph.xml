@@ -67,6 +67,9 @@
         <action
             android:id="@+id/action_main_fragment_to_searchFragment"
             app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
 
     <fragment
@@ -201,4 +204,16 @@
         android:name="com.example.diplomskirad.ui.search.SearchFragment"
         android:label="fragment_search"
         tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/productDetailsFragment"
+        android:name="com.example.diplomskirad.ui.products.product_details.ProductDetailsFragment"
+        android:label="fragment_product_details"
+        tools:layout="@layout/fragment_product_details">
+
+        <argument
+            android:name="productId"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+    </fragment>
 </navigation>
