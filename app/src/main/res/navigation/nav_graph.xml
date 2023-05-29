@@ -64,6 +64,9 @@
         <action
             android:id="@+id/action_main_fragment_to_profileFragment"
             app:destination="@id/profileFragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
     </fragment>
 
     <fragment
@@ -193,4 +196,9 @@
         android:id="@+id/changePasswordFragment"
         android:name="com.example.diplomskirad.ui.user.change_password.ChangePasswordFragment"
         android:label="ChangePasswordFragment" />
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.example.diplomskirad.ui.search.SearchFragment"
+        android:label="fragment_search"
+        tools:layout="@layout/fragment_search" />
 </navigation>

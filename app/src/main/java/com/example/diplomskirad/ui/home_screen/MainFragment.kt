@@ -3,8 +3,11 @@ package com.example.diplomskirad.ui.home_screen
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,10 +28,59 @@ class MainFragment : Fragment() {
     private lateinit var auth: FirebaseAuth
     private var sharedPreferences: LoginSharedPreferences? = null
     private var productList: MutableList<Product>? = null
+    private var displayList: MutableList<Product>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         auth = Firebase.auth
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main, menu)
+        val searchItem = menu.findItem(R.id.menu_search)
+
+        if (searchItem != null) {
+            val searchView = searchItem.actionView as SearchView
+
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    if (query != null) {
+                        displayList?.clear()
+
+
+
+                        binding.rvProduct.adapter?.notifyDataSetChanged()
+                    } else {
+                        displayList?.clear()
+                        productList?.let { displayList?.addAll(it) }
+                        binding.rvProduct.adapter?.notifyDataSetChanged()
+                    }
+                    // on below line we are checking
+                    // if query exist or not.
+//                if (programmingLanguagesList.contains(query)) {
+//                    // if query exist within list we
+//                    // are filtering our list adapter.
+//                    listAdapter.filter.filter(query)
+//                } else {
+//                    // if query is not present we are displaying
+//                    // a toast message as no  data found..
+//                    Toast.makeText(this@MainActivity, "No Language found..", Toast.LENGTH_LONG)
+//                        .show()
+//                }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    // if query text is change in that case we
+                    // are filtering our adapter with
+                    // new text on below line.
+//                listAdapter.filter.filter(newText)
+                    return true
+                }
+            })
+        }
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onCreateView(
@@ -37,6 +89,8 @@ class MainFragment : Fragment() {
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         sharedPreferences = LoginSharedPreferences(requireContext())
+        productList = java.util.ArrayList()
+        displayList = java.util.ArrayList()
 
         checkIsUserSignedIn()
         setUI()
@@ -47,6 +101,7 @@ class MainFragment : Fragment() {
 
     private fun setUI() {
         val userList: MutableList<String> = ArrayList()
+        productList?.add(Product("dsa2", "productName"))
         val productAdapter = productList?.let { ProductAdapter(it) }
 
         val layout = LinearLayoutManager(requireContext())
@@ -98,6 +153,10 @@ class MainFragment : Fragment() {
         binding.shoppingCart.setOnClickListener {
             findNavController().navigate(R.id.cartFragment)
         }
+
+//        binding.searchView.setOnClickListener {
+//            findNavController().navigate(R.id.searchFragment)
+//        }
 
 //        binding.login.setOnClickListener {
 //            findNavController().navigate(R.id.login_fragment)
