@@ -24,7 +24,7 @@
                                             <option name="values">
                                               <map>
                                                 <entry key="color" value="000000" />
-                                                <entry key="imagePath" value="/private/var/folders/nb/r1kvvyy91hvfs3hr9fyqs55m0000gn/T/baseline_search_24.xml" />
+                                                <entry key="imagePath" value="/private/var/folders/nb/r1kvvyy91hvfs3hr9fyqs55m0000gn/T/baseline_image_search_24.xml" />
                                                 <entry key="opacityPercent" value="60" />
                                               </map>
                                             </option>
@@ -36,7 +36,7 @@
                                           <PersistentState>
                                             <option name="values">
                                               <map>
-                                                <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/search/baseline_search_24.xml" />
+                                                <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/image_search/baseline_image_search_24.xml" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -82,7 +82,7 @@
                                   <option name="values">
                                     <map>
                                       <entry key="imageAsset" value="$USER_HOME$/Downloads/empty_cart.png" />
-                                      <entry key="outputName" value="ic_search" />
+                                      <entry key="outputName" value="ic_no_image" />
                                     </map>
                                   </option>
                                 </PersistentState>

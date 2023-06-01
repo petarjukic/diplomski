@@ -12,8 +12,9 @@ import com.example.diplomskirad.model.Product
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-
+import com.squareup.picasso.Picasso
 
 class ProductDetailsFragment : Fragment() {
     val args: ProductDetailsFragmentArgs by navArgs()
@@ -28,19 +29,30 @@ class ProductDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        database = FirebaseDatabase.getInstance().getReference("product")
         _binding = FragmentProductDetailsBinding.inflate(inflater, container, false)
         val args = this.arguments
+        database.addValueEventListener(postListener)
 
-        selectedProduct = args?.getString(Constants().SELECTED_USER_ID_TAG)
+        selectedProduct = args?.getString(Constants().SELECTED_PRODUCT_ID_TAG)
+        binding.btnCheckout.setOnClickListener {
+            // TODO implement add to cart
+        }
 
         return binding.root
     }
 
     private val postListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
-            val product =
-                selectedProduct?.let { dataSnapshot.child("product").child(it).getValue(Product::class.java) }!!
-            setUI(product)
+            for (child in dataSnapshot.children) {
+                val product = child.getValue(Product::class.java)
+
+                if (product != null) {
+                    if (selectedProduct == product.id) {
+                        setUI(product)
+                    }
+                }
+            }
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
@@ -48,7 +60,10 @@ class ProductDetailsFragment : Fragment() {
     }
 
     private fun setUI(product: Product) {
-
+        binding.productDescription.text = product.description
+        binding.productName.text = product.productName
+        binding.productPrice.text = product.price.toString()
+        Picasso.get().load(product.image).into(binding.productImage)
     }
 
     override fun onDestroyView() {

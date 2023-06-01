@@ -70,6 +70,9 @@
         <action
             android:id="@+id/action_main_fragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_filteredItemsFragment"
+            app:destination="@id/filteredItemsFragment" />
     </fragment>
 
     <fragment
@@ -215,5 +218,19 @@
             app:argType="string"
             android:defaultValue="@null"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/filteredItemsFragment"
+        android:name="com.example.diplomskirad.ui.filtered_items.FilteredItemsFragment"
+        android:label="fragment_filtered_items"
+        tools:layout="@layout/fragment_filtered_items">
+        <argument
+            android:name="category"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_filteredItemsFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
 </navigation>

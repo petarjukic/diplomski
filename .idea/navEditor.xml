@@ -140,6 +140,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="filteredItemsFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-548" />
+                            <option name="y" value="-236" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="goToLoginFragment">
                     <value>
                       <LayoutPositions />
@@ -203,6 +215,11 @@
                               </value>
                             </entry>
                             <entry key="action_main_fragment_to_login_fragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_main_fragment_to_productDetailsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

@@ -39,6 +39,8 @@ class MainFragment : Fragment() {
     private lateinit var database: DatabaseReference
     private var productList: MutableList<Product>? = null
     private var displayList: MutableList<Product>? = null
+    private var categoryList: MutableList<String>? = null
+    private var categoryAdapter: CategoryAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -100,6 +102,7 @@ class MainFragment : Fragment() {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         sharedPreferences = LoginSharedPreferences(requireContext())
         productList = java.util.ArrayList()
+        categoryList = java.util.ArrayList()
         displayList = java.util.ArrayList()
 
         checkIsUserSignedIn()
@@ -115,6 +118,7 @@ class MainFragment : Fragment() {
                 val product = child.getValue<Product>()
                 if (product != null) {
                     productList?.add(product)
+                    product.categoryId?.let { categoryList?.add(it) }
                 }
             }
             setUI()
@@ -125,9 +129,11 @@ class MainFragment : Fragment() {
     }
 
     private fun setUI() {
+        val categories = categoryList?.distinct()
         val userList: MutableList<String> = ArrayList()
         productList?.add(Product("dsa2", "productName"))
         val productAdapter = productList?.let { ProductAdapter(it, this) }
+        categoryAdapter = categories?.let { CategoryAdapter(it, this) }
 
         binding.rvProduct.layoutManager = GridLayoutManager(context, 2)
         binding.rvProduct.adapter = productAdapter
@@ -147,6 +153,11 @@ class MainFragment : Fragment() {
         llm.orientation = LinearLayoutManager.HORIZONTAL
         binding.rvUserActions.layoutManager = llm
         binding.rvUserActions.adapter = adapter
+
+        val categoryLayout = LinearLayoutManager(requireContext())
+        categoryLayout.orientation = LinearLayoutManager.HORIZONTAL
+        binding.categories.layoutManager = categoryLayout
+        binding.categories.adapter = categoryAdapter
     }
 
     private fun getData() {
@@ -211,9 +222,15 @@ class MainFragment : Fragment() {
         isSignedIn = user != null
     }
 
+    fun navigateToFiltered(category: String) {
+        val bundle = bundleOf(Constants().FILTER_CATEGORY to category)
+        findNavController().navigate(R.id.filteredItemsFragment, bundle)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         database.removeEventListener(postListener)
+        categoryAdapter = null
         _binding = null
     }
 

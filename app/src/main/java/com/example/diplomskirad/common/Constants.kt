@@ -7,4 +7,5 @@ class Constants {
     val SELECTED_USER_ID_TAG = "selectedUserId"
     val SELECTED_PRODUCT_ID_TAG = "selectedProductId"
     val SELECTED_CATEGORY_ID = "selectedCategoryId"
+    val FILTER_CATEGORY = "filterCategory"
 }

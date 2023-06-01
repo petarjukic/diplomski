@@ -45,6 +45,7 @@
     <string name="total_items">Total items</string>
     <string name="total_price">Total price</string>
     <string name="checkout">Checkout</string>
+    <string name="add_cart">Add to cart</string>
     <string name="logout">Logout</string>
     <string name="change_password">Change password</string>
     <string name="my_profile">My profile</string>

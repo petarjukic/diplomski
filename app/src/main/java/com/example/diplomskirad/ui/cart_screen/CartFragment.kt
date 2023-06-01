@@ -9,11 +9,9 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.FragmentCartBinding
 import com.example.diplomskirad.listener.IProductLoadListener
 import com.example.diplomskirad.model.Product
-import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -22,7 +20,6 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
-import java.util.ArrayList
 
 class CartFragment : Fragment(), IProductLoadListener {
     private var _binding: FragmentCartBinding? = null
@@ -43,7 +40,7 @@ class CartFragment : Fragment(), IProductLoadListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentCartBinding.inflate(inflater, container, false);
+        _binding = FragmentCartBinding.inflate(inflater, container, false)
 
         getProducts()
         setListeners()
@@ -55,7 +52,6 @@ class CartFragment : Fragment(), IProductLoadListener {
 
         binding.btnCheckout.setOnClickListener {
             // TODO buy items
-
         }
 
         binding.btnHomeScreen.setOnClickListener {
@@ -68,8 +64,8 @@ class CartFragment : Fragment(), IProductLoadListener {
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()) {
-                    for(data in snapshot.children) {
+                if (snapshot.exists()) {
+                    for (data in snapshot.children) {
                         val product = data.getValue(Product::class.java)
                         if (product != null) {
                             cartList.add(product)
@@ -90,7 +86,7 @@ class CartFragment : Fragment(), IProductLoadListener {
     override fun onSuccess(cartList: List<Product>) {
         adapter = CartAdapter(this, cartList)
 
-        if(cartList.isEmpty()) {
+        if (cartList.isEmpty()) {
             binding.emptyCartScreen.visibility = View.VISIBLE
             binding.cartScreen.visibility = View.GONE
         } else {
@@ -103,7 +99,6 @@ class CartFragment : Fragment(), IProductLoadListener {
             binding.rvCart.adapter = adapter
             binding.rvCart.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
         }
-
     }
 
     override fun onError(message: String?) {
