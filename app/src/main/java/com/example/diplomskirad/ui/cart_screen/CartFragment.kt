@@ -5,10 +5,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.diplomskirad.R
+import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.databinding.FragmentCartBinding
 import com.example.diplomskirad.listener.IProductLoadListener
 import com.example.diplomskirad.model.Product
@@ -57,6 +60,11 @@ class CartFragment : Fragment(), IProductLoadListener {
         binding.btnHomeScreen.setOnClickListener {
             findNavController().popBackStack()
         }
+    }
+
+    fun navigateToProductDetails(productId: String) {
+        val bundle = bundleOf(Constants().SELECTED_PRODUCT_ID_TAG to productId)
+        findNavController().navigate(R.id.productDetailsFragment, bundle)
     }
 
     private fun getProducts() {

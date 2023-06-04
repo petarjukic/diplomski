@@ -55,7 +55,7 @@
         tools:text="Product description big text" />
 
     <Button
-        android:id="@+id/btn_checkout"
+        android:id="@+id/add_to_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"

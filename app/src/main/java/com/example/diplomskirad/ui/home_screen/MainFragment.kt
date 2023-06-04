@@ -8,6 +8,7 @@ import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.SearchView
+import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,7 +19,11 @@ import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.common.preferences.LoginSharedPreferences
 import com.example.diplomskirad.databinding.FragmentMainBinding
+import com.example.diplomskirad.eventbus.UpdateCartEvent
+import com.example.diplomskirad.listener.ICartLoadListener
+import com.example.diplomskirad.model.Cart
 import com.example.diplomskirad.model.Product
+import com.example.diplomskirad.ui.utils.ItemDecoration
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -28,8 +33,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class MainFragment : Fragment() {
+class MainFragment : Fragment(), ICartLoadListener {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
@@ -41,11 +49,17 @@ class MainFragment : Fragment() {
     private var displayList: MutableList<Product>? = null
     private var categoryList: MutableList<String>? = null
     private var categoryAdapter: CategoryAdapter? = null
+    private var cartListener: ICartLoadListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         database = FirebaseDatabase.getInstance().getReference("product")
         auth = Firebase.auth
+    }
+
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -104,12 +118,34 @@ class MainFragment : Fragment() {
         productList = java.util.ArrayList()
         categoryList = java.util.ArrayList()
         displayList = java.util.ArrayList()
+        cartListener = this
 
         checkIsUserSignedIn()
         getData()
         setupListener()
+        countDataFromDatabase()
 
         return binding.root
+    }
+
+    private fun countDataFromDatabase() {
+        val cartData: MutableList<Cart> = ArrayList()
+        auth.currentUser?.uid?.let { FirebaseDatabase.getInstance().getReference("cart").child(it) }
+            ?.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (cart in snapshot.children) {
+                        val cartModel = cart.getValue(Cart::class.java)
+                        if (cartModel != null) {
+                            cartData.add(cartModel)
+                        }
+                    }
+                    cartListener?.onLoadCartSuccess(cartData)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    cartListener?.onLoadCartError(error.message)
+                }
+            })
     }
 
     private val postListener = object : ValueEventListener {
@@ -137,6 +173,7 @@ class MainFragment : Fragment() {
 
         binding.rvProduct.layoutManager = GridLayoutManager(context, 2)
         binding.rvProduct.adapter = productAdapter
+        binding.rvProduct.addItemDecoration(ItemDecoration())
 
         if (!isSignedIn) {
             userList.add("Login")
@@ -227,6 +264,20 @@ class MainFragment : Fragment() {
         findNavController().navigate(R.id.filteredItemsFragment, bundle)
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun onUpdateCartEvent(event: UpdateCartEvent) {
+        countDataFromDatabase()
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        if (EventBus.getDefault().hasSubscriberForEvent(UpdateCartEvent::class.java)) {
+            EventBus.getDefault().removeStickyEvent(UpdateCartEvent::class.java)
+        }
+        EventBus.getDefault().unregister(this)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         database.removeEventListener(postListener)
@@ -245,5 +296,21 @@ class MainFragment : Fragment() {
 
             return fragment
         }
+    }
+
+    override fun onLoadCartSuccess(cartList: List<Cart>) {
+        var cartSum = 0
+        for (cart in cartList) {
+            cartSum += cart.quantity
+        }
+        binding.badge.setNumber(cartSum)
+    }
+
+    override fun onSuccessMessage(message: String) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLoadCartError(errorMessage: String?) {
+        Toast.makeText(requireContext(), errorMessage, Toast.LENGTH_SHORT).show()
     }
 }

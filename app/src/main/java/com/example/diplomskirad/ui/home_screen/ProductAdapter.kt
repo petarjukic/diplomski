@@ -1,6 +1,5 @@
 package com.example.diplomskirad.ui.home_screen
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,12 +22,11 @@ class ProductAdapter(private val productList: List<Product>, private val fragmen
     override fun getItemCount() = productList.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.productPrice.text = productList[position].price.toString()
+        holder.productPrice.text = StringBuilder("€").append(productList[position].price.toString())
         holder.productTitle.text = productList[position].productName
-        Picasso.get().load(productList[position].image).into(holder.productImage)
+        Picasso.get().load(productList[position].image).placeholder(R.drawable.ic_no_image).into(holder.productImage)
 
         holder.product.setOnClickListener {
-            Log.d("provjera", "AAAAAAA pozicija $position oiiii ${productList[position].id}")
             productList[position].id?.let { it1 -> fragment.navigateToDetails(it1) }
         }
     }
