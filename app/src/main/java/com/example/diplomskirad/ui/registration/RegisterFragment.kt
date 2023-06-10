@@ -17,7 +17,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import java.util.*
+import java.util.UUID
 
 class RegisterFragment : Fragment() {
     private var _binding: FragmentRegisterBinding? = null
@@ -25,6 +25,7 @@ class RegisterFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,7 +46,6 @@ class RegisterFragment : Fragment() {
     private fun setupClickListeners() {
         binding.btnRegister.setOnClickListener {
             if (checkInputFields()) {
-                // TODO register user into firebase and create user
                 registerUser()
             }
         }
@@ -62,7 +62,6 @@ class RegisterFragment : Fragment() {
         )
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
                     Log.d("provjera", "createUserWithEmail:success auth.currentUser ${auth.currentUser}")
                     Toast.makeText(requireContext(), "Success register", Toast.LENGTH_SHORT).show()
 
@@ -77,10 +76,8 @@ class RegisterFragment : Fragment() {
                         Constants().DEFAULT_ROLE
                     )
                     database.child("users").child(uuid).setValue(user)
-//                    val user = auth.currentUser
                     findNavController().navigate(R.id.login_fragment)
                 } else {
-                    // If sign in fails, display a message to the user.
                     Log.d("provjera", "createUserWithEmail:failure")
                     Toast.makeText(
                         requireContext(), "Authentication failed.",
@@ -119,7 +116,6 @@ class RegisterFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-
         _binding = null
     }
 
@@ -130,7 +126,6 @@ class RegisterFragment : Fragment() {
         fun newInstance(): RegisterFragment {
             val args = Bundle()
             val fragment = RegisterFragment()
-
             fragment.arguments = args
 
             return fragment

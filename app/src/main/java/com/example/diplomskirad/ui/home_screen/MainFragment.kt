@@ -208,6 +208,9 @@ class MainFragment : Fragment(), ICartLoadListener {
 
     fun logoutUser() {
         if (isSignedIn) {
+            sharedPreferences?.deleteLoginInfoForUser(sharedPreferences?.getEmail())
+            sharedPreferences?.deleteRoleInfoForUser(sharedPreferences?.getRole())
+
             FirebaseAuth.getInstance().signOut()
             requireActivity().finish()
             requireActivity().startActivity(Intent(context, MainActivity::class.java))
@@ -233,25 +236,6 @@ class MainFragment : Fragment(), ICartLoadListener {
         binding.shoppingCart.setOnClickListener {
             findNavController().navigate(R.id.cartFragment)
         }
-
-//        binding.searchView.setOnClickListener {
-//            findNavController().navigate(R.id.searchFragment)
-//        }
-
-//        binding.login.setOnClickListener {
-//            findNavController().navigate(R.id.login_fragment)
-//        }
-//
-//        binding.userList.setOnClickListener {
-//            findNavController().navigate(R.id.admin_actions_fragment)
-//        }
-//
-//        binding.logout.setOnClickListener {
-//            FirebaseAuth.getInstance().signOut()
-//            requireActivity().finish()
-//            requireActivity().startActivity(Intent(context, MainActivity::class.java))
-//            requireActivity().finishAffinity()
-//        }
     }
 
     private fun checkIsUserSignedIn() {

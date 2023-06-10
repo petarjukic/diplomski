@@ -12,9 +12,16 @@ import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.common.preferences.LoginSharedPreferences
 import com.example.diplomskirad.databinding.FragmentLoginBinding
+import com.example.diplomskirad.model.User
 import com.example.diplomskirad.service_manager.user_manager.UserManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 class LoginFragment : Fragment() {
@@ -23,12 +30,16 @@ class LoginFragment : Fragment() {
 
     private lateinit var auth: FirebaseAuth
     private var sharedPreferences: LoginSharedPreferences? = null
+    private lateinit var database: DatabaseReference
+    private lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        database = FirebaseDatabase.getInstance().getReference("user")
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
+        database.addValueEventListener(postListener)
 
         sharedPreferences = LoginSharedPreferences(requireContext())
         setupClickListeners()
@@ -52,6 +63,22 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private val postListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (child in dataSnapshot.children) {
+                val currentUser = child.getValue<User>()
+                if (currentUser != null) {
+                    if (currentUser.email?.lowercase().equals(binding.loginEmail.text.toString().lowercase())) {
+                        user = User(email = currentUser.email, role = currentUser.role)
+                    }
+                }
+            }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+        }
+    }
+
     private fun checkInputFields(): Boolean {
         if (binding.loginEmail.text.toString() == "" || !binding.loginEmail.text.toString().contains("@")) {
             Toast.makeText(requireContext(), getString(R.string.invalid_email), Toast.LENGTH_SHORT).show()
@@ -68,26 +95,29 @@ class LoginFragment : Fragment() {
         return true
     }
 
-    private fun getUser(): String {
-
-        return ""
+    private fun getUserRole(): String? {
+        return user.role
     }
 
     private fun loginUser() {
-        val role = getUser()
-
         auth.signInWithEmailAndPassword(binding.loginEmail.text.toString(), binding.loginPassword.text.toString())
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
+                    val role = getUserRole()
+
                     Log.d("provjera", "signInWithEmail:success ${auth.currentUser}")
-                    UserManager().setUser(binding.loginEmail.toString(), Constants().DEFAULT_ROLE)
+                    if (role != null) {
+                        UserManager().setUser(binding.loginEmail.toString(), role)
+                        sharedPreferences?.saveRole(role)
+                    } else {
+                        UserManager().setUser(binding.loginEmail.toString(), Constants().DEFAULT_ROLE)
+                        sharedPreferences?.saveRole(Constants().DEFAULT_ROLE)
+                    }
+
                     sharedPreferences?.saveEmail(binding.loginEmail.text.toString())
-                    sharedPreferences?.saveRole(role)
 
                     findNavController().navigate(R.id.main_fragment)
                 } else {
-                    // If sign in fails, display a message to the user.
                     Log.d("provjera", "signInWithEmail:failure", task.exception)
                     Toast.makeText(
                         requireContext(), "Authentication failed.",
@@ -99,6 +129,7 @@ class LoginFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        database.removeEventListener(postListener)
         _binding = null
     }
 
