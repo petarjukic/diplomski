@@ -8,9 +8,14 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diplomskirad.R
 import com.example.diplomskirad.model.Product
+import com.example.diplomskirad.ui.best_sellers_screen.BestSellersFragment
 import com.squareup.picasso.Picasso
 
-class FilteredItemsAdapter(private val productList: List<Product>, private val fragment: FilteredItemsFragment) :
+class FilteredItemsAdapter(
+    private val productList: List<Product>,
+    private val fragment: FilteredItemsFragment?,
+    private val bestSellersFragment: BestSellersFragment?
+) :
     RecyclerView.Adapter<FilteredItemsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -27,7 +32,8 @@ class FilteredItemsAdapter(private val productList: List<Product>, private val f
         Picasso.get().load(productList[position].image).placeholder(R.drawable.ic_no_image).into(holder.productImage)
 
         holder.product.setOnClickListener {
-            productList[position].id?.let { it1 -> fragment.navigateToDetails(it1) }
+            productList[position].id?.let { it1 -> fragment?.navigateToDetails(it1) }
+            productList[position].id?.let { it1 -> bestSellersFragment?.navigateToDetails(it1) }
         }
     }
 

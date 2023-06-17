@@ -123,7 +123,7 @@ class MainFragment : Fragment(), ICartLoadListener {
         checkIsUserSignedIn()
         getData()
         setupListener()
-        countDataFromDatabase()
+//        countDataFromDatabase()
 
         return binding.root
     }
@@ -164,16 +164,8 @@ class MainFragment : Fragment(), ICartLoadListener {
         }
     }
 
-    private fun setUI() {
-        val categories = categoryList?.distinct()
+    private fun setUserList(): List<String> {
         val userList: MutableList<String> = ArrayList()
-        productList?.add(Product("dsa2", "productName"))
-        val productAdapter = productList?.let { ProductAdapter(it, this) }
-        categoryAdapter = categories?.let { CategoryAdapter(it, this) }
-
-        binding.rvProduct.layoutManager = GridLayoutManager(context, 2)
-        binding.rvProduct.adapter = productAdapter
-        binding.rvProduct.addItemDecoration(ItemDecoration())
 
         if (!isSignedIn) {
             userList.add("Login")
@@ -184,8 +176,22 @@ class MainFragment : Fragment(), ICartLoadListener {
         }
 
         userList.add("Profile")
+        userList.add("Best seller")
 
-        val adapter = UserActionsAdapter(userList, this)
+        return userList
+    }
+
+    private fun setUI() {
+        val categories = categoryList?.distinct()
+        productList?.add(Product("dsa2", "productName"))
+        val productAdapter = productList?.let { ProductAdapter(it, this) }
+        categoryAdapter = categories?.let { CategoryAdapter(it, this) }
+
+        binding.rvProduct.layoutManager = GridLayoutManager(context, 2)
+        binding.rvProduct.adapter = productAdapter
+        binding.rvProduct.addItemDecoration(ItemDecoration())
+
+        val adapter = UserActionsAdapter(setUserList(), this)
         val llm = LinearLayoutManager(requireContext())
         llm.orientation = LinearLayoutManager.HORIZONTAL
         binding.rvUserActions.layoutManager = llm
@@ -224,6 +230,10 @@ class MainFragment : Fragment(), ICartLoadListener {
         findNavController().navigate(R.id.profileFragment)
     }
 
+    fun gotoBestSellerScreen() {
+        findNavController().navigate(R.id.bestSellersFragment)
+    }
+
     fun navigateToUserActions() {
         if (isSignedIn) {
             findNavController().navigate(R.id.admin_actions_fragment)
@@ -250,7 +260,7 @@ class MainFragment : Fragment(), ICartLoadListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun onUpdateCartEvent(event: UpdateCartEvent) {
-        countDataFromDatabase()
+//        countDataFromDatabase()
     }
 
     override fun onStop() {

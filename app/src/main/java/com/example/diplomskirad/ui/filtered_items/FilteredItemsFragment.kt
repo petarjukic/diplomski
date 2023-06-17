@@ -63,7 +63,7 @@ class FilteredItemsFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        adapter = productList?.let { FilteredItemsAdapter(it, this) }
+        adapter = productList?.let { FilteredItemsAdapter(it, this, null) }
         binding.rvProducts.layoutManager = GridLayoutManager(context, 2)
         binding.rvProducts.adapter = adapter
     }

@@ -39,6 +39,10 @@ class UserActionsAdapter(
                 2 -> {
                     fragment.goToProfileScreen()
                 }
+
+                3 -> {
+                    fragment.gotoBestSellerScreen()
+                }
             }
         }
     }

@@ -81,6 +81,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="bestSellersFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-681" />
+                            <option name="y" value="-930" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="cartFragment">
                     <value>
                       <LayoutPositions>
@@ -93,6 +105,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_cartFragment_to_main_fragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_cartFragment_to_productDetailsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -148,6 +165,15 @@
                             <option name="x" value="-548" />
                             <option name="y" value="-236" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_filteredItemsFragment_to_productDetailsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -210,6 +236,11 @@
                               </value>
                             </entry>
                             <entry key="action_main_fragment_to_cartFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_main_fragment_to_filteredItemsFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
