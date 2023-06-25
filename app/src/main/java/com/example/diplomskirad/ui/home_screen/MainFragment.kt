@@ -123,7 +123,7 @@ class MainFragment : Fragment(), ICartLoadListener {
         checkIsUserSignedIn()
         getData()
         setupListener()
-//        countDataFromDatabase()
+        countDataFromDatabase()
 
         return binding.root
     }
@@ -260,7 +260,7 @@ class MainFragment : Fragment(), ICartLoadListener {
 
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     fun onUpdateCartEvent(event: UpdateCartEvent) {
-//        countDataFromDatabase()
+        countDataFromDatabase()
     }
 
     override fun onStop() {

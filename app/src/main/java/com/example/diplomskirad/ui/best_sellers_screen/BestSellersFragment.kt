@@ -28,6 +28,8 @@ class BestSellersFragment : Fragment() {
 
     private lateinit var database: DatabaseReference
     private var productList: MutableList<Product>? = null
+    private var soldItemsList: MutableList<SoldItems>? = null
+    private var sortedList: MutableList<Product>? = null
     private var adapter: FilteredItemsAdapter? = null
     private var bestSellersMap = hashMapOf<Int, Product>()
 
@@ -41,6 +43,8 @@ class BestSellersFragment : Fragment() {
         database.addValueEventListener(postListener)
 
         productList = java.util.ArrayList()
+        soldItemsList = java.util.ArrayList()
+        sortedList = java.util.ArrayList()
 
         return binding.root
     }
@@ -54,17 +58,47 @@ class BestSellersFragment : Fragment() {
         var finalList: List<Product> = listOf()
 
         if (productList != null) {
-            for (product in productList!!) {
-
-            }
+//            for (product in productList!!) {
+//
+//            }
         }
 
         return finalList
     }
 
     private fun setAdapter() {
+        //TODO check result of bestsellers
         val filteredList = findBestSellers()
-        adapter = FilteredItemsAdapter(filteredList, null, this)
+        soldItemsList?.sortByDescending { it.count }
+        if (soldItemsList != null && soldItemsList!!.size > 0) {
+            if (soldItemsList?.size!! >= 5) {
+                for (i in 0..5) {
+                    val product = Product(
+                        id = soldItemsList!![i].id,
+                        image = soldItemsList!![i].image,
+                        productName = soldItemsList!![i].productName,
+                        price = soldItemsList!![i].price,
+                        description = soldItemsList!![i].description,
+                        categoryId = soldItemsList!![i].categoryId
+                    )
+                    sortedList?.add(product)
+                }
+            } else {
+                for (i in 0..soldItemsList!!.size) {
+                    val product = Product(
+                        id = soldItemsList!![i].id,
+                        image = soldItemsList!![i].image,
+                        productName = soldItemsList!![i].productName,
+                        price = soldItemsList!![i].price,
+                        description = soldItemsList!![i].description,
+                        categoryId = soldItemsList!![i].categoryId
+                    )
+                    sortedList?.add(product)
+                }
+            }
+        }
+
+        adapter = sortedList?.let { FilteredItemsAdapter(it, null, this) }
         binding.rvBestsellers.layoutManager = GridLayoutManager(context, 2)
         binding.rvBestsellers.adapter = adapter
     }
@@ -75,6 +109,7 @@ class BestSellersFragment : Fragment() {
                 val item = child.getValue<SoldItems>()
 
                 if (item != null) {
+                    soldItemsList?.add(item)
                     val product = Product(
                         price = item.price,
                         productName = item.productName,
