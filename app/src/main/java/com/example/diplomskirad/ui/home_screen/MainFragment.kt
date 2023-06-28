@@ -2,12 +2,10 @@ package com.example.diplomskirad.ui.home_screen
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.Menu
-import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
@@ -23,6 +21,7 @@ import com.example.diplomskirad.eventbus.UpdateCartEvent
 import com.example.diplomskirad.listener.ICartLoadListener
 import com.example.diplomskirad.model.Cart
 import com.example.diplomskirad.model.Product
+import com.example.diplomskirad.ui.search.SearchActivity
 import com.example.diplomskirad.ui.utils.ItemDecoration
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -60,53 +59,6 @@ class MainFragment : Fragment(), ICartLoadListener {
     override fun onStart() {
         super.onStart()
         EventBus.getDefault().register(this)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main, menu)
-        val searchItem = menu.findItem(R.id.menu_search)
-
-        if (searchItem != null) {
-            val searchView = searchItem.actionView as SearchView
-
-            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-                override fun onQueryTextSubmit(query: String?): Boolean {
-                    if (query != null) {
-                        displayList?.clear()
-
-
-
-                        binding.rvProduct.adapter?.notifyDataSetChanged()
-                    } else {
-                        displayList?.clear()
-                        productList?.let { displayList?.addAll(it) }
-                        binding.rvProduct.adapter?.notifyDataSetChanged()
-                    }
-                    // on below line we are checking
-                    // if query exist or not.
-//                if (programmingLanguagesList.contains(query)) {
-//                    // if query exist within list we
-//                    // are filtering our list adapter.
-//                    listAdapter.filter.filter(query)
-//                } else {
-//                    // if query is not present we are displaying
-//                    // a toast message as no  data found..
-//                    Toast.makeText(this@MainActivity, "No Language found..", Toast.LENGTH_LONG)
-//                        .show()
-//                }
-                    return true
-                }
-
-                override fun onQueryTextChange(newText: String?): Boolean {
-                    // if query text is change in that case we
-                    // are filtering our adapter with
-                    // new text on below line.
-//                listAdapter.filter.filter(newText)
-                    return true
-                }
-            })
-        }
-        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onCreateView(
@@ -161,6 +113,8 @@ class MainFragment : Fragment(), ICartLoadListener {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
+            Log.e("databaseError", databaseError.message)
+            throw databaseError.toException()
         }
     }
 
@@ -246,6 +200,12 @@ class MainFragment : Fragment(), ICartLoadListener {
         binding.shoppingCart.setOnClickListener {
             findNavController().navigate(R.id.cartFragment)
         }
+
+//        binding.searchView.setOnClickListener {
+//            findNavController().navigate(R.id.searchFragment)
+//        }
+        val intent = Intent(activity, SearchActivity::class.java)
+        activity?.startActivity(intent)
     }
 
     private fun checkIsUserSignedIn() {

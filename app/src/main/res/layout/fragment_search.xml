@@ -1,11 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="20dp"
-    tools:context=".ui.search.SearchFragment">
+    android:layout_height="match_parent">
+
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/idTVHeading"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_margin="8dp"-->
+    <!--        android:gravity="center"-->
+    <!--        android:padding="4dp"-->
+    <!--        android:text="@string/app_name"-->
+    <!--        android:textAlignment="center"-->
+    <!--        android:textColor="@color/purple_200"-->
+    <!--        android:textSize="18sp"-->
+    <!--        android:textStyle="bold" />-->
+
+    <!--    &lt;!&ndash;on below line we are creating a recycler view&ndash;&gt;-->
+    <!--    <androidx.recyclerview.widget.RecyclerView-->
+    <!--        android:id="@+id/idRVCourses"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="match_parent"-->
+    <!--        android:layout_below="@id/idTVHeading"-->
+    <!--        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />-->
 
     <!--    <SearchView-->
     <!--        android:id="@+id/search_view"-->
@@ -14,35 +32,12 @@
     <!--        android:layout_margin="8dp"-->
     <!--        android:iconifiedByDefault="false"-->
     <!--        android:padding="4dp"-->
-    <!--        android:queryHint="Search" />-->
+    <!--        android:queryHint="Search Programming language" />-->
 
     <!--    <ListView-->
-    <!--        android:id="@+id/lv_items"-->
+    <!--        android:id="@+id/product_list"-->
     <!--        android:layout_width="match_parent"-->
     <!--        android:layout_height="fill_parent"-->
     <!--        android:layout_below="@id/search_view" />-->
 
-
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/materialCardView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="12dp"
-        app:cardUseCompatPadding="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <SearchView
-            android:id="@+id/searchView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:iconifiedByDefault="false"
-            app:queryBackground="@android:color/transparent"
-            app:queryHint="Search here ..." />
-
-    </com.google.android.material.card.MaterialCardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</RelativeLayout>
