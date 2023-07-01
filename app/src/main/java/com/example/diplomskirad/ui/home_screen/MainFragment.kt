@@ -201,11 +201,10 @@ class MainFragment : Fragment(), ICartLoadListener {
             findNavController().navigate(R.id.cartFragment)
         }
 
-//        binding.searchView.setOnClickListener {
-//            findNavController().navigate(R.id.searchFragment)
-//        }
-        val intent = Intent(activity, SearchActivity::class.java)
-        activity?.startActivity(intent)
+        binding.searchView.setOnClickListener {
+            val intent = Intent(activity, SearchActivity::class.java)
+            activity?.startActivity(intent)
+        }
     }
 
     private fun checkIsUserSignedIn() {

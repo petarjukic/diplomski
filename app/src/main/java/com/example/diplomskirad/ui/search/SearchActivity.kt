@@ -7,6 +7,7 @@ import android.view.MenuItem
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.ActivitySearchBinding
 import com.example.diplomskirad.model.Product
@@ -27,11 +28,10 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         database = FirebaseDatabase.getInstance().getReference("product")
-//TODO check activity search error
         binding = ActivitySearchBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        //TODO implement clickListener on search item
         database.addValueEventListener(postListener)
-        listAdapter = SearchAdapter(productList = productList)
-        binding.idRVCourses.adapter = listAdapter
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -82,12 +82,28 @@ class SearchActivity : AppCompatActivity() {
                 }
             }
             listAdapter?.notifyDataSetChanged()
+            setData()
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
             Log.e("databaseError", databaseError.message)
             throw databaseError.toException()
         }
+    }
+
+    private fun setData() {
+        listAdapter = SearchAdapter(productList = productList, this)
+
+        val llm = LinearLayoutManager(this)
+        llm.orientation = LinearLayoutManager.VERTICAL
+        binding.rvSearchProducts.layoutManager = llm
+        binding.rvSearchProducts.adapter = listAdapter
+    }
+
+    fun navigateToProductDetails(productId: String?) {
+        val fragment = SearchFragment.newInstance()
+
+//        fragment.navigate(productId)
     }
 
     override fun onDestroy() {
