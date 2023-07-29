@@ -21,23 +21,25 @@ import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import org.greenrobot.eventbus.EventBus
 
+
 class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
     private lateinit var binding: ActivityProductDetailsBinding
 
     private lateinit var database: DatabaseReference
-    private var selectedProductId: String? = null
+    private var selectedProductIdCart: String? = null
     private var selectedProduct: Product? = null
     private lateinit var listener: ICartLoadListener
+    private var productId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         database = FirebaseDatabase.getInstance().getReference("product")
 
         setContentView(R.layout.activity_product_details)
-
         binding = ActivityProductDetailsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //TODO implement clickListener on search item
+        val intent = intent
+        productId = intent.getStringExtra("productId")
         database.addValueEventListener(postListener)
 
         binding.addToCart.setOnClickListener {
@@ -51,7 +53,7 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
         val user = Firebase.auth.currentUser
         val userCart = user?.uid?.let { FirebaseDatabase.getInstance().getReference("cart").child(it) }
 
-        selectedProductId?.let { userCart?.child(it) }?.addValueEventListener(object : ValueEventListener {
+        selectedProductIdCart?.let { userCart?.child(it) }?.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     val cartModel = snapshot.getValue(Cart::class.java)
@@ -69,14 +71,14 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
                         }
                 } else {
                     val cartModel = Cart()
-                    cartModel.id = selectedProductId
+                    cartModel.id = selectedProductIdCart
                     cartModel.name = selectedProduct?.productName
                     cartModel.image = selectedProduct?.image
                     cartModel.price = selectedProduct?.price
                     cartModel.quantity = 1
                     cartModel.totalPrice = cartModel.price!!
 
-                    userCart?.child(selectedProductId!!)?.setValue(cartModel)
+                    userCart?.child(selectedProductIdCart!!)?.setValue(cartModel)
                         ?.addOnSuccessListener {
                             EventBus.getDefault().postSticky(UpdateCartEvent())
                             listener.onSuccessMessage("Product added to cart")
@@ -104,9 +106,12 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
             for (child in dataSnapshot.children) {
                 val product = child.getValue<Product>()
                 if (product != null) {
+                    if (product.id == productId) {
+                        setUI(product = product)
+                        break
+                    }
                 }
             }
-//            setUI(product = )
         }
 
         override fun onCancelled(databaseError: DatabaseError) {

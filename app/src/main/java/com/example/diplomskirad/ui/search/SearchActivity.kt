@@ -1,5 +1,6 @@
 package com.example.diplomskirad.ui.search
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplomskirad.R
 import com.example.diplomskirad.databinding.ActivitySearchBinding
 import com.example.diplomskirad.model.Product
+import com.example.diplomskirad.ui.products.product_details.ProductDetailsActivity
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -30,7 +32,6 @@ class SearchActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().getReference("product")
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        //TODO implement clickListener on search item
         database.addValueEventListener(postListener)
     }
 
@@ -101,9 +102,9 @@ class SearchActivity : AppCompatActivity() {
     }
 
     fun navigateToProductDetails(productId: String?) {
-        val fragment = SearchFragment.newInstance()
-
-//        fragment.navigate(productId)
+        val intent = Intent(this, ProductDetailsActivity::class.java)
+        intent.putExtra("productId", productId)
+        startActivity(intent)
     }
 
     override fun onDestroy() {
