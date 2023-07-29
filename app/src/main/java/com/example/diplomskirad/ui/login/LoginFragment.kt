@@ -39,7 +39,6 @@ class LoginFragment : Fragment() {
     ): View {
         database = FirebaseDatabase.getInstance().getReference("user")
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        database.addValueEventListener(postListener)
 
         sharedPreferences = LoginSharedPreferences(requireContext())
         setupClickListeners()
@@ -54,6 +53,7 @@ class LoginFragment : Fragment() {
     private fun setupClickListeners() {
         binding.btnSignup.setOnClickListener {
             if (checkInputFields()) {
+                database.addValueEventListener(postListener)
                 loginUser()
             }
         }
@@ -69,6 +69,7 @@ class LoginFragment : Fragment() {
                 val currentUser = child.getValue<User>()
                 if (currentUser != null) {
                     if (currentUser.email?.lowercase().equals(binding.loginEmail.text.toString().lowercase())) {
+                        Log.d("provjera", "prode ovdeee za kreirat useraaa")
                         user = User(email = currentUser.email, role = currentUser.role)
                     }
                 }
@@ -76,6 +77,7 @@ class LoginFragment : Fragment() {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
+            Log.e("databaseError", databaseError.message)
         }
     }
 
@@ -103,6 +105,7 @@ class LoginFragment : Fragment() {
         auth.signInWithEmailAndPassword(binding.loginEmail.text.toString(), binding.loginPassword.text.toString())
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    //TODO check saving data and login error
                     val role = getUserRole()
 
                     Log.d("provjera", "signInWithEmail:success ${auth.currentUser}")
@@ -118,7 +121,7 @@ class LoginFragment : Fragment() {
 
                     findNavController().navigate(R.id.main_fragment)
                 } else {
-                    Log.d("provjera", "signInWithEmail:failure", task.exception)
+                    Log.d("databaseError", "signInWithEmail:failure", task.exception)
                     Toast.makeText(
                         requireContext(), "Authentication failed.",
                         Toast.LENGTH_SHORT

@@ -73,6 +73,9 @@
         <action
             android:id="@+id/action_main_fragment_to_bestSellersFragment"
             app:destination="@id/bestSellersFragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_bestSellerGenresFragment"
+            app:destination="@id/bestSellerGenresFragment" />
     </fragment>
 
     <fragment
@@ -251,5 +254,18 @@
         <action
             android:id="@+id/action_searchFragment_to_productDetailsFragment"
             app:destination="@id/productDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/bestSellerGenresFragment"
+        android:name="com.example.diplomskirad.ui.best_sellers_screen.BestSellerGenresFragment"
+        android:label="BestSellerGenresFragment">
+        <argument
+            android:name="category"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_bestSellerGenresFragment_to_filteredItemsFragment"
+            app:destination="@id/filteredItemsFragment" />
     </fragment>
 </navigation>

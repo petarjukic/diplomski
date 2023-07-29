@@ -43,6 +43,10 @@ class UserActionsAdapter(
                 3 -> {
                     fragment.gotoBestSellerScreen()
                 }
+
+                4 -> {
+                    fragment.goToBesSellerGenreScreen()
+                }
             }
         }
     }

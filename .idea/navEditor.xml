@@ -81,6 +81,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="bestSellerGenresFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-210" />
+                            <option name="y" value="-938" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="bestSellersFragment">
                     <value>
                       <LayoutPositions>
@@ -347,6 +359,15 @@
                             <option name="x" value="-926" />
                             <option name="y" value="-710" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_searchFragment_to_productDetailsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

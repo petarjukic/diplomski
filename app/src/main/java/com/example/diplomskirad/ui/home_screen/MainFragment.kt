@@ -126,11 +126,14 @@ class MainFragment : Fragment(), ICartLoadListener {
             userList.add("Register")
         } else {
             userList.add("Logout")
-            userList.add("Admin actions")
+            Log.d("provjera", "AAAAAAAA ${sharedPreferences?.getRole()}")
+            if (sharedPreferences?.getRole() == Constants().ADMIN_ROLE)
+                userList.add("Admin actions")
         }
 
         userList.add("Profile")
         userList.add("Best seller")
+        userList.add("Best seller genre")
 
         return userList
     }
@@ -185,6 +188,10 @@ class MainFragment : Fragment(), ICartLoadListener {
     }
 
     fun gotoBestSellerScreen() {
+        findNavController().navigate(R.id.bestSellersFragment)
+    }
+
+    fun goToBesSellerGenreScreen() {
         findNavController().navigate(R.id.bestSellersFragment)
     }
 

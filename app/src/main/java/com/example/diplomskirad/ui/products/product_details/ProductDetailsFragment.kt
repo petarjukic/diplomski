@@ -1,6 +1,7 @@
 package com.example.diplomskirad.ui.products.product_details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -116,6 +117,7 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
+            Log.d("error", databaseError.message)
         }
     }
 

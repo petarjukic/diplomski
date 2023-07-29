@@ -1,6 +1,7 @@
 package com.example.diplomskirad.ui.user.user_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -70,6 +71,7 @@ class UsersFragment : Fragment() {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
+            Log.e("databaseError", databaseError.message)
             Toast.makeText(context, "Unable to load data.", Toast.LENGTH_SHORT).show()
         }
     }
