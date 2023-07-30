@@ -37,7 +37,7 @@ class LoginFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        database = FirebaseDatabase.getInstance().getReference("user")
+        database = FirebaseDatabase.getInstance().getReference("users")
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         sharedPreferences = LoginSharedPreferences(requireContext())
@@ -54,7 +54,6 @@ class LoginFragment : Fragment() {
         binding.btnSignup.setOnClickListener {
             if (checkInputFields()) {
                 database.addValueEventListener(postListener)
-                loginUser()
             }
         }
 
@@ -69,8 +68,8 @@ class LoginFragment : Fragment() {
                 val currentUser = child.getValue<User>()
                 if (currentUser != null) {
                     if (currentUser.email?.lowercase().equals(binding.loginEmail.text.toString().lowercase())) {
-                        Log.d("provjera", "prode ovdeee za kreirat useraaa")
                         user = User(email = currentUser.email, role = currentUser.role)
+                        loginUser()
                     }
                 }
             }
@@ -105,7 +104,6 @@ class LoginFragment : Fragment() {
         auth.signInWithEmailAndPassword(binding.loginEmail.text.toString(), binding.loginPassword.text.toString())
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    //TODO check saving data and login error
                     val role = getUserRole()
 
                     Log.d("provjera", "signInWithEmail:success ${auth.currentUser}")
