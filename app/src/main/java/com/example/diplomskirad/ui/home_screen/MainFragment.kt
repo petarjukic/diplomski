@@ -82,12 +82,14 @@ class MainFragment : Fragment(), ICartLoadListener {
 
     private fun countDataFromDatabase() {
         val cartData: MutableList<Cart> = ArrayList()
+        val user = Firebase.auth.currentUser
+
         auth.currentUser?.uid?.let { FirebaseDatabase.getInstance().getReference("cart").child(it) }
             ?.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (cart in snapshot.children) {
                         val cartModel = cart.getValue(Cart::class.java)
-                        if (cartModel != null) {
+                        if (cartModel != null && cartModel.userId.equals(user?.email)) {
                             cartData.add(cartModel)
                         }
                     }
@@ -126,7 +128,6 @@ class MainFragment : Fragment(), ICartLoadListener {
             userList.add("Register")
         } else {
             userList.add("Logout")
-            Log.d("provjera", "AAAAAAAA ${sharedPreferences?.getRole()}")
             if (sharedPreferences?.getRole() == Constants().ADMIN_ROLE)
                 userList.add("Admin actions")
         }

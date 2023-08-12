@@ -106,7 +106,7 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful) {
                     val role = getUserRole()
 
-                    Log.d("provjera", "signInWithEmail:success ${auth.currentUser}")
+                    Log.d("database", "signInWithEmail:success ${auth.currentUser}")
                     if (role != null) {
                         UserManager().setUser(binding.loginEmail.toString(), role)
                         sharedPreferences?.saveRole(role)

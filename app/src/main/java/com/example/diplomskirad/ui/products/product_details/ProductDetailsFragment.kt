@@ -74,7 +74,8 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
                         ?.addOnSuccessListener {
                             EventBus.getDefault().postSticky(UpdateCartEvent())
                             listener.onSuccessMessage("Product added to cart")
-                        }?.addOnFailureListener {
+                        }?.addOnFailureListener { e ->
+                            Log.d("databaseError", "${e.message}")
                             listener.onLoadCartError("Unable to add product")
                         }
                 } else {

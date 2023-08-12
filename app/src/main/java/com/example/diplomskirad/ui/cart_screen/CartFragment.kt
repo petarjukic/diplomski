@@ -14,8 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.databinding.FragmentCartBinding
-import com.example.diplomskirad.listener.IProductLoadListener
-import com.example.diplomskirad.model.Product
+import com.example.diplomskirad.eventbus.UpdateCartEvent
+import com.example.diplomskirad.listener.ICartLoadListener
+import com.example.diplomskirad.model.Cart
 import com.example.diplomskirad.model.SoldItems
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -24,19 +25,22 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
-class CartFragment : Fragment(), IProductLoadListener {
+class CartFragment : Fragment(), ICartLoadListener {
     private var _binding: FragmentCartBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
     private lateinit var database: DatabaseReference
     private lateinit var databaseItem: DatabaseReference
+    private lateinit var listener: ICartLoadListener
+
     private var adapter: CartAdapter? = null
-    private lateinit var listener: IProductLoadListener
-    private var cartList: MutableList<Product> = ArrayList()
+    private var cartList: MutableList<Cart> = ArrayList()
     private var soldItems: MutableList<SoldItems> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +61,11 @@ class CartFragment : Fragment(), IProductLoadListener {
         return binding.root
     }
 
+    override fun onStart() {
+        super.onStart()
+        EventBus.getDefault().register(this)
+    }
+
     private fun setListeners() {
         listener = this
 
@@ -73,7 +82,7 @@ class CartFragment : Fragment(), IProductLoadListener {
     private fun updateItems() {
         var counter = 0
         for (cartItem in cartList) {
-            if (cartItem.id != null && cartItem.productName != null) {
+            if (cartItem.id != null && cartItem.name != null) {
                 for (item in soldItems) {
                     if (item.count != null) {
                         if (item.id?.equals(cartItem.id) == true) {
@@ -93,48 +102,49 @@ class CartFragment : Fragment(), IProductLoadListener {
     }
 
     private fun getProducts() {
-        databaseItem.addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()) {
-                    for (data in snapshot.children) {
-                        val item = data.getValue<SoldItems>()
-                        if (item != null) {
-                            soldItems.add(item)
-                        }
-                    }
-                }
-            }
+        val user = Firebase.auth.currentUser
 
-            override fun onCancelled(error: DatabaseError) {
-                Log.e("databaseError", error.message)
-                throw error.toException()
-            }
-        })
+//        databaseItem.addListenerForSingleValueEvent(object : ValueEventListener {
+//            override fun onDataChange(snapshot: DataSnapshot) {
+//                if (snapshot.exists()) {
+//                    for (data in snapshot.children) {
+//                        val item = data.getValue<SoldItems>()
+//                        if (item != null) {
+//                            soldItems.add(item)
+//                        }
+//                    }
+//                }
+//            }
+//
+//            override fun onCancelled(error: DatabaseError) {
+//                Log.e("databaseError", error.message)
+//                throw error.toException()
+//            }
+//        })
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (data in snapshot.children) {
-                        val product = data.getValue(Product::class.java)
-                        if (product != null) {
-                            cartList.add(product)
+                        val cart = data.getValue(Cart::class.java)
+                        if (cart != null && cart.userId.equals(user?.email)) {
+                            cartList.add(cart)
                         }
                     }
-                    listener.onSuccess(cartList)
                 } else {
-                    listener.onError("Unable to load items!")
+                    listener.onLoadCartError("Unable to load items!")
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
                 Log.e("databaseError", error.message)
-                listener.onError(error.message)
+                listener.onLoadCartError(error.message)
             }
         })
     }
 
-    override fun onSuccess(cartList: List<Product>) {
-        adapter = CartAdapter(this, cartList)
+    override fun onLoadCartSuccess(cartList: List<Cart>) {
+        adapter = CartAdapter(this, cartList, requireContext())
 
         if (cartList.isEmpty()) {
             binding.emptyCartScreen.visibility = View.VISIBLE
@@ -148,18 +158,47 @@ class CartFragment : Fragment(), IProductLoadListener {
             binding.rvCart.layoutManager = llm
             binding.rvCart.adapter = adapter
             binding.rvCart.addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+
+            countCartItems(cartList)
         }
     }
 
-    override fun onError(message: String?) {
+    private fun countCartItems(cartList: List<Cart>) {
+        var sum = 0.0
+
+        for (cart in cartList) {
+            sum += cart.price!!
+        }
+
+        binding.totalPriceValue.text = StringBuilder("$ ").append(sum)
+    }
+
+    override fun onSuccessMessage(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onLoadCartError(message: String?) {
         binding.emptyCartScreen.visibility = View.VISIBLE
         binding.cartScreen.visibility = View.GONE
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
+    fun onUpdateCartEvent(event: UpdateCartEvent) {
+        getProducts()
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        if (EventBus.getDefault().hasSubscriberForEvent(UpdateCartEvent::class.java)) {
+            EventBus.getDefault().removeStickyEvent(UpdateCartEvent::class.java)
+        }
+        EventBus.getDefault().unregister(this)
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
-//        database.removeEventListener(postListener)
         adapter = null
         _binding = null
     }

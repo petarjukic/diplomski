@@ -10,4 +10,5 @@ class Cart {
     var price: Float? = null
     var quantity: Int = 0
     var totalPrice: Float = 0f
+    var userId: String? = null
 }

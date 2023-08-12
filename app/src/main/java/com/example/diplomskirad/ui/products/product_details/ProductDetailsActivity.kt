@@ -66,8 +66,8 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
                         ?.addOnSuccessListener {
                             EventBus.getDefault().postSticky(UpdateCartEvent())
                             listener.onSuccessMessage("Product added to cart")
-                        }?.addOnFailureListener {
-                            listener.onLoadCartError("Unable to add product")
+                        }?.addOnFailureListener { e ->
+                            listener.onLoadCartError(e.message)
                         }
                 } else {
                     val cartModel = Cart()
@@ -82,8 +82,8 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
                         ?.addOnSuccessListener {
                             EventBus.getDefault().postSticky(UpdateCartEvent())
                             listener.onSuccessMessage("Product added to cart")
-                        }?.addOnFailureListener {
-                            listener.onLoadCartError("Unable to add product")
+                        }?.addOnFailureListener { e ->
+                            listener.onLoadCartError(e.message)
                         }
                 }
             }
