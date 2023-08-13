@@ -81,7 +81,8 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
                         selectedProduct?.price,
                         1,
                         selectedProduct!!.price!!,
-                        user?.email
+                        user?.email,
+                        selectedProduct!!.categoryId
                     )
 
                     FirebaseDatabase.getInstance().getReference("cart").child(uuid).setValue(cartModel)

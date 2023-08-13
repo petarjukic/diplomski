@@ -29,6 +29,7 @@ import com.google.firebase.ktx.Firebase
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.util.UUID
 
 class CartFragment : Fragment(), ICartLoadListener {
     private var _binding: FragmentCartBinding? = null
@@ -72,8 +73,7 @@ class CartFragment : Fragment(), ICartLoadListener {
         if (auth.currentUser != null) {
             binding.btnCheckout.visibility = View.VISIBLE
             binding.btnCheckout.setOnClickListener {
-                //TODO buy items
-                updateItems()
+                checkoutCart()
             }
         } else {
             binding.btnCheckout.visibility = View.GONE
@@ -84,21 +84,21 @@ class CartFragment : Fragment(), ICartLoadListener {
         }
     }
 
-    private fun updateItems() {
-        var counter = 0
-        for (cartItem in cartList) {
-            if (cartItem.id != null && cartItem.name != null) {
-                for (item in soldItems) {
-                    if (item.count != null) {
-                        if (item.id?.equals(cartItem.id) == true) {
-                            counter = item.count!!
-                        }
-                    }
-                }
-                //TODO update number of items from cart
-//                databaseItem.child("${item.id}/${item.productName}").setValue("YourDateHere");
-            }
+    private fun checkoutCart() {
+        for (cart in cartList) {
+            FirebaseDatabase.getInstance().getReference("cart/${cart.id!!}").removeValue()
+
+            transferDataToSoldItems(cart)
         }
+
+        Toast.makeText(requireContext(), getString(R.string.checkout_success), Toast.LENGTH_SHORT).show()
+        findNavController().popBackStack()
+    }
+
+    private fun transferDataToSoldItems(cart: Cart) {
+        val uuid = UUID.randomUUID().toString()
+        val item = SoldItems(uuid, cart.name, cart.price, cart.categoryId, cart.image)
+        FirebaseDatabase.getInstance().getReference("soldItems").child(uuid).setValue(item)
     }
 
     fun navigateToProductDetails(productId: String) {

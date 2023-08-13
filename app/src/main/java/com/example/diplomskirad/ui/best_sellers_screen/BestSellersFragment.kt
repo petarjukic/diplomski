@@ -14,7 +14,7 @@ import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.databinding.FragmentBestSellersBinding
 import com.example.diplomskirad.model.Product
 import com.example.diplomskirad.model.SoldItems
-import com.example.diplomskirad.ui.filtered_items.FilteredItemsAdapter
+import com.example.diplomskirad.ui.best_sellers_screen.adapter.BestSellerAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -30,15 +30,14 @@ class BestSellersFragment : Fragment() {
     private var productList: MutableList<Product>? = null
     private var soldItemsList: MutableList<SoldItems>? = null
     private var sortedList: MutableList<Product>? = null
-    private var adapter: FilteredItemsAdapter? = null
+    private var adapter: BestSellerAdapter? = null
     private var bestSellersMap = hashMapOf<Int, Product>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // TODO check the name of table
-        database = FirebaseDatabase.getInstance().getReference("sold_items")
+        database = FirebaseDatabase.getInstance().getReference("soldItems")
         _binding = FragmentBestSellersBinding.inflate(inflater, container, false)
         database.addValueEventListener(postListener)
 
@@ -78,19 +77,17 @@ class BestSellersFragment : Fragment() {
                         image = soldItemsList!![i].image,
                         productName = soldItemsList!![i].productName,
                         price = soldItemsList!![i].price,
-                        description = soldItemsList!![i].description,
                         categoryId = soldItemsList!![i].categoryId
                     )
                     sortedList?.add(product)
                 }
             } else {
-                for (i in 0..soldItemsList!!.size) {
+                for (i in 0 until soldItemsList!!.size) {
                     val product = Product(
                         id = soldItemsList!![i].id,
                         image = soldItemsList!![i].image,
                         productName = soldItemsList!![i].productName,
                         price = soldItemsList!![i].price,
-                        description = soldItemsList!![i].description,
                         categoryId = soldItemsList!![i].categoryId
                     )
                     sortedList?.add(product)
@@ -98,7 +95,7 @@ class BestSellersFragment : Fragment() {
             }
         }
 
-        adapter = sortedList?.let { FilteredItemsAdapter(it, null, this) }
+        adapter = BestSellerAdapter(soldItemsList!!.toList(), this)
         binding.rvBestsellers.layoutManager = GridLayoutManager(context, 2)
         binding.rvBestsellers.adapter = adapter
     }
@@ -113,7 +110,6 @@ class BestSellersFragment : Fragment() {
                     val product = Product(
                         price = item.price,
                         productName = item.productName,
-                        description = item.description,
                         image = item.image,
                         categoryId = item.categoryId
                     )

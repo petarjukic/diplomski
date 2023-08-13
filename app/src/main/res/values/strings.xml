@@ -63,5 +63,6 @@
     <string name="change_password_fail">Change password fail</string>
     <string name="your_password_changed_successfully">Your password changed successfully!</string>
     <string name="search">Search</string>
+    <string name="checkout_success">Checkout success!</string>
 
 </resources>

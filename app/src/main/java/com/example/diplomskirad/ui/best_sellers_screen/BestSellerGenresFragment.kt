@@ -13,6 +13,7 @@ import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.databinding.FragmentBestSellersBinding
 import com.example.diplomskirad.model.Category
+import com.example.diplomskirad.ui.best_sellers_screen.adapter.BestSellerGenreAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference

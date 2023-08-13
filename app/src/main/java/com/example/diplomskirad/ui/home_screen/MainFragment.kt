@@ -21,6 +21,7 @@ import com.example.diplomskirad.eventbus.UpdateCartEvent
 import com.example.diplomskirad.listener.ICartLoadListener
 import com.example.diplomskirad.model.Cart
 import com.example.diplomskirad.model.Product
+import com.example.diplomskirad.model.User
 import com.example.diplomskirad.ui.search.SearchActivity
 import com.example.diplomskirad.ui.utils.ItemDecoration
 import com.google.firebase.auth.FirebaseAuth
@@ -42,6 +43,7 @@ class MainFragment : Fragment(), ICartLoadListener {
 
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var firebaseUser: User
 
     private var isSignedIn: Boolean = false
     private var sharedPreferences: LoginSharedPreferences? = null
@@ -131,8 +133,9 @@ class MainFragment : Fragment(), ICartLoadListener {
             userList.add("Register")
         } else {
             userList.add("Logout")
-            if (sharedPreferences?.getRole() == Constants().ADMIN_ROLE)
+            if (sharedPreferences?.getRole() == Constants().ADMIN_ROLE) {
                 userList.add("Admin actions")
+            }
         }
 
         userList.add("Profile")
@@ -200,8 +203,10 @@ class MainFragment : Fragment(), ICartLoadListener {
     }
 
     fun navigateToUserActions() {
-        if (isSignedIn) {
+        if (isSignedIn && sharedPreferences?.getRole() == Constants().ADMIN_ROLE) {
             findNavController().navigate(R.id.admin_actions_fragment)
+        } else if (isSignedIn && sharedPreferences?.getRole() == Constants().DEFAULT_ROLE) {
+            findNavController().navigate(R.id.profileFragment)
         } else {
             findNavController().navigate(R.id.register_fragment)
         }

@@ -12,4 +12,5 @@ data class Cart(
     var quantity: Int = 0,
     var totalPrice: Float = 0f,
     var userId: String? = null,
+    var categoryId: String? = null,
 )
