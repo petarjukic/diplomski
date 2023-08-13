@@ -40,10 +40,11 @@ class MainFragment : Fragment(), ICartLoadListener {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private var isSignedIn: Boolean = false
-    private lateinit var auth: FirebaseAuth
-    private var sharedPreferences: LoginSharedPreferences? = null
     private lateinit var database: DatabaseReference
+    private lateinit var auth: FirebaseAuth
+
+    private var isSignedIn: Boolean = false
+    private var sharedPreferences: LoginSharedPreferences? = null
     private var productList: MutableList<Product>? = null
     private var displayList: MutableList<Product>? = null
     private var categoryList: MutableList<String>? = null
@@ -84,11 +85,12 @@ class MainFragment : Fragment(), ICartLoadListener {
         val cartData: MutableList<Cart> = ArrayList()
         val user = Firebase.auth.currentUser
 
-        auth.currentUser?.uid?.let { FirebaseDatabase.getInstance().getReference("cart").child(it) }
-            ?.addListenerForSingleValueEvent(object : ValueEventListener {
+        FirebaseDatabase.getInstance().getReference("cart")
+            .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (cart in snapshot.children) {
                         val cartModel = cart.getValue(Cart::class.java)
+
                         if (cartModel != null && cartModel.userId.equals(user?.email)) {
                             cartData.add(cartModel)
                         }
@@ -97,6 +99,7 @@ class MainFragment : Fragment(), ICartLoadListener {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
+                    Log.d("databaseError", error.message)
                     cartListener?.onLoadCartError(error.message)
                 }
             })

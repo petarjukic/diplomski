@@ -20,15 +20,16 @@ import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import org.greenrobot.eventbus.EventBus
-
+import java.util.UUID
 
 class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
     private lateinit var binding: ActivityProductDetailsBinding
 
     private lateinit var database: DatabaseReference
+    private lateinit var listener: ICartLoadListener
+
     private var selectedProductIdCart: String? = null
     private var selectedProduct: Product? = null
-    private lateinit var listener: ICartLoadListener
     private var productId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,25 +71,31 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
                             listener.onLoadCartError(e.message)
                         }
                 } else {
-                    val cartModel = Cart()
-                    cartModel.id = selectedProductIdCart
-                    cartModel.name = selectedProduct?.productName
-                    cartModel.image = selectedProduct?.image
-                    cartModel.price = selectedProduct?.price
-                    cartModel.quantity = 1
-                    cartModel.totalPrice = cartModel.price!!
+                    val uuid = UUID.randomUUID().toString()
 
-                    userCart?.child(selectedProductIdCart!!)?.setValue(cartModel)
-                        ?.addOnSuccessListener {
+                    val cartModel = Cart(
+                        uuid,
+                        selectedProductIdCart,
+                        selectedProduct?.productName,
+                        selectedProduct?.image,
+                        selectedProduct?.price,
+                        1,
+                        selectedProduct!!.price!!,
+                        user?.email
+                    )
+
+                    FirebaseDatabase.getInstance().getReference("cart").child(uuid).setValue(cartModel)
+                        .addOnSuccessListener {
                             EventBus.getDefault().postSticky(UpdateCartEvent())
                             listener.onSuccessMessage("Product added to cart")
-                        }?.addOnFailureListener { e ->
-                            listener.onLoadCartError(e.message)
+                        }.addOnFailureListener {
+                            listener.onLoadCartError("Unable to add product")
                         }
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
+                Log.d("databaseError", error.message)
                 listener.onLoadCartError(error.message)
             }
         })

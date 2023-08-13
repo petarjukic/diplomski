@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import org.greenrobot.eventbus.EventBus
+import java.util.UUID
 
 class ProductDetailsFragment : Fragment(), ICartLoadListener {
     val args: ProductDetailsFragmentArgs by navArgs()
@@ -34,9 +35,9 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
 
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
+    private lateinit var listener: ICartLoadListener
     private var selectedProductId: String? = null
     private var selectedProduct: Product? = null
-    private lateinit var listener: ICartLoadListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -79,25 +80,30 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
                             listener.onLoadCartError("Unable to add product")
                         }
                 } else {
-                    val cartModel = Cart()
-                    cartModel.id = selectedProductId
-                    cartModel.name = selectedProduct?.productName
-                    cartModel.image = selectedProduct?.image
-                    cartModel.price = selectedProduct?.price
-                    cartModel.quantity = 1
-                    cartModel.totalPrice = cartModel.price!!
+                    val uuid = UUID.randomUUID().toString()
+                    val cartModel = Cart(
+                        uuid,
+                        selectedProductId,
+                        selectedProduct?.productName,
+                        selectedProduct?.image,
+                        selectedProduct?.price,
+                        1,
+                        selectedProduct!!.price!!,
+                        user?.email
+                    )
 
-                    userCart?.child(selectedProductId!!)?.setValue(cartModel)
-                        ?.addOnSuccessListener {
+                    FirebaseDatabase.getInstance().getReference("cart").child(uuid).setValue(cartModel)
+                        .addOnSuccessListener {
                             EventBus.getDefault().postSticky(UpdateCartEvent())
                             listener.onSuccessMessage("Product added to cart")
-                        }?.addOnFailureListener {
+                        }.addOnFailureListener {
                             listener.onLoadCartError("Unable to add product")
                         }
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
+                Log.d("databaseError", error.message)
                 listener.onLoadCartError(error.message)
             }
         })

@@ -69,9 +69,14 @@ class CartFragment : Fragment(), ICartLoadListener {
     private fun setListeners() {
         listener = this
 
-        binding.btnCheckout.setOnClickListener {
-            //TODO buy items
-            updateItems()
+        if (auth.currentUser != null) {
+            binding.btnCheckout.visibility = View.VISIBLE
+            binding.btnCheckout.setOnClickListener {
+                //TODO buy items
+                updateItems()
+            }
+        } else {
+            binding.btnCheckout.visibility = View.GONE
         }
 
         binding.btnHomeScreen.setOnClickListener {
@@ -127,17 +132,20 @@ class CartFragment : Fragment(), ICartLoadListener {
                 if (snapshot.exists()) {
                     for (data in snapshot.children) {
                         val cart = data.getValue(Cart::class.java)
+
                         if (cart != null && cart.userId.equals(user?.email)) {
                             cartList.add(cart)
                         }
                     }
+
+                    listener.onLoadCartSuccess(cartList)
                 } else {
                     listener.onLoadCartError("Unable to load items!")
                 }
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Log.e("databaseError", error.message)
+                Log.d("databaseError", error.message)
                 listener.onLoadCartError(error.message)
             }
         })
@@ -171,6 +179,7 @@ class CartFragment : Fragment(), ICartLoadListener {
         }
 
         binding.totalPriceValue.text = StringBuilder("$ ").append(sum)
+        binding.totalItemsValue.text = cartList.size.toString()
     }
 
     override fun onSuccessMessage(message: String) {

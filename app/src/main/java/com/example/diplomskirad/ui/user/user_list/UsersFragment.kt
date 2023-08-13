@@ -23,8 +23,8 @@ class UsersFragment : Fragment() {
     private var _binding: FragmentUsersBinding? = null
     private val binding get() = _binding!!
 
-    private var adapter: UsersAdapter? = null
     private lateinit var database: DatabaseReference
+    private var adapter: UsersAdapter? = null
     private var userList: MutableList<User>? = null
     private var sharedPreferences: LoginSharedPreferences? = null
 
