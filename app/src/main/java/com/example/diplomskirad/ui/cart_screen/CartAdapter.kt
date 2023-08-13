@@ -1,6 +1,5 @@
 package com.example.diplomskirad.ui.cart_screen
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,8 +16,7 @@ import org.greenrobot.eventbus.EventBus
 
 class CartAdapter(
     private val fragment: CartFragment,
-    private val cartList: List<Cart>,
-    private val context: Context
+    private val cartList: List<Cart>
 ) :
     RecyclerView.Adapter<CartAdapter.ViewHolder>() {
 
@@ -56,7 +54,6 @@ class CartAdapter(
         holder.quantity.text = cart.quantity.toString()
 
         updateFirebaseData(cart)
-
     }
 
     private fun removeItemFromCart(holder: ViewHolder, cart: Cart, position: Int) {
@@ -72,13 +69,8 @@ class CartAdapter(
     }
 
     private fun updateFirebaseData(cart: Cart) {
-        FirebaseDatabase.getInstance().getReference("cart")
-            .child("UNIQUE_USER_ID") //TODO provjeri tocno
-            .child(cart.id!!)
-            .setValue(cart)
-            .addOnSuccessListener {
-                EventBus.getDefault().postSticky(UpdateCartEvent())
-            }
+        FirebaseDatabase.getInstance().getReference("cart").child(cart.id!!).setValue(cart)
+            .addOnSuccessListener { EventBus.getDefault().postSticky(UpdateCartEvent()) }
     }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

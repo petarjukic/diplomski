@@ -107,25 +107,8 @@ class CartFragment : Fragment(), ICartLoadListener {
     }
 
     private fun getProducts() {
+        cartList.clear()
         val user = Firebase.auth.currentUser
-
-//        databaseItem.addListenerForSingleValueEvent(object : ValueEventListener {
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if (snapshot.exists()) {
-//                    for (data in snapshot.children) {
-//                        val item = data.getValue<SoldItems>()
-//                        if (item != null) {
-//                            soldItems.add(item)
-//                        }
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                Log.e("databaseError", error.message)
-//                throw error.toException()
-//            }
-//        })
 
         database.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -152,7 +135,7 @@ class CartFragment : Fragment(), ICartLoadListener {
     }
 
     override fun onLoadCartSuccess(cartList: List<Cart>) {
-        adapter = CartAdapter(this, cartList, requireContext())
+        adapter = CartAdapter(this, cartList)
 
         if (cartList.isEmpty()) {
             binding.emptyCartScreen.visibility = View.VISIBLE
@@ -173,13 +156,15 @@ class CartFragment : Fragment(), ICartLoadListener {
 
     private fun countCartItems(cartList: List<Cart>) {
         var sum = 0.0
+        var totalItems = 0
 
         for (cart in cartList) {
             sum += cart.price!!
+            totalItems += cart.quantity
         }
 
         binding.totalPriceValue.text = StringBuilder("$ ").append(sum)
-        binding.totalItemsValue.text = cartList.size.toString()
+        binding.totalItemsValue.text = totalItems.toString()
     }
 
     override fun onSuccessMessage(message: String) {
@@ -208,6 +193,7 @@ class CartFragment : Fragment(), ICartLoadListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        cartList.clear()
         adapter = null
         _binding = null
     }
