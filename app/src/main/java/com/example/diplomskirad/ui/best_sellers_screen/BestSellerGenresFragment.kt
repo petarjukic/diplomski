@@ -11,32 +11,37 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
-import com.example.diplomskirad.databinding.FragmentBestSellersBinding
-import com.example.diplomskirad.model.Category
+import com.example.diplomskirad.databinding.FragmentBestSellerGenresBinding
+import com.example.diplomskirad.model.Product
+import com.example.diplomskirad.model.SoldItems
 import com.example.diplomskirad.ui.best_sellers_screen.adapter.BestSellerGenreAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
+
 
 class BestSellerGenresFragment : Fragment() {
-    private var _binding: FragmentBestSellersBinding? = null
+    private var _binding: FragmentBestSellerGenresBinding? = null
     private val binding get() = _binding!!
 
     private var adapter: BestSellerGenreAdapter? = null
     private lateinit var database: DatabaseReference
-    private var categoryList: MutableList<Category>? = null
+    private var soldItemsList: MutableList<SoldItems>? = null
+    private var sortedList: MutableList<Product>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentBestSellersBinding.inflate(inflater, container, false)
-        database = FirebaseDatabase.getInstance().getReference("category")
-        categoryList = ArrayList()
+        _binding = FragmentBestSellerGenresBinding.inflate(inflater, container, false)
+        database = FirebaseDatabase.getInstance().getReference("soldItems")
+        database.addValueEventListener(postListener)
 
-        setAdapter()
+        soldItemsList = java.util.ArrayList()
+        sortedList = java.util.ArrayList()
 
         return binding.root
     }
@@ -44,8 +49,13 @@ class BestSellerGenresFragment : Fragment() {
     private val postListener = object : ValueEventListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             for (child in dataSnapshot.children) {
+                val item = child.getValue<SoldItems>()
 
+                if (item != null) {
+                    soldItemsList?.add(item)
+                }
             }
+            setAdapter()
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
@@ -54,12 +64,30 @@ class BestSellerGenresFragment : Fragment() {
     }
 
     private fun setAdapter() {
-        adapter = categoryList?.let { BestSellerGenreAdapter(it, this) }
+        binding.loading.visibility = View.GONE
+
+        val sortedCategories = findCategories()
+
+        adapter = BestSellerGenreAdapter(sortedCategories, this)
         val llm = LinearLayoutManager(requireContext())
         llm.orientation = LinearLayoutManager.VERTICAL
-        binding.rvBestsellers.layoutManager = llm
-        binding.rvBestsellers.adapter = adapter
-        database.addValueEventListener(postListener)
+        binding.rcBestSellerGenre.layoutManager = llm
+        binding.rcBestSellerGenre.adapter = adapter
+    }
+
+    private fun findCategories(): List<String> {
+        val sortedList = hashMapOf<String, Int>()
+
+        for (item in soldItemsList!!) {
+            if (!sortedList.keys.contains(item.categoryId)) {
+                sortedList[item.categoryId!!] = item.count!!
+            } else {
+                sortedList[item.categoryId!!] = sortedList.getValue(item.categoryId) + item.count!!
+            }
+        }
+
+        val sortedMap = sortedList.toList().sortedBy { (_, v) -> v }.reversed().toMap()
+        return sortedMap.keys.toList()
     }
 
     fun navigateToGenreItems(categoryId: String) {

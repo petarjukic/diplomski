@@ -27,11 +27,9 @@ class BestSellersFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var database: DatabaseReference
-    private var productList: MutableList<Product>? = null
     private var soldItemsList: MutableList<SoldItems>? = null
     private var sortedList: MutableList<Product>? = null
     private var adapter: BestSellerAdapter? = null
-    private var bestSellersMap = hashMapOf<Int, Product>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +39,6 @@ class BestSellersFragment : Fragment() {
         _binding = FragmentBestSellersBinding.inflate(inflater, container, false)
         database.addValueEventListener(postListener)
 
-        productList = java.util.ArrayList()
         soldItemsList = java.util.ArrayList()
         sortedList = java.util.ArrayList()
 
@@ -53,21 +50,7 @@ class BestSellersFragment : Fragment() {
         findNavController().navigate(R.id.productDetailsFragment, bundle)
     }
 
-    private fun findBestSellers(): List<Product> {
-        var finalList: List<Product> = listOf()
-
-        if (productList != null) {
-//            for (product in productList!!) {
-//
-//            }
-        }
-
-        return finalList
-    }
-
     private fun setAdapter() {
-        //TODO check result of bestsellers
-        val filteredList = findBestSellers()
         soldItemsList?.sortByDescending { it.count }
         if (soldItemsList != null && soldItemsList!!.size > 0) {
             if (soldItemsList?.size!! >= 5) {
@@ -107,13 +90,6 @@ class BestSellersFragment : Fragment() {
 
                 if (item != null) {
                     soldItemsList?.add(item)
-                    val product = Product(
-                        price = item.price,
-                        productName = item.productName,
-                        image = item.image,
-                        categoryId = item.categoryId
-                    )
-                    productList?.add(product)
                 }
             }
             setAdapter()

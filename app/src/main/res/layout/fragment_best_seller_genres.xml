@@ -3,7 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.user.user_list.UsersFragment">
+
+    <TextView
+        android:id="@+id/bestseller_genre_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/best_selling_genres"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/rv_bestsellers" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rc_best_seller_genre"

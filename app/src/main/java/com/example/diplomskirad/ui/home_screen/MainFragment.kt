@@ -199,7 +199,7 @@ class MainFragment : Fragment(), ICartLoadListener {
     }
 
     fun goToBesSellerGenreScreen() {
-        findNavController().navigate(R.id.bestSellersFragment)
+        findNavController().navigate(R.id.bestSellerGenresFragment)
     }
 
     fun navigateToUserActions() {

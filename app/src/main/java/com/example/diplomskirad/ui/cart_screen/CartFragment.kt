@@ -97,7 +97,7 @@ class CartFragment : Fragment(), ICartLoadListener {
 
     private fun transferDataToSoldItems(cart: Cart) {
         val uuid = UUID.randomUUID().toString()
-        val item = SoldItems(uuid, cart.name, cart.price, cart.categoryId, cart.image)
+        val item = SoldItems(uuid, cart.name, cart.price, cart.categoryId, cart.image, cart.quantity)
         FirebaseDatabase.getInstance().getReference("soldItems").child(uuid).setValue(item)
     }
 
