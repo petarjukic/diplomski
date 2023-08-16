@@ -45,6 +45,11 @@ class AddCategoryFragment : Fragment() {
         findNavController().popBackStack()
     }
 
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
+    }
+
     companion object {
         val TAG = AddCategoryFragment::class.java.simpleName
 
