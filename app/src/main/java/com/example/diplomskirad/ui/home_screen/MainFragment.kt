@@ -137,6 +137,7 @@ class MainFragment : Fragment(), ICartLoadListener {
         }
 
         userList.add("Profile")
+        userList.add("Favorites")
         userList.add("Best seller")
         userList.add("Best seller genre")
         userList.add("Companies")
@@ -203,6 +204,10 @@ class MainFragment : Fragment(), ICartLoadListener {
 
     fun goToCompaniesScreen() {
         findNavController().navigate(R.id.companiesFragment)
+    }
+
+    fun goToFavorites() {
+        findNavController().navigate(R.id.favoritesFragment)
     }
 
     fun navigateToUserActions() {

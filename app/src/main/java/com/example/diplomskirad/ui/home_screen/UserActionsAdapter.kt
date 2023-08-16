@@ -41,14 +41,18 @@ class UserActionsAdapter(
                 }
 
                 3 -> {
-                    fragment.gotoBestSellerScreen()
+                    fragment.goToFavorites()
                 }
 
                 4 -> {
-                    fragment.goToBesSellerGenreScreen()
+                    fragment.gotoBestSellerScreen()
                 }
 
                 5 -> {
+                    fragment.goToBesSellerGenreScreen()
+                }
+
+                6 -> {
                     fragment.goToCompaniesScreen()
                 }
             }

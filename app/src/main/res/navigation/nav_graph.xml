@@ -79,6 +79,9 @@
         <action
             android:id="@+id/action_main_fragment_to_companiesFragment"
             app:destination="@id/companiesFragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
 
     <fragment
@@ -307,5 +310,14 @@
         <action
             android:id="@+id/action_addCompanyFragment_to_companiesFragment"
             app:destination="@id/companiesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.diplomskirad.ui.favorites_screen.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/action_favoritesFragment_to_productDetailsFragment"
+            app:destination="@id/productDetailsFragment" />
     </fragment>
 </navigation>

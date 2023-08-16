@@ -239,6 +239,18 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="favoritesFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-779" />
+                            <option name="y" value="-301" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="filteredItemsFragment">
                     <value>
                       <LayoutPositions>
@@ -328,6 +340,11 @@
                               </value>
                             </entry>
                             <entry key="action_main_fragment_to_cartFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_main_fragment_to_companiesFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
