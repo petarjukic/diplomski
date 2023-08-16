@@ -2,6 +2,7 @@ package com.example.diplomskirad.ui.user.profile
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +10,18 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.diplomskirad.MainActivity
 import com.example.diplomskirad.R
+import com.example.diplomskirad.common.Constants
+import com.example.diplomskirad.common.preferences.LoginSharedPreferences
 import com.example.diplomskirad.databinding.FragmentProfileBinding
+import com.example.diplomskirad.model.SoldItems
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 
 class ProfileFragment : Fragment() {
@@ -19,7 +29,10 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var database: DatabaseReference
     private var signedIn: Boolean = false
+    private var sharedPreferences: LoginSharedPreferences? = null
+    private var totalProfit: Float = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,15 +43,37 @@ class ProfileFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        database = FirebaseDatabase.getInstance().getReference("soldItems")
+
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        database.addValueEventListener(postListener)
+
+        sharedPreferences = LoginSharedPreferences(requireContext())
 
         if (FirebaseAuth.getInstance().currentUser != null) {
             signedIn = true
         }
 
-        setUI()
         setListener()
         return binding.root
+    }
+
+
+    private val postListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (child in dataSnapshot.children) {
+                val item = child.getValue<SoldItems>()
+
+                if (item != null) {
+                    totalProfit += item.count!! * item.price!!
+                }
+            }
+            setUI()
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.e("databaseError", databaseError.message)
+        }
     }
 
     private fun setUI() {
@@ -59,6 +94,12 @@ class ProfileFragment : Fragment() {
             binding.btnSignup.visibility = View.VISIBLE
             binding.changePassword.visibility = View.GONE
             binding.ivChangePassword.visibility = View.GONE
+        }
+
+        if (sharedPreferences?.getRole() == Constants().ADMIN_ROLE && signedIn) {
+            binding.totalProfitKey.visibility = View.VISIBLE
+            binding.totalProfitValue.text = StringBuilder("$").append(totalProfit.toString())
+            binding.totalProfitValue.visibility = View.VISIBLE
         }
     }
 
@@ -89,6 +130,7 @@ class ProfileFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        database.removeEventListener(postListener)
         _binding = null
     }
 

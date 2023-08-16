@@ -66,5 +66,6 @@
     <string name="checkout_success">Checkout success!</string>
     <string name="bestsellers">Bestsellers</string>
     <string name="best_selling_genres">Best-selling genres</string>
+    <string name="total_profit">Total profit:</string>
 
 </resources>
