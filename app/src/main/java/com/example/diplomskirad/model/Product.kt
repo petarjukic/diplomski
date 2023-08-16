@@ -9,5 +9,7 @@ data class Product(
     val price: Float? = null,
     val categoryId: String? = null,
     val image: String? = null,
-    val description: String? = null
+    val description: String? = null,
+    val companyId: String? = null,
+    val isAddedFavorites: Boolean = false
 )

@@ -64,6 +64,18 @@
                 app:layout_constraintTop_toBottomOf="@id/btn_category" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_companies"
+                android:layout_width="fill_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/company_screen"
+                android:textSize="15sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_product" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_users"
                 android:layout_width="fill_parent"
                 android:layout_height="56dp"
@@ -73,7 +85,7 @@
                 app:cornerRadius="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_product" />
+                app:layout_constraintTop_toBottomOf="@id/btn_companies" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

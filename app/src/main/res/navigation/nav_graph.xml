@@ -76,6 +76,9 @@
         <action
             android:id="@+id/action_main_fragment_to_bestSellerGenresFragment"
             app:destination="@id/bestSellerGenresFragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_companiesFragment"
+            app:destination="@id/companiesFragment" />
     </fragment>
 
     <fragment
@@ -133,6 +136,9 @@
         <action
             android:id="@+id/action_admin_actions_fragment_to_addProductFragment"
             app:destination="@id/addProductFragment" />
+        <action
+            android:id="@+id/action_admin_actions_fragment_to_companiesFragment"
+            app:destination="@id/companiesFragment" />
     </fragment>
 
     <fragment
@@ -267,5 +273,39 @@
         <action
             android:id="@+id/action_bestSellerGenresFragment_to_filteredItemsFragment"
             app:destination="@id/filteredItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/companiesFragment"
+        android:name="com.example.diplomskirad.ui.company_screen.CompaniesFragment"
+        android:label="fragment_companies"
+        tools:layout="@layout/fragment_companies">
+
+        <action
+            android:id="@+id/action_companiesFragment_to_updateCompanyFragment"
+            app:destination="@id/updateCompanyFragment" />
+        <action
+            android:id="@+id/action_companiesFragment_to_addCompanyFragment"
+            app:destination="@id/addCompanyFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/updateCompanyFragment"
+        android:name="com.example.diplomskirad.ui.company_screen.UpdateCompanyFragment"
+        android:label="UpdateCompanyFragment">
+        <argument
+            android:name="selectedCompanyId"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_updateCompanyFragment_to_companiesFragment"
+            app:destination="@id/companiesFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addCompanyFragment"
+        android:name="com.example.diplomskirad.ui.company_screen.AddCompanyFragment"
+        android:label="AddCompanyFragment">
+        <action
+            android:id="@+id/action_addCompanyFragment_to_companiesFragment"
+            app:destination="@id/companiesFragment" />
     </fragment>
 </navigation>

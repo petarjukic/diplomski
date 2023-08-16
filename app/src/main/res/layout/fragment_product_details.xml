@@ -43,6 +43,19 @@
         tools:text="$100" />
 
     <TextView
+        android:id="@+id/product_company"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textSize="22sp"
+        android:textAlignment="center"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/product_price"
+        tools:text="Company" />
+
+    <TextView
         android:id="@+id/product_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,7 +64,7 @@
         android:textAlignment="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/product_price"
+        app:layout_constraintTop_toBottomOf="@id/product_company"
         tools:text="Product description big text" />
 
     <Button

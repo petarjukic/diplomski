@@ -133,6 +133,7 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
         binding.productDescription.text = product.description
         binding.productName.text = product.productName
         binding.productPrice.text = StringBuilder("€").append(product.price.toString())
+        binding.productCompany.text = product.companyId
         Picasso.get().load(product.image).placeholder(R.drawable.ic_no_image).into(binding.productImage)
     }
 

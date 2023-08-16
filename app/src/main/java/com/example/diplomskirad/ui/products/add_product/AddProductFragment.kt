@@ -1,6 +1,7 @@
 package com.example.diplomskirad.ui.products.add_product
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.diplomskirad.databinding.FragmentAddProductBinding
 import com.example.diplomskirad.model.Category
+import com.example.diplomskirad.model.Company
 import com.example.diplomskirad.model.Product
 import com.example.diplomskirad.ui.base_bottom_sheet.BottomSheetFragment
 import com.google.firebase.database.DataSnapshot
@@ -23,17 +25,22 @@ class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener {
     private val binding get() = _binding!!
 
     private lateinit var categoryData: DatabaseReference
+    private lateinit var companyData: DatabaseReference
     private var categoryId: String? = null
     private var categoryList: MutableList<Category>? = null
+    private var companies: MutableList<Company>? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         categoryData = FirebaseDatabase.getInstance().getReference("category")
+        companyData = FirebaseDatabase.getInstance().getReference("company")
         _binding = FragmentAddProductBinding.inflate(inflater, container, false)
         categoryList = ArrayList()
+        companies = ArrayList()
         categoryData.addValueEventListener(postListener)
+        companyData.addValueEventListener(companiesPostListener)
 
         setListener()
 
@@ -52,6 +59,21 @@ class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener {
 
         override fun onCancelled(databaseError: DatabaseError) {
             Toast.makeText(context, "Unable to load data.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private val companiesPostListener = object : ValueEventListener {
+        override fun onDataChange(dataSnapshot: DataSnapshot) {
+            for (child in dataSnapshot.children) {
+                val value: Company? = child.getValue(Company::class.java)
+                if (value?.removed != null && !value.removed) {
+                    companies?.add(value)
+                }
+            }
+        }
+
+        override fun onCancelled(databaseError: DatabaseError) {
+            Log.d("databaseError", databaseError.message)
         }
     }
 
@@ -80,6 +102,25 @@ class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener {
             bottomFragment.show(childFragmentManager, BottomSheetFragment.TAG)
             bottomFragment.setListener(this)
         }
+
+        binding.companyDropdown.setOnClickListener {
+            val data: MutableList<String> = mutableListOf()
+            if (companies != null) {
+                for (company in companies!!) {
+                    company.companyName?.let { data.add(it) }
+                }
+            }
+
+            val bottomFragment: BottomSheetFragment = if (binding.companyDropdown.text.toString() != "") {
+                BottomSheetFragment.newInstance(data, binding.companyDropdown.text.toString())
+
+            } else {
+                BottomSheetFragment.newInstance(data, null)
+            }
+
+            bottomFragment.show(childFragmentManager, BottomSheetFragment.TAG)
+            bottomFragment.setListener(this)
+        }
     }
 
     private fun checkFields(): Boolean {
@@ -87,7 +128,8 @@ class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener {
             binding.descriptionEditText.text.toString() == "" ||
             binding.priceEditText.text.toString() == "" ||
             binding.productNameEditText.text.toString() == "" ||
-            binding.categoryDropdown.text.toString() == ""
+            binding.categoryDropdown.text.toString() == "" ||
+            binding.companyDropdown.text.toString() == ""
         ) {
             Toast.makeText(requireContext(), "Invalid input!", Toast.LENGTH_SHORT).show()
             return false
@@ -106,7 +148,8 @@ class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener {
             binding.priceEditText.text.toString().toFloat(),
             categoryId,
             binding.imageUrlEditText.text.toString(),
-            binding.descriptionEditText.text.toString()
+            binding.descriptionEditText.text.toString(),
+            binding.companyDropdown.text.toString()
         )
 
         categoryData.child("product").child(uuid).setValue(product)
@@ -121,6 +164,7 @@ class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener {
         super.onDestroyView()
         categoryList?.clear()
         categoryData.removeEventListener(postListener)
+        companyData.removeEventListener(companiesPostListener)
         _binding = null
     }
 

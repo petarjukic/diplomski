@@ -8,6 +8,27 @@
             <LayoutPositions>
               <option name="myPositions">
                 <map>
+                  <entry key="addCompanyFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-395" />
+                            <option name="y" value="669" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_addCompanyFragment_to_companiesFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="addProductFragment">
                     <value>
                       <LayoutPositions>
@@ -76,6 +97,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_admin_actions_fragment_to_companiesFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -89,6 +115,15 @@
                             <option name="x" value="-210" />
                             <option name="y" value="-938" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_bestSellerGenresFragment_to_filteredItemsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -178,6 +213,32 @@
                       </LayoutPositions>
                     </value>
                   </entry>
+                  <entry key="companiesFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-162" />
+                            <option name="y" value="579" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_companiesFragment_to_addCompanyFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_companiesFragment_to_updateCompanyFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="filteredItemsFragment">
                     <value>
                       <LayoutPositions>
@@ -252,6 +313,11 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_main_fragment_to_adminActionsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_main_fragment_to_bestSellerGenresFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -384,6 +450,27 @@
                         <option name="myPositions">
                           <map>
                             <entry key="action_updateCategoryFragment_to_category_list_fragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="updateCompanyFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="48" />
+                            <option name="y" value="602" />
+                          </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_updateCompanyFragment_to_companiesFragment">
                               <value>
                                 <LayoutPositions />
                               </value>

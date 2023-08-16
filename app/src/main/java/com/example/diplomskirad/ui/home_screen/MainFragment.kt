@@ -21,7 +21,6 @@ import com.example.diplomskirad.eventbus.UpdateCartEvent
 import com.example.diplomskirad.listener.ICartLoadListener
 import com.example.diplomskirad.model.Cart
 import com.example.diplomskirad.model.Product
-import com.example.diplomskirad.model.User
 import com.example.diplomskirad.ui.search.SearchActivity
 import com.example.diplomskirad.ui.utils.ItemDecoration
 import com.google.firebase.auth.FirebaseAuth
@@ -43,7 +42,6 @@ class MainFragment : Fragment(), ICartLoadListener {
 
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
-    private lateinit var firebaseUser: User
 
     private var isSignedIn: Boolean = false
     private var sharedPreferences: LoginSharedPreferences? = null
@@ -141,6 +139,7 @@ class MainFragment : Fragment(), ICartLoadListener {
         userList.add("Profile")
         userList.add("Best seller")
         userList.add("Best seller genre")
+        userList.add("Companies")
 
         return userList
     }
@@ -200,6 +199,10 @@ class MainFragment : Fragment(), ICartLoadListener {
 
     fun goToBesSellerGenreScreen() {
         findNavController().navigate(R.id.bestSellerGenresFragment)
+    }
+
+    fun goToCompaniesScreen() {
+        findNavController().navigate(R.id.companiesFragment)
     }
 
     fun navigateToUserActions() {

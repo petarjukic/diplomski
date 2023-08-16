@@ -91,6 +91,19 @@
                 app:layout_constraintTop_toBottomOf="@id/description_edit_text" />
 
             <TextView
+                android:id="@+id/company_dropdown"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:hint="@string/company"
+                android:lineSpacingExtra="3sp"
+                android:textSize="18sp"
+                android:background="@android:drawable/btn_dropdown"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_url_edit_text" />
+
+            <TextView
                 android:id="@+id/category_dropdown"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -101,7 +114,7 @@
                 android:background="@android:drawable/btn_dropdown"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_url_edit_text" />
+                app:layout_constraintTop_toBottomOf="@id/company_dropdown" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_add_product"
