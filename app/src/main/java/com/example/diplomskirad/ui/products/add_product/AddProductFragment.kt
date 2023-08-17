@@ -13,6 +13,7 @@ import com.example.diplomskirad.model.Category
 import com.example.diplomskirad.model.Company
 import com.example.diplomskirad.model.Product
 import com.example.diplomskirad.ui.base_bottom_sheet.BottomSheetFragment
+import com.example.diplomskirad.ui.base_bottom_sheet.company.CompanyBottomSheetFragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -20,7 +21,8 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import java.util.UUID
 
-class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener {
+class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener,
+    CompanyBottomSheetFragment.BottomSheetListener {
     private var _binding: FragmentAddProductBinding? = null
     private val binding get() = _binding!!
 
@@ -111,15 +113,15 @@ class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener {
                 }
             }
 
-            val bottomFragment: BottomSheetFragment = if (binding.companyDropdown.text.toString() != "") {
-                BottomSheetFragment.newInstance(data, binding.companyDropdown.text.toString())
+            val bottomCompanyFragment: CompanyBottomSheetFragment = if (binding.companyDropdown.text.toString() != "") {
+                CompanyBottomSheetFragment.newInstance(data, binding.companyDropdown.text.toString())
 
             } else {
-                BottomSheetFragment.newInstance(data, null)
+                CompanyBottomSheetFragment.newInstance(data, null)
             }
 
-            bottomFragment.show(childFragmentManager, BottomSheetFragment.TAG)
-            bottomFragment.setListener(this)
+            bottomCompanyFragment.show(childFragmentManager, CompanyBottomSheetFragment.TAG)
+            bottomCompanyFragment.setListener(this)
         }
     }
 
@@ -149,7 +151,8 @@ class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener {
             categoryId,
             binding.imageUrlEditText.text.toString(),
             binding.descriptionEditText.text.toString(),
-            binding.companyDropdown.text.toString()
+            binding.companyDropdown.text.toString(),
+            false
         )
 
         categoryData.child("product").child(uuid).setValue(product)
@@ -158,6 +161,10 @@ class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener {
 
     override fun onCategoryItemClicked(title: String) {
         binding.categoryDropdown.text = title
+    }
+
+    override fun onCompanyItemClicked(title: String) {
+        binding.companyDropdown.text = title
     }
 
     override fun onDestroyView() {

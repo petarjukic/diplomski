@@ -1,7 +1,6 @@
 package com.example.diplomskirad.model.favorites.dao
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
 import com.example.diplomskirad.model.favorites.Favorites
@@ -14,6 +13,6 @@ interface FavoritesDao {
     @Insert
     fun insertAll(vararg favorites: Favorites)
 
-    @Delete
-    fun delete(favorite: Favorites)
+    @Query("delete from favorites where product_id LIKE :productId")
+    fun delete(productId: String)
 }

@@ -11,5 +11,5 @@ data class Product(
     val image: String? = null,
     val description: String? = null,
     val companyId: String? = null,
-    val isAddedFavorites: Boolean = false
+    val addedToFavorites: Boolean? = null
 )

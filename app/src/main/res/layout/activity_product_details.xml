@@ -68,6 +68,39 @@
         tools:text="Product description big text" />
 
     <Button
+        android:id="@+id/add_to_favorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/add_to_the_favorites"
+        app:cornerRadius="12dp"
+        android:layout_marginBottom="35dp"
+        android:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/product_description"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/remove_from_favorites"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:backgroundTint="@color/red"
+        android:text="@string/remove_from_favorites"
+        app:cornerRadius="12dp"
+        android:layout_marginBottom="35dp"
+        android:visibility="gone"
+        tools:visibility="visible"
+        app:layout_constraintTop_toBottomOf="@+id/add_to_favorites"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
         android:id="@+id/add_to_cart"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,6 +110,7 @@
         android:text="@string/add_cart"
         app:cornerRadius="12dp"
         android:layout_marginBottom="35dp"
+        app:layout_constraintTop_toBottomOf="@+id/remove_from_favorites"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

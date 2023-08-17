@@ -1,20 +1,26 @@
 package com.example.diplomskirad.ui.products.product_details
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.HandlerCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
+import androidx.room.Room
 import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
+import com.example.diplomskirad.common.database.AppDatabase
 import com.example.diplomskirad.databinding.FragmentProductDetailsBinding
 import com.example.diplomskirad.eventbus.UpdateCartEvent
 import com.example.diplomskirad.listener.ICartLoadListener
 import com.example.diplomskirad.model.Cart
 import com.example.diplomskirad.model.Product
+import com.example.diplomskirad.model.favorites.Favorites
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -26,6 +32,8 @@ import com.google.firebase.ktx.Firebase
 import com.squareup.picasso.Picasso
 import org.greenrobot.eventbus.EventBus
 import java.util.UUID
+import java.util.concurrent.ExecutorService
+import java.util.concurrent.Executors
 
 class ProductDetailsFragment : Fragment(), ICartLoadListener {
     val args: ProductDetailsFragmentArgs by navArgs()
@@ -36,8 +44,13 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
     private lateinit var listener: ICartLoadListener
+
     private var selectedProductId: String? = null
     private var selectedProduct: Product? = null
+    private var db: AppDatabase? = null
+
+    private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
+    private val handler: Handler = HandlerCompat.createAsync(Looper.getMainLooper())
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,16 +59,52 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
         database = FirebaseDatabase.getInstance().getReference("product")
         auth = Firebase.auth
         _binding = FragmentProductDetailsBinding.inflate(inflater, container, false)
+        db = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "favorites").build()
+
         val args = this.arguments
         database.addValueEventListener(postListener)
         listener = this
-
         selectedProductId = args?.getString(Constants().SELECTED_PRODUCT_ID_TAG)
+
+        setListener()
+
+        return binding.root
+    }
+
+    private fun setListener() {
         binding.addToCart.setOnClickListener {
             addToCart()
         }
 
-        return binding.root
+        binding.addToFavorites.setOnClickListener {
+            addToFavorites()
+        }
+
+        binding.removeFromFavorites.setOnClickListener {
+            removeFromFavorites()
+        }
+    }
+
+    private fun removeFromFavorites() {
+        executorService.execute {
+            val favoriteDao = db?.favoritesDao()
+            selectedProductId?.let { favoriteDao?.delete(it) }
+            handler.post {
+                database.child("${selectedProductId}/addedToFavorites").setValue(false)
+                Toast.makeText(context, "Removed from favorites", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun addToFavorites() {
+        executorService.execute {
+            val favoriteDao = db?.favoritesDao()
+            favoriteDao?.insertAll(Favorites(selectedProductId))
+            handler.post {
+                database.child("${selectedProductId}/addedToFavorites").setValue(true)
+                Toast.makeText(context, "Added to favorites", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun addToCart() {
@@ -114,7 +163,6 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             for (child in dataSnapshot.children) {
                 val product = child.getValue(Product::class.java)
-
                 if (product != null) {
                     if (selectedProductId == product.id) {
                         selectedProduct = product
@@ -130,11 +178,22 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
     }
 
     private fun setUI(product: Product) {
+        setVisibility(product)
         binding.productDescription.text = product.description
         binding.productName.text = product.productName
         binding.productPrice.text = StringBuilder("€").append(product.price.toString())
         binding.productCompany.text = product.companyId
         Picasso.get().load(product.image).placeholder(R.drawable.ic_no_image).into(binding.productImage)
+    }
+
+    private fun setVisibility(product: Product) {
+        if (product.addedToFavorites == true) {
+            binding.addToFavorites.visibility = View.GONE
+            binding.removeFromFavorites.visibility = View.VISIBLE
+        } else {
+            binding.addToFavorites.visibility = View.VISIBLE
+            binding.removeFromFavorites.visibility = View.GONE
+        }
     }
 
     override fun onDestroyView() {
