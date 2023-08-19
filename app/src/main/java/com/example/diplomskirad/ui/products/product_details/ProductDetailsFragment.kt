@@ -174,8 +174,13 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
             for (child in dataSnapshot.children) {
                 val product = child.getValue(Product::class.java)
                 if (product != null) {
+                    Log.d("provjera", "AAAAAAAa rpije product ${product}")
+                    Log.d("provjera", "AAAAAAAa prijeee ifaaa selectani product  idddd $selectedProductId")
+
                     if (selectedProductId == product.id) {
                         selectedProduct = product
+                        Log.d("provjera", "AAAAAAAa selectani product ${product}")
+                        Log.d("provjera", "AAAAAAAa selectani product  idddd $selectedProductId")
                         setUI(product)
                     }
                 }
@@ -193,6 +198,7 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
         binding.productName.text = product.productName
         binding.productPrice.text = StringBuilder("€").append(product.price.toString())
         binding.productCompany.text = product.companyId
+        binding.productCategory.text = product.categoryId
         Picasso.get().load(product.image).placeholder(R.drawable.ic_no_image).into(binding.productImage)
     }
 

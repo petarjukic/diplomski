@@ -164,6 +164,7 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
         binding.productName.text = product.productName
         binding.productPrice.text = StringBuilder("€").append(product.price.toString())
         binding.productCompany.text = product.companyId
+        binding.productCategory.text = product.categoryId
         Picasso.get().load(product.image).placeholder(R.drawable.ic_no_image).into(binding.productImage)
     }
 

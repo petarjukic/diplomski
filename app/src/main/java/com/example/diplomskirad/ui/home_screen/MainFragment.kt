@@ -147,7 +147,6 @@ class MainFragment : Fragment(), ICartLoadListener {
 
     private fun setUI() {
         val categories = categoryList?.distinct()
-        productList?.add(Product("dsa2", "productName"))
         val productAdapter = productList?.let { ProductAdapter(it, this) }
         categoryAdapter = categories?.let { CategoryAdapter(it, this) }
 
