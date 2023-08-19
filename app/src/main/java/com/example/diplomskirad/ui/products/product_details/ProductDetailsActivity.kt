@@ -10,7 +10,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.HandlerCompat
 import androidx.room.Room
 import com.example.diplomskirad.R
+import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.common.database.AppDatabase
+import com.example.diplomskirad.common.preferences.LoginSharedPreferences
 import com.example.diplomskirad.databinding.ActivityProductDetailsBinding
 import com.example.diplomskirad.eventbus.UpdateCartEvent
 import com.example.diplomskirad.listener.ICartLoadListener
@@ -40,6 +42,7 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
     private var selectedProduct: Product? = null
     private var productId: String? = null
     private var db: AppDatabase? = null
+    private var sharedPreferences: LoginSharedPreferences? = null
 
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
     private val handler: Handler = HandlerCompat.createAsync(Looper.getMainLooper())
@@ -55,6 +58,7 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
         val intent = intent
         productId = intent.getStringExtra("productId")
         database.addValueEventListener(postListener)
+        sharedPreferences = LoginSharedPreferences(applicationContext)
 
         setListener()
 
@@ -72,6 +76,10 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
 
         binding.removeFromFavorites.setOnClickListener {
             removeFromFavorites()
+        }
+
+        binding.updateProduct.setOnClickListener {
+
         }
     }
 
@@ -166,6 +174,12 @@ class ProductDetailsActivity : AppCompatActivity(), ICartLoadListener {
         } else {
             binding.addToFavorites.visibility = View.VISIBLE
             binding.removeFromFavorites.visibility = View.GONE
+        }
+
+        if (sharedPreferences?.getRole() == Constants().ADMIN_ROLE) {
+            binding.updateProduct.visibility = View.VISIBLE
+        } else {
+            binding.updateProduct.visibility = View.GONE
         }
     }
 

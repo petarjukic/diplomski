@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import java.util.UUID
 
 class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener,
@@ -28,9 +30,16 @@ class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener,
 
     private lateinit var categoryData: DatabaseReference
     private lateinit var companyData: DatabaseReference
+    private lateinit var database: DatabaseReference
+
     private var categoryId: String? = null
     private var categoryList: MutableList<Category>? = null
     private var companies: MutableList<Company>? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        database = Firebase.database.reference
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -155,7 +164,7 @@ class AddProductFragment : Fragment(), BottomSheetFragment.BottomSheetListener,
             false
         )
 
-        categoryData.child("product").child(uuid).setValue(product)
+        database.child("product").child(uuid).setValue(product)
         findNavController().popBackStack()
     }
 

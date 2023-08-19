@@ -9,12 +9,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.os.HandlerCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.room.Room
 import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
 import com.example.diplomskirad.common.database.AppDatabase
+import com.example.diplomskirad.common.preferences.LoginSharedPreferences
 import com.example.diplomskirad.databinding.FragmentProductDetailsBinding
 import com.example.diplomskirad.eventbus.UpdateCartEvent
 import com.example.diplomskirad.listener.ICartLoadListener
@@ -48,6 +51,7 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
     private var selectedProductId: String? = null
     private var selectedProduct: Product? = null
     private var db: AppDatabase? = null
+    private var sharedPreferences: LoginSharedPreferences? = null
 
     private val executorService: ExecutorService = Executors.newSingleThreadExecutor()
     private val handler: Handler = HandlerCompat.createAsync(Looper.getMainLooper())
@@ -60,6 +64,7 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
         auth = Firebase.auth
         _binding = FragmentProductDetailsBinding.inflate(inflater, container, false)
         db = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "favorites").build()
+        sharedPreferences = LoginSharedPreferences(requireContext())
 
         val args = this.arguments
         database.addValueEventListener(postListener)
@@ -82,6 +87,11 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
 
         binding.removeFromFavorites.setOnClickListener {
             removeFromFavorites()
+        }
+
+        binding.updateProduct.setOnClickListener {
+            val bundle = bundleOf(Constants().SELECTED_PRODUCT_ID_TAG to selectedProductId)
+            findNavController().navigate(R.id.updateProductFragment, bundle)
         }
     }
 
@@ -193,6 +203,12 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
         } else {
             binding.addToFavorites.visibility = View.VISIBLE
             binding.removeFromFavorites.visibility = View.GONE
+        }
+
+        if (sharedPreferences?.getRole() == Constants().ADMIN_ROLE) {
+            binding.updateProduct.visibility = View.VISIBLE
+        } else {
+            binding.updateProduct.visibility = View.GONE
         }
     }
 

@@ -248,6 +248,15 @@
                             <option name="y" value="-301" />
                           </Point>
                         </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_favoritesFragment_to_productDetailsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
+                        </option>
                       </LayoutPositions>
                     </value>
                   </entry>
@@ -345,6 +354,11 @@
                               </value>
                             </entry>
                             <entry key="action_main_fragment_to_companiesFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                            <entry key="action_main_fragment_to_favoritesFragment">
                               <value>
                                 <LayoutPositions />
                               </value>
@@ -493,6 +507,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="updateProductFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-546" />
+                            <option name="y" value="134" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
