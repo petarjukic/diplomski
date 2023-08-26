@@ -11,10 +11,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
-import com.example.diplomskirad.databinding.FragmentBestSellerGenresBinding
+import com.example.diplomskirad.databinding.FragmentBestSellerCategoriesBinding
 import com.example.diplomskirad.model.Product
 import com.example.diplomskirad.model.SoldItems
-import com.example.diplomskirad.ui.best_sellers_screen.adapter.BestSellerGenreAdapter
+import com.example.diplomskirad.ui.best_sellers_screen.adapter.BestSellerCategoryAdapter
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -22,12 +22,11 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 
-
-class BestSellerGenresFragment : Fragment() {
-    private var _binding: FragmentBestSellerGenresBinding? = null
+class BestSellerCategoriesFragment : Fragment() {
+    private var _binding: FragmentBestSellerCategoriesBinding? = null
     private val binding get() = _binding!!
 
-    private var adapter: BestSellerGenreAdapter? = null
+    private var adapter: BestSellerCategoryAdapter? = null
     private lateinit var database: DatabaseReference
     private var soldItemsList: MutableList<SoldItems>? = null
     private var sortedList: MutableList<Product>? = null
@@ -36,7 +35,7 @@ class BestSellerGenresFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentBestSellerGenresBinding.inflate(inflater, container, false)
+        _binding = FragmentBestSellerCategoriesBinding.inflate(inflater, container, false)
         database = FirebaseDatabase.getInstance().getReference("soldItems")
         database.addValueEventListener(postListener)
 
@@ -68,7 +67,7 @@ class BestSellerGenresFragment : Fragment() {
 
         val sortedCategories = findCategories()
 
-        adapter = BestSellerGenreAdapter(sortedCategories, this)
+        adapter = BestSellerCategoryAdapter(sortedCategories, this)
         val llm = LinearLayoutManager(requireContext())
         llm.orientation = LinearLayoutManager.VERTICAL
         binding.rcBestSellerGenre.layoutManager = llm
@@ -104,12 +103,12 @@ class BestSellerGenresFragment : Fragment() {
     }
 
     companion object {
-        val TAG = BestSellerGenresFragment::class.java.simpleName
+        val TAG = BestSellerCategoriesFragment::class.java.simpleName
 
         @JvmStatic
-        fun newInstance(): BestSellerGenresFragment {
+        fun newInstance(): BestSellerCategoriesFragment {
             val args = Bundle()
-            val fragment = BestSellerGenresFragment()
+            val fragment = BestSellerCategoriesFragment()
             fragment.arguments = args
 
             return fragment

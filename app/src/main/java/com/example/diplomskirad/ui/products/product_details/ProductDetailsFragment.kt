@@ -174,13 +174,8 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
             for (child in dataSnapshot.children) {
                 val product = child.getValue(Product::class.java)
                 if (product != null) {
-                    Log.d("provjera", "AAAAAAAa rpije product ${product}")
-                    Log.d("provjera", "AAAAAAAa prijeee ifaaa selectani product  idddd $selectedProductId")
-
                     if (selectedProductId == product.id) {
                         selectedProduct = product
-                        Log.d("provjera", "AAAAAAAa selectani product ${product}")
-                        Log.d("provjera", "AAAAAAAa selectani product  idddd $selectedProductId")
                         setUI(product)
                     }
                 }

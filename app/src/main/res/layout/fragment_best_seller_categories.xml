@@ -10,7 +10,7 @@
         android:id="@+id/bestseller_genre_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/best_selling_genres"
+        android:text="@string/best_selling_categories"
         android:textSize="24sp"
         android:gravity="center"
         android:textStyle="bold"

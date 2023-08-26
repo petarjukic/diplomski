@@ -139,7 +139,7 @@ class MainFragment : Fragment(), ICartLoadListener {
         userList.add("Profile")
         userList.add("Favorites")
         userList.add("Best seller")
-        userList.add("Best seller genre")
+        userList.add("Best seller category")
         userList.add("Companies")
 
         return userList

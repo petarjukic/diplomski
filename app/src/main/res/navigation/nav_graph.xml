@@ -269,7 +269,7 @@
     </fragment>
     <fragment
         android:id="@+id/bestSellerGenresFragment"
-        android:name="com.example.diplomskirad.ui.best_sellers_screen.BestSellerGenresFragment"
+        android:name="com.example.diplomskirad.ui.best_sellers_screen.BestSellerCategoriesFragment"
         android:label="BestSellerGenresFragment">
         <argument
             android:name="category"

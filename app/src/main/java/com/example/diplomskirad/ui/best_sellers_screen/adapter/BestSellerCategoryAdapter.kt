@@ -6,10 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.diplomskirad.R
-import com.example.diplomskirad.ui.best_sellers_screen.BestSellerGenresFragment
+import com.example.diplomskirad.ui.best_sellers_screen.BestSellerCategoriesFragment
 
-class BestSellerGenreAdapter(private val genreList: List<String>, private val fragment: BestSellerGenresFragment) :
-    RecyclerView.Adapter<BestSellerGenreAdapter.BestSellerGenreHolder>() {
+class BestSellerCategoryAdapter(
+    private val genreList: List<String>,
+    private val fragment: BestSellerCategoriesFragment
+) :
+    RecyclerView.Adapter<BestSellerCategoryAdapter.BestSellerGenreHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BestSellerGenreHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.best_seller_genre_item, parent, false)

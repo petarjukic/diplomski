@@ -65,7 +65,7 @@
     <string name="search">Search</string>
     <string name="checkout_success">Checkout success!</string>
     <string name="bestsellers">Bestsellers</string>
-    <string name="best_selling_genres">Best-selling genres</string>
+    <string name="best_selling_categories">Best-selling categories</string>
     <string name="total_profit">Total profit:</string>
     <string name="company_screen">Company screen</string>
     <string name="add_company">Add company</string>
