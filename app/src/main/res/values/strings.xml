@@ -75,5 +75,6 @@
     <string name="remove_from_favorites">Remove from favorites</string>
     <string name="favorites">Favorites</string>
     <string name="best_seller_company">Best seller companies</string>
+    <string name="most_active_users">Most active users</string>
 
 </resources>

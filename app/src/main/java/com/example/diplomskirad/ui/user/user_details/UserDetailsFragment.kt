@@ -68,11 +68,10 @@ class UserDetailsFragment : Fragment() {
         override fun onDataChange(dataSnapshot: DataSnapshot) {
             for (child in dataSnapshot.children) {
                 selectedUser = child.getValue(User::class.java)
-                if (userId == selectedUser?.id) {
+                if (userId == selectedUser?.email) {
                     break
                 }
             }
-
             setUI()
         }
 

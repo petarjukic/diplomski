@@ -145,6 +145,9 @@
         <action
             android:id="@+id/action_admin_actions_fragment_to_companiesFragment"
             app:destination="@id/companiesFragment" />
+        <action
+            android:id="@+id/action_admin_actions_fragment_to_mostActiveUsersFragment"
+            app:destination="@id/mostActiveUsersFragment" />
     </fragment>
 
     <fragment
@@ -350,5 +353,14 @@
         <action
             android:id="@+id/action_bestSellerCompaniesFragment_to_filteredItemsFragment"
             app:destination="@id/filteredItemsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mostActiveUsersFragment"
+        android:name="com.example.diplomskirad.ui.most_active_users.MostActiveUsersFragment"
+        android:label="fragment_most_active_users"
+        tools:layout="@layout/fragment_most_active_users">
+        <action
+            android:id="@+id/action_mostActiveUsersFragment_to_user_details_fragment"
+            app:destination="@id/user_details_fragment" />
     </fragment>
 </navigation>

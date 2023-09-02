@@ -9,5 +9,6 @@ data class SoldItems(
     val price: Float? = null,
     val categoryId: String? = null,
     val image: String? = null,
+    val userId: String? = null,
     var count: Int? = null
 )

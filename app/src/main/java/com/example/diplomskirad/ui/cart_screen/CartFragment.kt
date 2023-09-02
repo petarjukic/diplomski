@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.diplomskirad.R
 import com.example.diplomskirad.common.Constants
+import com.example.diplomskirad.common.preferences.LoginSharedPreferences
 import com.example.diplomskirad.databinding.FragmentCartBinding
 import com.example.diplomskirad.eventbus.UpdateCartEvent
 import com.example.diplomskirad.listener.ICartLoadListener
@@ -42,7 +43,7 @@ class CartFragment : Fragment(), ICartLoadListener {
 
     private var adapter: CartAdapter? = null
     private var cartList: MutableList<Cart> = ArrayList()
-    private var soldItems: MutableList<SoldItems> = ArrayList()
+    private var sharedPreferences: LoginSharedPreferences? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +57,7 @@ class CartFragment : Fragment(), ICartLoadListener {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentCartBinding.inflate(inflater, container, false)
+        sharedPreferences = LoginSharedPreferences(requireContext())
 
         getProducts()
         setListeners()
@@ -97,7 +99,15 @@ class CartFragment : Fragment(), ICartLoadListener {
 
     private fun transferDataToSoldItems(cart: Cart) {
         val uuid = UUID.randomUUID().toString()
-        val item = SoldItems(uuid, cart.name, cart.price, cart.categoryId, cart.image, cart.quantity)
+        val item = SoldItems(
+            uuid,
+            cart.name,
+            cart.price,
+            cart.categoryId,
+            cart.image,
+            sharedPreferences?.getEmail(),
+            cart.quantity
+        )
         FirebaseDatabase.getInstance().getReference("soldItems").child(uuid).setValue(item)
     }
 

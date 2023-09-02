@@ -45,7 +45,7 @@ class UsersAdapter(
     }
 
     private fun goToUserDetails(user: User?) {
-        val bundle = bundleOf(Constants().SELECTED_USER_ID_TAG to user?.id)
+        val bundle = bundleOf(Constants().SELECTED_USER_ID_TAG to user?.email)
         fragment.navigateToDetails(bundle)
     }
 

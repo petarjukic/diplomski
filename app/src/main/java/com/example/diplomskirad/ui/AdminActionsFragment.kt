@@ -40,6 +40,10 @@ class AdminActionsFragment : Fragment() {
         binding.btnCompanies.setOnClickListener {
             findNavController().navigate(R.id.companiesFragment)
         }
+
+        binding.btnMostActiveUsers.setOnClickListener {
+            findNavController().navigate(R.id.mostActiveUsersFragment)
+        }
     }
 
     override fun onDestroyView() {

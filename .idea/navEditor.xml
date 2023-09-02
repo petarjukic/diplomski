@@ -102,6 +102,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_admin_actions_fragment_to_mostActiveUsersFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                           </map>
                         </option>
                       </LayoutPositions>
@@ -115,6 +120,15 @@
                             <option name="x" value="-482" />
                             <option name="y" value="-1180" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_bestSellerCompaniesFragment_to_filteredItemsFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -350,6 +364,11 @@
                                 <LayoutPositions />
                               </value>
                             </entry>
+                            <entry key="action_main_fragment_to_bestSellerCompaniesFragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
                             <entry key="action_main_fragment_to_bestSellerGenresFragment">
                               <value>
                                 <LayoutPositions />
@@ -406,6 +425,18 @@
                               </value>
                             </entry>
                           </map>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
+                  <entry key="mostActiveUsersFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="154" />
+                            <option name="y" value="-1039" />
+                          </Point>
                         </option>
                       </LayoutPositions>
                     </value>
@@ -549,8 +580,8 @@
                       <LayoutPositions>
                         <option name="myPosition">
                           <Point>
-                            <option name="x" value="400" />
-                            <option name="y" value="236" />
+                            <option name="x" value="415" />
+                            <option name="y" value="278" />
                           </Point>
                         </option>
                       </LayoutPositions>
