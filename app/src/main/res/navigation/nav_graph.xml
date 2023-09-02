@@ -148,6 +148,9 @@
         <action
             android:id="@+id/action_admin_actions_fragment_to_mostActiveUsersFragment"
             app:destination="@id/mostActiveUsersFragment" />
+        <action
+            android:id="@+id/action_admin_actions_fragment_to_inactiveUsersFragment"
+            app:destination="@id/inactiveUsersFragment" />
     </fragment>
 
     <fragment
@@ -356,11 +359,16 @@
     </fragment>
     <fragment
         android:id="@+id/mostActiveUsersFragment"
-        android:name="com.example.diplomskirad.ui.most_active_users.MostActiveUsersFragment"
+        android:name="com.example.diplomskirad.ui.statistics.most_active_users.MostActiveUsersFragment"
         android:label="fragment_most_active_users"
         tools:layout="@layout/fragment_most_active_users">
         <action
             android:id="@+id/action_mostActiveUsersFragment_to_user_details_fragment"
             app:destination="@id/user_details_fragment" />
     </fragment>
+    <fragment
+        android:id="@+id/inactiveUsersFragment"
+        android:name="com.example.diplomskirad.ui.statistics.inactive_users.InactiveUsersFragment"
+        android:label="fragment_inactive_users"
+        tools:layout="@layout/fragment_inactive_users" />
 </navigation>

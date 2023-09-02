@@ -44,6 +44,10 @@ class AdminActionsFragment : Fragment() {
         binding.btnMostActiveUsers.setOnClickListener {
             findNavController().navigate(R.id.mostActiveUsersFragment)
         }
+
+        binding.btnInactiveUsers.setOnClickListener {
+            findNavController().navigate(R.id.inactiveUsersFragment)
+        }
     }
 
     override fun onDestroyView() {

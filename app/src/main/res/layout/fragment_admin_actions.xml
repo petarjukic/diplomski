@@ -88,6 +88,18 @@
                 app:layout_constraintTop_toBottomOf="@id/btn_companies" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_inactive_users"
+                android:layout_width="fill_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/inactive_users"
+                android:textSize="15sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_most_active_users" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_users"
                 android:layout_width="fill_parent"
                 android:layout_height="56dp"
@@ -97,7 +109,7 @@
                 app:cornerRadius="12dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/btn_most_active_users" />
+                app:layout_constraintTop_toBottomOf="@id/btn_inactive_users" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

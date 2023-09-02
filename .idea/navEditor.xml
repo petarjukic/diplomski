@@ -327,6 +327,18 @@
                       <LayoutPositions />
                     </value>
                   </entry>
+                  <entry key="inactiveUsersFragment">
+                    <value>
+                      <LayoutPositions>
+                        <option name="myPosition">
+                          <Point>
+                            <option name="x" value="-771" />
+                            <option name="y" value="259" />
+                          </Point>
+                        </option>
+                      </LayoutPositions>
+                    </value>
+                  </entry>
                   <entry key="login_fragment">
                     <value>
                       <LayoutPositions>
@@ -437,6 +449,15 @@
                             <option name="x" value="154" />
                             <option name="y" value="-1039" />
                           </Point>
+                        </option>
+                        <option name="myPositions">
+                          <map>
+                            <entry key="action_mostActiveUsersFragment_to_user_details_fragment">
+                              <value>
+                                <LayoutPositions />
+                              </value>
+                            </entry>
+                          </map>
                         </option>
                       </LayoutPositions>
                     </value>

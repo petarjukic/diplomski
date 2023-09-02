@@ -76,5 +76,7 @@
     <string name="favorites">Favorites</string>
     <string name="best_seller_company">Best seller companies</string>
     <string name="most_active_users">Most active users</string>
-
+    <string name="inactive_users">Inactive users</string>
+    <string name="delete_user">Delete user</string>
+    <string name="empty_message">There are no inactive users!</string>
 </resources>
