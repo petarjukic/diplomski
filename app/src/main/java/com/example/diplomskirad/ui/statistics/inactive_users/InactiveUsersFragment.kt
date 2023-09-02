@@ -98,10 +98,10 @@ class InactiveUsersFragment : Fragment() {
 
         if (inactiveUsers.isEmpty()) {
             binding.rcInactiveUsers.visibility = View.GONE
-            binding.inactiveUsersTitle.visibility = View.VISIBLE
+            binding.tvEmptyMessage.visibility = View.VISIBLE
         } else {
             binding.rcInactiveUsers.visibility = View.VISIBLE
-            binding.inactiveUsersTitle.visibility = View.GONE
+            binding.tvEmptyMessage.visibility = View.GONE
 
             adapter = InactiveUsersAdapter(inactiveUsers, this)
             val llm = LinearLayoutManager(requireContext())
