@@ -1,6 +1,7 @@
 package com.example.diplomskirad.ui.filtered_items
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -68,6 +69,7 @@ class FilteredItemsFragment : Fragment() {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
+            Log.d("databaseError", databaseError.message)
         }
     }
 

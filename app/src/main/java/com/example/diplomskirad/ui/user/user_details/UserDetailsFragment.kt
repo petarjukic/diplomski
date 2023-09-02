@@ -1,6 +1,7 @@
 package com.example.diplomskirad.ui.user.user_details
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -76,6 +77,7 @@ class UserDetailsFragment : Fragment() {
         }
 
         override fun onCancelled(databaseError: DatabaseError) {
+            Log.d("databaseError", databaseError.message)
         }
     }
 
