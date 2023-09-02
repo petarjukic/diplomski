@@ -55,6 +55,10 @@ class UserActionsAdapter(
                 6 -> {
                     fragment.goToCompaniesScreen()
                 }
+
+                7 -> {
+                    fragment.goToBestSellerCompanies()
+                }
             }
         }
     }

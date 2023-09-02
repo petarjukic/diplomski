@@ -141,6 +141,7 @@ class MainFragment : Fragment(), ICartLoadListener {
         userList.add("Best seller")
         userList.add("Best seller category")
         userList.add("Companies")
+        userList.add("Best seller companies")
 
         return userList
     }
@@ -207,6 +208,10 @@ class MainFragment : Fragment(), ICartLoadListener {
 
     fun goToFavorites() {
         findNavController().navigate(R.id.favoritesFragment)
+    }
+
+    fun goToBestSellerCompanies() {
+        findNavController().navigate(R.id.bestSellerCompaniesFragment)
     }
 
     fun navigateToUserActions() {

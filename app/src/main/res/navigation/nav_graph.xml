@@ -82,6 +82,9 @@
         <action
             android:id="@+id/action_main_fragment_to_favoritesFragment"
             app:destination="@id/favoritesFragment" />
+        <action
+            android:id="@+id/action_main_fragment_to_bestSellerCompaniesFragment"
+            app:destination="@id/bestSellerCompaniesFragment" />
     </fragment>
 
     <fragment
@@ -334,5 +337,18 @@
             app:argType="string"
             android:defaultValue="@null"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/bestSellerCompaniesFragment"
+        android:name="com.example.diplomskirad.ui.best_sellers_screen.BestSellerCompaniesFragment"
+        android:label="BestSellerCompaniesFragment">
+        <argument
+            android:name="companyId"
+            app:argType="string"
+            android:defaultValue="@null"
+            app:nullable="true" />
+        <action
+            android:id="@+id/action_bestSellerCompaniesFragment_to_filteredItemsFragment"
+            app:destination="@id/filteredItemsFragment" />
     </fragment>
 </navigation>

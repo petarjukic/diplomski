@@ -26,7 +26,9 @@ class FilteredItemsFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var database: DatabaseReference
+
     private var selectedCategory: String? = null
+    private var selectedCompany: String? = null
     private var productList: MutableList<Product>? = null
     private var adapter: FilteredItemsAdapter? = null
 
@@ -39,6 +41,7 @@ class FilteredItemsFragment : Fragment() {
         val args = this.arguments
         database.addValueEventListener(postListener)
         selectedCategory = args?.getString(Constants().FILTER_CATEGORY)
+        selectedCompany = args?.getString(Constants().FILTER_COMPANY)
         productList = java.util.ArrayList()
 
         return binding.root
@@ -50,8 +53,14 @@ class FilteredItemsFragment : Fragment() {
                 val product = child.getValue(Product::class.java)
 
                 if (product != null) {
-                    if (selectedCategory?.lowercase() == product.categoryId?.lowercase()) {
-                        productList?.add(product)
+                    if (selectedCategory != null) {
+                        if (selectedCategory?.lowercase() == product.categoryId?.lowercase()) {
+                            productList?.add(product)
+                        }
+                    } else {
+                        if (selectedCompany?.lowercase() == product.companyId?.lowercase()) {
+                            productList?.add(product)
+                        }
                     }
                 }
             }
