@@ -198,12 +198,20 @@ class ProductDetailsFragment : Fragment(), ICartLoadListener {
     }
 
     private fun setVisibility(product: Product) {
+        val user = Firebase.auth.currentUser
+
         if (product.addedToFavorites == true) {
             binding.addToFavorites.visibility = View.GONE
             binding.removeFromFavorites.visibility = View.VISIBLE
         } else {
             binding.addToFavorites.visibility = View.VISIBLE
             binding.removeFromFavorites.visibility = View.GONE
+        }
+
+        if (user != null) {
+            binding.addToCart.visibility = View.VISIBLE
+        } else {
+            binding.addToCart.visibility = View.GONE
         }
 
         if (sharedPreferences?.getRole() == Constants().ADMIN_ROLE) {
