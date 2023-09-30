@@ -1,4 +1,82 @@
 <resources>
     <string name="app_name">DiplomskiRad</string>
-    <string name="login_to_app_title">Login to app</string>
+    <string name="login_to_app_title">Login</string>
+
+    <string name="password">Password</string>
+    <string name="e_mail">E-mail</string>
+    <string name="btn_login">Login</string>
+    <string name="sign_up">Don\'t have an account? | Sign up</string>
+    <string name="register">Register</string>
+    <string name="register_already_have_an_account">Already have an account? Sign in here</string>
+    <string name="sign_up_title">Sign up</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="first_name">First name</string>
+    <string name="last_name">Last name</string>
+
+    <string name="invalid_email">Invalid e-mail input</string>
+    <string name="invalid_password">Please re-enter your password</string>
+    <string name="invalid_first_name">Invalid first name</string>
+    <string name="invalid_last_name">Invalid last name</string>
+    <string name="user_details_email">User email</string>
+    <string name="address">Address</string>
+    <string name="save_changes">Save changes</string>
+
+    <string-array name="dropdown_roles">
+        <item>Admin</item>
+        <item>Customer</item>
+    </string-array>
+
+    <string name="remove_user">Remove user</string>
+    <string name="category_screen">Category Screen</string>
+    <string name="product_screen">Add Product</string>
+    <string name="user_list">User list</string>
+    <string name="add_category">Add category</string>
+    <string name="category_name">Category name</string>
+    <string name="category">Category</string>
+    <string name="add_product">Add product</string>
+    <string name="product_name">Product name</string>
+    <string name="price">Price</string>
+    <string name="product_description">Product description</string>
+    <string name="image_url">Image URL</string>
+    <string name="admin_actions">Admin actions</string>
+    <string name="go_to_home_screen">Go to home screen</string>
+    <string name="message_empty_cart">Looks like you haven\'t added any products to your cart yet</string>
+    <string name="empty_cart">Your cart is empty</string>
+    <string name="total_items">Total items</string>
+    <string name="total_price">Total price</string>
+    <string name="checkout">Checkout</string>
+    <string name="add_cart">Add to cart</string>
+    <string name="logout">Logout</string>
+    <string name="change_password">Change password</string>
+    <string name="my_profile">My profile</string>
+
+    <string name="send">Send</string>
+    <string name="change_password_confirm_password">Confirm new password</string>
+    <string name="change_password_new_password">New password</string>
+    <string name="change_password_old_password">Old password</string>
+    <string name="enter_valid_passwords">Please enter valid passwords</string>
+    <string name="error_new_password_same_as_old_password">Your old and new password are the same. Please enter a different password.</string>
+    <string name="your_email">Your email:</string>
+    <string name="invalid_old_password">Please enter your current password</string>
+    <string name="error">Error</string>
+    <string name="ok">OK</string>
+    <string name="change_password_fail">Change password fail</string>
+    <string name="your_password_changed_successfully">Your password changed successfully!</string>
+    <string name="search">Search</string>
+    <string name="checkout_success">Checkout success!</string>
+    <string name="bestsellers">Bestsellers</string>
+    <string name="best_selling_categories">Best-selling categories</string>
+    <string name="total_profit">Total profit:</string>
+    <string name="company_screen">Company screen</string>
+    <string name="add_company">Add company</string>
+    <string name="company_name">Company name</string>
+    <string name="company">Company</string>
+    <string name="add_to_the_favorites">Add to the favorites</string>
+    <string name="remove_from_favorites">Remove from favorites</string>
+    <string name="favorites">Favorites</string>
+    <string name="best_seller_company">Best seller companies</string>
+    <string name="most_active_users">Most active users</string>
+    <string name="inactive_users">Inactive users</string>
+    <string name="delete_user">Delete user</string>
+    <string name="empty_message">There are no inactive users!</string>
 </resources>

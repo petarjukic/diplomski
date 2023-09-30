@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:padding="20dp"
+    android:paddingLeft="24dp"
+    android:paddingRight="24dp"
+    tools:context=".ui.AdminActionsFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/main_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:focusableInTouchMode="true"
+            android:orientation="vertical"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp">
+
+            <TextView
+                android:id="@+id/admin_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:textSize="18sp"
+                android:text="@string/admin_actions"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_category"
+                android:layout_width="fill_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/category_screen"
+                android:textSize="15sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/admin_name" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_product"
+                android:layout_width="fill_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/product_screen"
+                android:textSize="15sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_category" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_companies"
+                android:layout_width="fill_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/company_screen"
+                android:textSize="15sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_product" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_most_active_users"
+                android:layout_width="fill_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/most_active_users"
+                android:textSize="15sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_companies" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_inactive_users"
+                android:layout_width="fill_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/inactive_users"
+                android:textSize="15sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_most_active_users" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_users"
+                android:layout_width="fill_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="25dp"
+                android:text="@string/user_list"
+                android:textSize="15sp"
+                app:cornerRadius="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btn_inactive_users" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>
